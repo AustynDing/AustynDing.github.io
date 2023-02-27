@@ -19,10 +19,14 @@ def eachFile(filepath):
             old = f.read()
             f.seek(0)
             f.write('---\n')
-            f.write('title:' + allDir.split('.')[0] + '\n')
-            f.write('date:' + time.strftime("%Y/%m%d %H:%M:%S") + '\n')
-            "2013/7/13 20:46:25"
+            f.write('title: ' + allDir.split('.')[0] + '\n')
+            f.write('date: ' + time.strftime("%Y-%m-%d %H:%M:%S") + '\n')
+            f.write('categories: 计算机组成原理' + '\n')
             f.write('---\n')
+            # title: page0
+            # date: 2023 - 02 - 27
+            # 19: 53:20
+            # tags:
             f.write(old)
         # print(allDir.split('.'))
         # .decode('gbk')是解决中文显示乱码问题
