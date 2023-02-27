@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Hexo | Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="加减法  尾数右移时，需要返回原来的隐藏位1 尾数右移时，需要保持负号不变，在数值高位补0，但不改变符号位  示例 有进位要去掉进位，再进行左规 乘除 舍入 溢出最大允许阶值 &#x3D; 127最小允许阶值 &#x3D; -126阶值 &#x3D; 阶码的二进制解释 - 偏置常数在浮点数的表示中，阶码全1和阶码全0都有特殊含义 异常双精度：阶下溢用0表示。 数据类型 D+F-F &#x3D;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2023/02/27/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="加减法  尾数右移时，需要返回原来的隐藏位1 尾数右移时，需要保持负号不变，在数值高位补0，但不改变符号位  示例 有进位要去掉进位，再进行左规 乘除 舍入 溢出最大允许阶值 &#x3D; 127最小允许阶值 &#x3D; -126阶值 &#x3D; 阶码的二进制解释 - 偏置常数在浮点数的表示中，阶码全1和阶码全0都有特殊含义 异常双精度：阶下溢用0表示。 数据类型 D+F-F &#x3D;&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-02-27T02:06:36.680Z">
+<meta property="article:modified_time" content="2023-02-27T02:06:36.854Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/02/27/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-02-27 10:06:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Hexo"><span class="site-name">Hexo</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">No title</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-02-27T02:06:36.680Z" title="Created 2023-02-27 10:06:36">2023-02-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-02-27T02:06:36.854Z" title="Updated 2023-02-27 10:06:36">2023-02-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a name="igMSi"></a></p>
+<h2 id="加减法"><a href="#加减法" class="headerlink" title="加减法"></a>加减法</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665650022766-f9e0c767-60a8-48d5-8b67-8d57ba152f3b.png#averageHue=%23fcfbfa&clientId=u03e8dc0f-9a89-4&from=paste&height=661&id=u5751990a&name=image.png&originHeight=826&originWidth=1124&originalType=binary&ratio=1&rotation=0&showTitle=false&size=177606&status=done&style=shadow&taskId=u04a0cbf5-b254-45cb-a325-bb370f2c0f0&title=&width=899.2" alt="image.png"></p>
+<ol>
+<li>尾数右移时，需要返回原来的隐藏位<code>1</code></li>
+<li>尾数右移时，需要保持负号不变，在数值高位补<code>0</code>，但不改变符号位<br><a name="DeX3z"></a></li>
+</ol>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665653840660-c16ae184-7d93-4e26-b060-50d96009fb3a.png#averageHue=%23fcfaf9&clientId=u2236a498-dd16-4&from=paste&height=656&id=u9b62fc0d&name=image.png&originHeight=820&originWidth=1079&originalType=binary&ratio=1&rotation=0&showTitle=false&size=169686&status=done&style=shadow&taskId=uf75667cf-af1b-479a-b5a7-0e8f1b5fbc4&title=&width=863.2" alt="image.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665653694954-dc90dddc-91f1-4521-afd4-0a10467431a0.png#averageHue=%23fefdfc&clientId=u2236a498-dd16-4&from=paste&height=575&id=uef1e71a2&name=image.png&originHeight=719&originWidth=1001&originalType=binary&ratio=1&rotation=0&showTitle=false&size=137771&status=done&style=shadow&taskId=u77e49bc0-acb7-4509-b16c-6df86a648d6&title=&width=800.8" alt="image.png"><br /><strong>有进位要去掉进位</strong>，再进行左规<br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665826155336-ebc1c0bf-aa67-44ef-96de-2d7636217132.png#averageHue=%23fefefe&clientId=u61b8d9ea-46f1-4&from=paste&height=454&id=u8ef38f4c&name=image.png&originHeight=567&originWidth=735&originalType=binary&ratio=1&rotation=0&showTitle=false&size=70306&status=done&style=shadow&taskId=u8effb2dd-88bf-4eea-a34a-0a8b8452fe4&title=&width=588" alt="image.png"><br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665653514684-ee78ded2-8544-4e89-9a0c-0ae8290d58a0.png#averageHue=%23fefdfd&clientId=u2236a498-dd16-4&from=paste&height=590&id=ue4197a01&name=image.png&originHeight=737&originWidth=1124&originalType=binary&ratio=1&rotation=0&showTitle=false&size=139828&status=done&style=shadow&taskId=u6f2f2618-3bf4-4df5-ba58-4762fb21b6d&title=&width=899.2" alt="image.png"><br><a name="OfVdC"></a></p>
+<h2 id="乘除"><a href="#乘除" class="headerlink" title="乘除"></a>乘除</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665650671642-12e369a6-b8eb-44cc-aa08-c06023ccb4cd.png#averageHue=%23fdfcfc&clientId=u03e8dc0f-9a89-4&from=paste&height=646&id=u5e151d84&name=image.png&originHeight=808&originWidth=1316&originalType=binary&ratio=1&rotation=0&showTitle=false&size=132253&status=done&style=shadow&taskId=u7c2c3ab0-b2cc-4874-875a-31b1b8b1ef5&title=&width=1052.8" alt="image.png"><br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665654392640-b83d1468-53f0-472b-a872-3113abdb4c03.png#averageHue=%23f8f5f4&clientId=uf8f49807-0ca7-4&from=paste&height=674&id=uc86fba03&name=image.png&originHeight=842&originWidth=1089&originalType=binary&ratio=1&rotation=0&showTitle=false&size=283431&status=done&style=shadow&taskId=u0dfcbddd-33db-4f1f-9383-68cbfb9d994&title=&width=871.2" alt="image.png"><br><a name="ww3nZ"></a></p>
+<h2 id="舍入"><a href="#舍入" class="headerlink" title="舍入"></a>舍入</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1666086972475-e8ee49d0-503d-4407-ac4f-3fdd385db9e3.png#averageHue=%23f4f3f1&clientId=u199feb67-a58c-4&from=paste&height=521&id=uc514ef79&name=image.png&originHeight=651&originWidth=844&originalType=binary&ratio=1&rotation=0&showTitle=false&size=219164&status=done&style=shadow&taskId=u49584421-0d07-4264-b7ce-932444cd1af&title=&width=675.2" alt="image.png"><br><a name="fw9V3"></a></p>
+<h2 id="溢出"><a href="#溢出" class="headerlink" title="溢出"></a>溢出</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665651221721-286719f7-7ebe-4a6d-b1d8-dccd815e8e4e.png#averageHue=%23f6f4f4&clientId=u03e8dc0f-9a89-4&from=paste&height=473&id=uf7ac6ee2&name=image.png&originHeight=591&originWidth=1033&originalType=binary&ratio=1&rotation=0&showTitle=false&size=142812&status=done&style=shadow&taskId=u2455b8c2-4ba8-41b2-b397-9e5492a5121&title=&width=826.4" alt="image.png"><br />最大允许阶值 &#x3D; 127<br />最小允许阶值 &#x3D; -126<br /><strong>阶值 &#x3D; 阶码的二进制解释 - 偏置常数</strong><br /><strong>在浮点数的表示中，阶码全1和阶码全0都有特殊含义</strong><br><a name="DX7Bp"></a></p>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1666086860494-e5bafb9f-2855-4c4d-be50-cac243daee47.png#averageHue=%23faf5f5&clientId=u199feb67-a58c-4&from=paste&height=656&id=ubfe05a76&name=image.png&originHeight=820&originWidth=950&originalType=binary&ratio=1&rotation=0&showTitle=false&size=266321&status=done&style=shadow&taskId=u162f7142-86fb-4905-ba53-e3c999dfb25&title=&width=760" alt="image.png"><br />双精度：阶下溢用0表示。<br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665654690567-f1ac72ae-b798-4777-a0ff-f2da8da37a85.png#averageHue=%23f5f4f3&clientId=uf8f49807-0ca7-4&from=paste&height=647&id=ue1412a3d&name=image.png&originHeight=809&originWidth=1095&originalType=binary&ratio=1&rotation=0&showTitle=false&size=285410&status=done&style=shadow&taskId=ub8869202-2c7e-4795-bca4-5cab552252c&title=&width=876" alt="image.png"><br><a name="YWTY5"></a></p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1665655265428-f33b3675-8474-44a4-988f-45696f22da9a.png#averageHue=%23fbfaf9&clientId=uf8f49807-0ca7-4&from=paste&height=672&id=u491c8a49&name=image.png&originHeight=840&originWidth=1092&originalType=binary&ratio=1&rotation=0&showTitle=false&size=164041&status=done&style=shadow&taskId=u2a3d2d7e-b03d-4346-b536-149aeff3ea6&title=&width=873.6" alt="image.png"><br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1666080813814-89570370-a4e8-4b86-ae86-56e784b4442f.png#averageHue=%23fbfaf9&clientId=u8cf20f01-14ce-4&from=paste&height=516&id=u2307d450&name=image.png&originHeight=645&originWidth=860&originalType=binary&ratio=1&rotation=0&showTitle=false&size=114045&status=done&style=shadow&taskId=uc04ccf52-9887-4bdf-9e87-7e4ec3e0890&title=&width=688" alt="image.png"><br><a name="yvgPc"></a></p>
+<h4 id="D-F-F-x3D-x3D-F"><a href="#D-F-F-x3D-x3D-F" class="headerlink" title="D+F-F &#x3D;&#x3D; F"></a>D+F-F &#x3D;&#x3D; F</h4><p>什么时候不成立？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">float</span> y = <span class="number">1.0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">-100</span>; i &lt; <span class="number">100</span>; ++i) &#123;</span><br><span class="line">        <span class="type">double</span> w = <span class="built_in">pow</span>(<span class="number">2</span>, i);</span><br><span class="line">        <span class="keyword">if</span> ((y + w) - w != y) &#123;</span><br><span class="line"><span class="comment">//            cout &lt;&lt; y+w-w&lt;&lt;&quot;!!!&quot;;</span></span><br><span class="line"><span class="comment">//            cout &lt;&lt; y &lt;&lt;endl;</span></span><br><span class="line">            cout &lt;&lt; i &lt;&lt; <span class="string">&quot;  &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当<code>i &gt;=53</code>时，不成立。因为<strong>双精度浮点数的尾数长度为52，所以，</strong><code>**1.0**</code><strong>在对阶过程中，因为阶值变成了53，所以相当于1前面增加了53个0，而尾数最长只有52，所以1就被舍去了。</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/02/27/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97/">http://example.com/2023/02/27/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/27/%E7%AC%AC%E5%9B%9B%E8%AF%BE%20%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2023/02/27/%E7%AC%AC%E5%85%AD%E8%AF%BE%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E7%9A%84%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E8%BF%90%E7%AE%97/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info"></div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">John Doe</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%87%8F%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">加减法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.0.1.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%98%E9%99%A4"><span class="toc-number">2.</span> <span class="toc-text">乘除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%88%8D%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">舍入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%A2%E5%87%BA"><span class="toc-number">4.</span> <span class="toc-text">溢出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8"><span class="toc-number">5.</span> <span class="toc-text">异常</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.1.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#D-F-F-x3D-x3D-F"><span class="toc-number">5.1.1.</span> <span class="toc-text">D+F-F &#x3D;&#x3D; F</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/hello-world/" title="Hello World">Hello World</a><time datetime="2023-02-27T05:47:01.168Z" title="Created 2023-02-27 13:47:01">2023-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/%E7%AC%AC%E4%BA%8C%E8%AF%BE%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E9%A1%B6%E5%B1%82%E8%A7%86%E5%9B%BE/" title="No title">No title</a><time datetime="2023-02-27T02:16:18.019Z" title="Created 2023-02-27 10:16:18">2023-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/%E7%AC%AC%E5%9B%9B%E8%AF%BE%20%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97/" title="No title">No title</a><time datetime="2023-02-27T02:06:50.647Z" title="Created 2023-02-27 10:06:50">2023-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97/" title="No title">No title</a><time datetime="2023-02-27T02:06:36.680Z" title="Created 2023-02-27 10:06:36">2023-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/%E7%AC%AC%E5%85%AD%E8%AF%BE%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E7%9A%84%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E8%BF%90%E7%AE%97/" title="No title">No title</a><time datetime="2023-02-27T02:06:13.415Z" title="Created 2023-02-27 10:06:13">2023-02-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

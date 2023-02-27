@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Hexo | Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="分区方式 分页方式 虚拟存储器只需要保证同时需要载入的页的大小是低于主存的大小就行。对于同一个任务，其实是每个时刻只会执行部分代码段，所以只需要载入部分页进入内存就行  所有的任务的所有的页放入硬盘的特定区域中，也就是虚拟内存 每个任务正在使用的页载入主存当中 没命中时主存从硬盘中加载；有修改时，硬盘也会从主存加载 页表：对每个任务生成一个页表，记录页的状态    全相联映射：命中率更高 写回：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2023/02/27/%E7%AC%AC%E5%8D%81%E4%BA%8C%E8%AF%BE%20%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="分区方式 分页方式 虚拟存储器只需要保证同时需要载入的页的大小是低于主存的大小就行。对于同一个任务，其实是每个时刻只会执行部分代码段，所以只需要载入部分页进入内存就行  所有的任务的所有的页放入硬盘的特定区域中，也就是虚拟内存 每个任务正在使用的页载入主存当中 没命中时主存从硬盘中加载；有修改时，硬盘也会从主存加载 页表：对每个任务生成一个页表，记录页的状态    全相联映射：命中率更高 写回：">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-02-27T01:19:03.110Z">
+<meta property="article:modified_time" content="2023-02-27T01:19:03.275Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/02/27/%E7%AC%AC%E5%8D%81%E4%BA%8C%E8%AF%BE%20%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-02-27 09:19:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Hexo"><span class="site-name">Hexo</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">No title</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-02-27T01:19:03.110Z" title="Created 2023-02-27 09:19:03">2023-02-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-02-27T01:19:03.275Z" title="Updated 2023-02-27 09:19:03">2023-02-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a name="nFqlT"></a></p>
+<h3 id="分区方式"><a href="#分区方式" class="headerlink" title="分区方式"></a>分区方式</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669277706527-998432e0-a2fc-4508-a459-0462d95d9259.png#averageHue=%23f7f5f4&clientId=udc6bffc6-dde9-4&from=paste&height=365&id=u69155d3e&name=image.png&originHeight=456&originWidth=787&originalType=binary&ratio=1&rotation=0&showTitle=false&size=124023&status=done&style=none&taskId=u976c7ec9-20e4-4fe5-9c40-bf4da5073a7&title=&width=629.6" alt="image.png"><br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669277715931-9cb5eb6d-3720-4614-8410-6308a5873c48.png#averageHue=%23f6f5f4&clientId=udc6bffc6-dde9-4&from=paste&height=449&id=u2bb5d464&name=image.png&originHeight=561&originWidth=759&originalType=binary&ratio=1&rotation=0&showTitle=false&size=110472&status=done&style=none&taskId=u3369f9d8-07a5-466f-be9b-f96eb7192a4&title=&width=607.2" alt="image.png"><br><a name="gg4z0"></a></p>
+<h3 id="分页方式"><a href="#分页方式" class="headerlink" title="分页方式"></a>分页方式</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669277748398-0cc4a6e2-fdca-4261-aa6d-4c371ba1833b.png#averageHue=%23f7f5f4&clientId=udc6bffc6-dde9-4&from=paste&height=442&id=ua3ea96a6&name=image.png&originHeight=552&originWidth=855&originalType=binary&ratio=1&rotation=0&showTitle=false&size=141099&status=done&style=none&taskId=ubdfa9f0a-09fb-4ade-afa7-79333514136&title=&width=684" alt="image.png"><br><a name="L6lhU"></a></p>
+<h3 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669277942468-ec1e84a3-ebaa-404a-82f7-12d0f536d4cf.png#averageHue=%23f5f3f1&clientId=udc6bffc6-dde9-4&from=paste&height=380&id=u82ee28ed&name=image.png&originHeight=475&originWidth=730&originalType=binary&ratio=1&rotation=0&showTitle=false&size=151843&status=done&style=none&taskId=u992ae811-ef6c-488d-84f1-2c50db2092e&title=&width=584" alt="image.png"><br />只需要保证同时<strong>需要载入的页</strong>的大小是低于主存的大小就行。对于同一个任务，其实是每个时刻只会执行部分代码段，所以只需要载入部分页进入内存就行<br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669277966166-0c715239-9ac1-42b2-8d05-30ecde4fc470.png#averageHue=%23fbfaf9&clientId=udc6bffc6-dde9-4&from=paste&height=460&id=u9c42bafc&name=image.png&originHeight=575&originWidth=843&originalType=binary&ratio=1&rotation=0&showTitle=false&size=121107&status=done&style=none&taskId=u114d02d9-9b90-4017-9f47-b4740ff5e9a&title=&width=674.4" alt="image.png"></p>
+<ol>
+<li>所有的任务的所有的页放入硬盘的特定区域中，也就是<strong>虚拟内存</strong></li>
+<li>每个任务正在使用的页载入主存当中</li>
+<li>没命中时主存从硬盘中加载；有修改时，硬盘也会从主存加载</li>
+<li>页表：对每个任务生成一个页表，记录页的状态</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669277979600-731a069b-e5e4-4b80-8d9a-99071803ad2a.png#averageHue=%23fbf9f8&clientId=udc6bffc6-dde9-4&from=paste&height=416&id=u6d0bd8bf&name=image.png&originHeight=520&originWidth=791&originalType=binary&ratio=1&rotation=0&showTitle=false&size=107946&status=done&style=none&taskId=u766cdea8-c718-408c-ab6f-4eb4ea6e79c&title=&width=632.8" alt="image.png"></p>
+<ul>
+<li>全相联映射：命中率更高</li>
+<li>写回：避免像写直达一样，多次对硬盘进行操作<br><a name="krw6M"></a></li>
+</ul>
+<h3 id="分页式虚拟存储器"><a href="#分页式虚拟存储器" class="headerlink" title="分页式虚拟存储器"></a>分页式虚拟存储器</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669278432223-3b432e84-bedf-423a-b55a-9efc2a0488e8.png#averageHue=%23f6f3f2&clientId=ub64367f1-dc9e-4&from=paste&height=295&id=u8e15b110&name=image.png&originHeight=369&originWidth=847&originalType=binary&ratio=1&rotation=0&showTitle=false&size=137109&status=done&style=none&taskId=u449dcc30-e715-4b48-b1f7-56bfbf3eb8f&title=&width=677.6" alt="image.png"></p>
+<ul>
+<li>编写程序时，默认自己有一个很大的、连续的空间，所以记录在页表中的地址都是虚拟地址。</li>
+<li>程序真正被启动时，会产生很多页面，载入硬盘中</li>
+<li>把要用的页面真正载入主存中，由页表来记录</li>
+<li>页表也存在主存中<br><a name="OrHIE"></a></li>
+</ul>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669278909804-03e37ac1-149e-48c0-8717-bfab35e6db6a.png#averageHue=%23c7cab1&clientId=ub64367f1-dc9e-4&from=paste&height=436&id=u5416e5de&name=image.png&originHeight=545&originWidth=864&originalType=binary&ratio=1&rotation=0&showTitle=false&size=216918&status=done&style=none&taskId=ua20c0918-bbe8-4dc6-a91d-703c6727b89&title=&width=691.2" alt="image.png"><br><a name="i21yx"></a></p>
+<h4 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h4><p><strong>物理页和虚拟页的大小是一样的。所以页内偏移量是一致的</strong><br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669279021802-26aa3ba1-42dc-4880-b68b-4894c1759968.png#averageHue=%23f4f4f3&clientId=ub64367f1-dc9e-4&from=paste&height=410&id=ue7723b11&name=image.png&originHeight=513&originWidth=761&originalType=binary&ratio=1&rotation=0&showTitle=false&size=137934&status=done&style=none&taskId=u8d06126a-ef5f-4918-ab00-c2c4acd2100&title=&width=608.8" alt="image.png"></p>
+<ul>
+<li><code>null</code>磁盘没有存储VP0 VP4，对应的位置存储了其他信息<img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669279176054-4dd0b82e-33cc-4447-9762-53cbe5f148b9.png#averageHue=%23d9be87&clientId=ub64367f1-dc9e-4&from=paste&height=22&id=u1f5e4edb&name=A959A7B612035ABFFB13EF2EC4BE03A8.png&originHeight=27&originWidth=26&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1626&status=done&style=none&taskId=u879513f3-7f51-48cc-9d1c-c8f4e4a534d&title=&width=20.8" alt="A959A7B612035ABFFB13EF2EC4BE03A8.png"></li>
+<li><code>PP0</code>物理页号：说明在主存中有载入</li>
+<li>指针：说明在磁盘存储器中有，但是没有载入主存中。</li>
+<li><strong>虚拟地址比物理地址更长</strong>，虚拟空间比物理空间更大，虚拟页号比物理页号的长度更长；<strong>存放位置时的指针长度比物理地址小</strong></li>
+<li>不需要额外用空间记录虚拟页号，因为是按顺序排放的</li>
+<li>**存放位置的长度是按照最长的物理地址存放的 **<br><a name="bgiXr"></a></li>
+</ul>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669279472951-53ed2a0f-fd94-4324-a79a-5247a2c03333.png#averageHue=%23f4ecec&clientId=ub64367f1-dc9e-4&from=paste&height=264&id=uc72e0adc&name=image.png&originHeight=330&originWidth=780&originalType=binary&ratio=1&rotation=0&showTitle=false&size=56801&status=done&style=none&taskId=u060063a6-cd5e-434b-a34e-77ebb4f9818&title=&width=624" alt="image.png"><br><a name="JQN19"></a></p>
+<h4 id="快表"><a href="#快表" class="headerlink" title="快表"></a>快表</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669279512490-aad58c79-5266-41cd-8c4a-7076d662ddb1.png#averageHue=%23f6f4f3&clientId=ub64367f1-dc9e-4&from=paste&height=519&id=u6fec5fbb&name=image.png&originHeight=649&originWidth=891&originalType=binary&ratio=1&rotation=0&showTitle=false&size=176455&status=done&style=none&taskId=ua3418ac4-f7ec-46ae-ae42-a2aeb58dfab&title=&width=712.8" alt="image.png"><br><a name="YxFIf"></a></p>
+<h4 id="CPU访存过程"><a href="#CPU访存过程" class="headerlink" title="CPU访存过程"></a>CPU访存过程</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669280124191-614a3c12-4a15-49db-bfdd-fe3f90a7e44f.png#averageHue=%23f9f7f6&clientId=ub64367f1-dc9e-4&from=paste&height=460&id=u89b766c1&name=image.png&originHeight=575&originWidth=866&originalType=binary&ratio=1&rotation=0&showTitle=false&size=57515&status=done&style=none&taskId=u4c02556e-fc3d-4271-bf91-61b08842ece&title=&width=692.8" alt="image.png"><br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669280143486-c3062d63-658c-4610-95dc-55cc0bf9d235.png#averageHue=%23f6f4f4&clientId=ub64367f1-dc9e-4&from=paste&height=402&id=u1a3774b1&name=image.png&originHeight=502&originWidth=841&originalType=binary&ratio=1&rotation=0&showTitle=false&size=182928&status=done&style=none&taskId=u5a6c3087-7455-4d39-a32a-2bc915cc01f&title=&width=672.8" alt="image.png"><br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669280570598-b997891c-1fd3-4266-a226-636230946178.png#averageHue=%23f5f4f4&clientId=ub64367f1-dc9e-4&from=paste&height=507&id=u9e6a8edb&name=image.png&originHeight=634&originWidth=878&originalType=binary&ratio=1&rotation=0&showTitle=false&size=326545&status=done&style=none&taskId=u031c9e6c-cd14-47e3-b819-a3376ea0723&title=&width=702.4" alt="image.png"></p>
+<ol start="2">
+<li>访问的是主存中的数据，因为在Cache中miss了</li>
+<li>访问的是主存中的页表，数据仍然在Cache中</li>
+<li>出现缺页情况，访问硬盘和访问主存速度差距非常大</li>
+<li>TLB中有，页表中也一定有<br><a name="oXU29"></a></li>
+</ol>
+<h3 id="分段式虚拟存储器"><a href="#分段式虚拟存储器" class="headerlink" title="分段式虚拟存储器"></a>分段式虚拟存储器</h3><p>物理地址&#x3D; 段号左移4位+段内偏移量<br /><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669280849606-3494bb7d-aff3-4ab5-a9b1-eaeac95777fd.png#averageHue=%23f7f5f4&clientId=ub64367f1-dc9e-4&from=paste&height=418&id=ua63d4e79&name=image.png&originHeight=523&originWidth=796&originalType=binary&ratio=1&rotation=0&showTitle=false&size=171567&status=done&style=none&taskId=u6c08981c-ce11-478a-8d8b-8e369d0e9a7&title=&width=636.8" alt="image.png"><br />分页式：对权限管理很混乱，每一个页都要单独记录权限<br />分段式：</p>
+<ul>
+<li>会有重复地址</li>
+<li>长度不固定</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669281353237-f9a73a1a-49b5-4214-b7e9-149015592132.png#averageHue=%23fbfaf9&clientId=ub64367f1-dc9e-4&from=paste&height=357&id=u938c30b6&name=image.png&originHeight=446&originWidth=750&originalType=binary&ratio=1&rotation=0&showTitle=false&size=81129&status=done&style=none&taskId=ue0f8ff35-bc70-45fd-a7be-4afd659cfc7&title=&width=600" alt="image.png"><br><a name="huy5f"></a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/32543531/1669281422445-f6f60a5a-1b1e-4cbc-8196-882371e9d52c.png#averageHue=%23faf9f8&clientId=ub64367f1-dc9e-4&from=paste&height=432&id=uf5eb4e63&name=image.png&originHeight=540&originWidth=683&originalType=binary&ratio=1&rotation=0&showTitle=false&size=90620&status=done&style=none&taskId=uc4d4db28-9f44-4545-a623-43960c6d420&title=&width=546.4" alt="image.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/02/27/%E7%AC%AC%E5%8D%81%E4%BA%8C%E8%AF%BE%20%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/">http://example.com/2023/02/27/%E7%AC%AC%E5%8D%81%E4%BA%8C%E8%AF%BE%20%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/27/%E7%AC%AC%E5%8D%81%E8%AF%BE%20%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E7%A0%81/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2023/02/27/%E7%AC%AC%E5%8D%81%E5%85%AD%E8%AF%BE%20%E6%8E%A7%E5%88%B6%E5%99%A8/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info"></div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">John Doe</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">分区方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">分页方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">虚拟存储器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">分页式虚拟存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B"><span class="toc-number">4.1.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E8%A1%A8"><span class="toc-number">4.2.</span> <span class="toc-text">页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">4.3.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%AB%E8%A1%A8"><span class="toc-number">4.4.</span> <span class="toc-text">快表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CPU%E8%AE%BF%E5%AD%98%E8%BF%87%E7%A8%8B"><span class="toc-number">4.5.</span> <span class="toc-text">CPU访存过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">分段式虚拟存储器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/hello-world/" title="Hello World">Hello World</a><time datetime="2023-02-27T05:47:01.168Z" title="Created 2023-02-27 13:47:01">2023-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/%E7%AC%AC%E4%BA%8C%E8%AF%BE%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E9%A1%B6%E5%B1%82%E8%A7%86%E5%9B%BE/" title="No title">No title</a><time datetime="2023-02-27T02:16:18.019Z" title="Created 2023-02-27 10:16:18">2023-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/%E7%AC%AC%E5%9B%9B%E8%AF%BE%20%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97/" title="No title">No title</a><time datetime="2023-02-27T02:06:50.647Z" title="Created 2023-02-27 10:06:50">2023-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97/" title="No title">No title</a><time datetime="2023-02-27T02:06:36.680Z" title="Created 2023-02-27 10:06:36">2023-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/27/%E7%AC%AC%E5%85%AD%E8%AF%BE%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E7%9A%84%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E8%BF%90%E7%AE%97/" title="No title">No title</a><time datetime="2023-02-27T02:06:13.415Z" title="Created 2023-02-27 10:06:13">2023-02-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
