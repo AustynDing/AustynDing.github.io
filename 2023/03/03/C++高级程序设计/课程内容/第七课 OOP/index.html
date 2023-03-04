@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>第七课 OOP | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="C++拷贝构造函数、构造函数和析构函数  encapsulation 减少类之间的耦合 类内部的结构可以自由的进行修改 对成员进行控制 对代码的理解性更好   information hidding：不需要知道如何初始化，只需要使用提供的接口 Cfront 第一个C++的编译器，转为C   基于对象：没有继承 面向对象：封装、继承、多态  原因开发效率、软件外部质量、软件内部质量都得到明显提升 封">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第七课 OOP">
+<meta property="og:url" content="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%83%E8%AF%BE%20OOP/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="C++拷贝构造函数、构造函数和析构函数  encapsulation 减少类之间的耦合 类内部的结构可以自由的进行修改 对成员进行控制 对代码的理解性更好   information hidding：不需要知道如何初始化，只需要使用提供的接口 Cfront 第一个C++的编译器，转为C   基于对象：没有继承 面向对象：封装、继承、多态  原因开发效率、软件外部质量、软件内部质量都得到明显提升 封">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-03-03T12:11:33.971Z">
+<meta property="article:modified_time" content="2023-03-04T01:31:27.696Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%83%E8%AF%BE%20OOP/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第七课 OOP',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-03-04 09:31:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">第七课 OOP</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-03T12:11:33.971Z" title="发表于 2023-03-03 20:11:33">2023-03-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-04T01:31:27.696Z" title="更新于 2023-03-04 09:31:27">2023-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">C++高级程序设计</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/">课程内容</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="第七课 OOP"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014391177/article/details/82228662">C++拷贝构造函数、构造函数和析构函数</a></p>
+<ol>
+<li>encapsulation<ol>
+<li>减少类之间的耦合</li>
+<li>类内部的结构可以自由的进行修改</li>
+<li>对成员进行控制</li>
+<li>对代码的理解性更好</li>
+</ol>
+</li>
+<li>information hidding：不需要知道如何初始化，只需要使用提供的接口</li>
+<li>Cfront 第一个C++的编译器，转为C</li>
+</ol>
+<ul>
+<li>基于对象：没有继承</li>
+<li>面向对象：封装、继承、多态</li>
+</ul>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>开发效率、软件外部质量、软件内部质量都得到明显提升</p>
+<h3 id="封装-Encapsulation"><a href="#封装-Encapsulation" class="headerlink" title="封装 Encapsulation"></a>封装 Encapsulation</h3><h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><ul>
+<li>成员变量</li>
+<li>成员函数</li>
+<li>头文件、源文件：C++是一个个编译单元进行编译，所以需要提前知道其他编译单元的相关信息（存储在头文件中），只需要知道声明，不需要知道具体定义，减少编译复杂度</li>
+</ul>
+<p>将方法放在头文件中时，会将该方法当作<code>inline</code>函数。<br />主调函数运行时，如果有其他函数，会先运行其他函数，在返回主调函数。如果其他函数很短，则会在调用上消耗太多时间，所以需要变为<strong>内联函数–直接用函数体代替函数调用，代码展开，提高性能。</strong>但是，如果函数体很大时，会把代码变得很长。所以，<strong>一般的</strong><code>**set**</code>**函数 **<code>**get**</code><strong>函数、代码十行之内、没有</strong><code>**for**</code><strong>循环、没有</strong><code>**switch**</code><strong>语句声明成内联函数</strong></p>
+<hr>
+<p>为了优化编译，使用其他编译单元时，先不引入进来，而是在链接过程中，保证有定义即可。所以需要<strong>先声明，再使用</strong>，告诉本编译单元，该函数是合法的，所以需要<strong>头文件</strong>。</p>
+<ol>
+<li>本地单元进行编译时，头文件和源文件是一致的，肯定是合法的，减少了编译时的依赖关系，只需要和头文件建立依赖关系就可以了。</li>
+<li>减少编译时引入的内容</li>
+<li>把定义和声明放入一块，是为了支持<code>inline</code>：<strong>直接替换函数调用</strong>。如果头文件中没有具体声明，则无法使用<code>inline</code>。所以，<code>inline</code>要求<strong>头文件中必须要有声明</strong></li>
+<li><strong>所以</strong><code>**inline**</code><strong>过多，会使编译单元过于庞大，不适合写在头文件中，而是写在源文件中</strong></li>
+</ol>
+<h3 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h3><h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><ul>
+<li>如果提供了有参构造函数，则编译系统不再提供默认构造函数</li>
+<li>当类中未提供构造函数时，由编译系统提供</li>
+<li>如果没有指定c++默认初始化，则各种变量都会有<strong>不确定的值</strong></li>
+<li>成员变量如果是成员对象，则总是会初始化的，需要为成员对象设置构造函数</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666852754296-ad99d7fb-af8e-4267-88d6-ec874ca6cfbb.png" alt="image.png"></p>
+<ul>
+<li>全局变量和静态变量，未初始化，默认为0</li>
+<li>局部变量、成员变量，未初始化，默认为不确定的值</li>
+<li>编译系统提供的默认构造函数不会对成员变量进行处理，主要功能是<strong>完成对象的初始化，创建标识符，开辟内存空间</strong>，最后再根据传入的参数或者默认值进行对数据的处理。</li>
+<li>构造函数可定义为<code>private</code>，避免在其他代码中创建该对象，所以<strong>只能通过类内部的方法进行创建</strong>，而类内部的方法是我自己写的，因此<strong>可以接管对象的创建</strong>，例如保证单例，或者保证只有十个对象创建</li>
+</ul>
+<h5 id="数组构造"><a href="#数组构造" class="headerlink" title="数组构造"></a>数组构造</h5><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666853395899-ddd69b85-d7cd-4245-98cb-f1348a7c37f2.png" alt="image.png"></p>
+<h4 id="成员初始化表"><a href="#成员初始化表" class="headerlink" title="成员初始化表"></a>成员初始化表</h4><p>在冒号和花括号之间的代码部分称为构造函数的初始值列表，<strong>它的作用是给创建的对象的某些成员赋初值</strong>。这种是在构建对象的时候的初始化，是在对象创建成功之前完成的，和在函数体内赋值是不一样的，<strong>函数体内赋值是你的对象成员都已经创建好后对成员进行的赋值。</strong><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666854123003-fdd90dc6-e5eb-48e5-89e6-da3c44f41345.png" alt="image.png"></p>
+<ol>
+<li><code>static const</code>类的常量</li>
+<li>引用类型必须初始化，不能重新赋值</li>
+<li><strong>构造函数内赋值，实际上是先初始化为默认值，再赋值，相当于两次赋值</strong></li>
+<li>如果使用初始化表，则是在初始化的同时进行赋值，效率更高</li>
+<li>声明处进行初始化最为方便</li>
+<li>在构造函数内进行赋值，成员变量已经初始化了，这次是<strong>二次赋值</strong>，效率上更低</li>
+</ol>
+<h5 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Time</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> hour;</span><br><span class="line">    <span class="built_in">Time</span>(<span class="type">int</span> t) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;hour = t;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Date</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Date</span>(<span class="type">int</span> year = <span class="number">1990</span>, <span class="type">int</span> month = <span class="number">1</span>, <span class="type">int</span> day = <span class="number">1</span>)</span><br><span class="line">    : _year(year), _month(month), _day(day), <span class="built_in">t</span>(<span class="number">10</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		cout &lt;&lt; _year &lt;&lt; <span class="string">&quot;-&quot;</span> &lt;&lt; _month &lt;&lt; <span class="string">&quot;-&quot;</span> &lt;&lt; _day &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> _year = <span class="number">1990</span>;	</span><br><span class="line">    <span class="type">int</span> _month;</span><br><span class="line">    <span class="type">int</span> _day;</span><br><span class="line">    Time t;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>对于<code>const</code>和引用类型，必须要进行初始化，所以他们<strong>必须在初始化列表中进行初始化</strong>。</li>
+<li>当类类型成员有缺省（默认）的构造函数时，在创建对象的时候系统会默认调用，因为不用传参。当你的构造函数不是缺省的，如果不在初始化列表中进行调用构造函数，系统就无法知道怎么调用t的构造函数，那么就无法创建t了。</li>
+</ol>
+<p>如上代码中，需要在参数列表中调用t的构造函数才不会出错</p>
+<h5 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h5><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666854897871-99657b81-0c7f-48ef-a2e0-e0176f35ddaa.png" alt="image.png"><br>数据太多，可以在声明的同时进行初始化。</p>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><ul>
+<li>在上面的初始列表中，每个成员只能出现一次，因为一个变量多次初始化是无意义的。</li>
+<li>初始化列表的顺序并不限定初始化的执行顺序。<strong>成员的初始化顺序是与类中定义的顺序保持一致。</strong>最好让构造函数初始值的顺序与成员声明的顺序保持一致。</li>
+</ul>
+<h3 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h3><p><strong>程序员负责资源的申请和释放</strong><br />类的析构函数，它是类的一个成员函数，名字由波浪号加类名构成，是执行与构造函数相反的操作：释放对象使用的资源，并销毁非static成员。<br />同样的，我们来看看析构函数的几个特点：</p>
+<ol>
+<li>函数名是在类名前加上~，无参数且无返回值。</li>
+<li>一个类只能有且有一个析构函数，如果没有显式的定义，系统会生成一个缺省的析构函数（合成析构函数）。</li>
+<li>析构函数不能重载。<strong>每有一次构造函数的调用就会有一次析构函数的调用。</strong></li>
+</ol>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666855022119-3cdc0f73-c223-45d6-96a5-bb88dfc0c1f7.png" alt="image.png"></p>
+<ol>
+<li>对象离开作用域</li>
+<li>使用<code>delete</code>方法调用</li>
+<li>作用：把对象在运行中获得的额外资源进行释放</li>
+</ol>
+<h4 id="声明为private"><a href="#声明为private" class="headerlink" title="声明为private"></a>声明为<code>private</code></h4><blockquote>
+<ol>
+<li>禁止用户对此类型的变量进行定义，即<strong>禁止在栈内存空间内创建此类型的对象。</strong>要创建对象，只能用 <code>new</code> 在堆上进行。 </li>
+<li>禁止用户在程序中使用 <code>delete</code> 删除此类型对象。对象的删除只能在类内实现，也就是说只**有类的实现者才有可能实现对对象的 <strong><code>**delete**</code>，用户不能随便删除对象。</strong>如果用户想删除对象的话，只能按照类的实现者提供的方法进行 **</li>
+<li>如果一个类不打算作为基类，通常采用的方案就是将其析构函数声明为<code>private</code>，限制栈对象，却不限制继承</li>
+</ol>
+</blockquote>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666855595621-be2da256-d2c5-4676-bf14-af1ad5626581.png" alt="image.png"><br>系统无法调用析构函数，因为是自动消亡的，内存分配在栈中，<strong>离开作用域就会自动消亡</strong><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666855682941-ad51ba16-2810-465e-9b83-fadc93e2ef83.png" alt="image.png"><br><strong>通过将对象的析构函数定义为</strong><code>**private**</code><strong>，强制在堆上分配内存</strong>，场景：栈的内存有限，对象的内存很大。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666855753254-11b614b3-9ee7-4179-ae25-edecafd4b756.png" alt="image.png"><br>这种方法也能够将<code>p</code>指针重新定义为空指针，更好</p>
+<h4 id="栈对象的生命"><a href="#栈对象的生命" class="headerlink" title="栈对象的生命"></a>栈对象的生命</h4><ol>
+<li>会移动栈顶指针以“挪出”适当大小的空间</li>
+<li>在这个空间上直接调用对应的构造函数以形成一个栈对象</li>
+<li>当函数返回时，会调用其析构函数释放这个对象</li>
+<li>调整栈顶指针收回那块栈内存。</li>
+</ol>
+<h4 id="GC-垃圾回收"><a href="#GC-垃圾回收" class="headerlink" title="GC 垃圾回收"></a>GC 垃圾回收</h4><ol>
+<li>存在效率障碍，发生时间不确定</li>
+<li>存在不能使用GC的场合</li>
+<li>只能回收内存，不能回收文件操作的句柄等 <code>finalize</code></li>
+<li>不能由程序员自己控制</li>
+</ol>
+<h4 id="RAII-Resource-Acquisition-Is-Initialization"><a href="#RAII-Resource-Acquisition-Is-Initialization" class="headerlink" title="RAII  Resource Acquisition Is Initialization"></a>RAII  Resource Acquisition Is Initialization</h4><blockquote>
+<p>资源获取就是初始化</p>
+</blockquote>
+<ol>
+<li>什么时候获取什么时候释放都是确定的</li>
+<li>对象获得的资源都是要在析构函数中释放的</li>
+<li>栈上的内存资源自动释放，堆上的内存资源需要通过析构函数释放</li>
+</ol>
+<h3 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h3><h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><ol>
+<li>一个对象<strong>以值传递的方式传入函数</strong></li>
+<li>一个对象<strong>以值传递的方式从函数中返回</strong></li>
+<li>一个对象<strong>需要通过另外一个对象进行初始化</strong></li>
+</ol>
+<ul>
+<li>创建对象时，用一个同类的对象对其初始化</li>
+<li>自动调用：<code>Test(Test &amp;c_t)是自定义的拷贝构造函数，**拷贝构造函数的名称必须与类名称一致**，函数的形式参数是**本类型的一个引用变量,且必须是引用**</code></li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666856126500-f78dbc74-bfbc-495a-af46-8fb9045d3e4c.png" alt="image.png"></p>
+<ol>
+<li>使用引用：<strong>如果不写引用，则传参本身就会引发拷贝构造函数</strong>，导致递归</li>
+<li>使用<code>const</code>：防止拷贝时值被修改</li>
+<li>默认拷贝构造函数：<ol>
+<li>逐个成员初始化</li>
+<li>对于对象成员，该函数是递归的</li>
+</ol>
+</li>
+</ol>
+<p><strong>需要深拷贝时，要自己提供拷贝构造函数</strong></p>
+<h4 id="浅拷贝-深拷贝"><a href="#浅拷贝-深拷贝" class="headerlink" title="浅拷贝 深拷贝"></a>浅拷贝 深拷贝</h4><ul>
+<li>如果在类中没有显式地声明一个拷贝构造函数，那么，编译器将会自动生成一个默认的拷贝构造函数，该构造函数完成对象之间的位拷贝。位拷贝又称浅拷贝，后面将进行说明。</li>
+<li>自定义拷贝构造函数是一种良好的编程风格，它可以阻止编译器形成默认的拷贝构造函数，提高源码效率。</li>
+<li>浅拷贝：在某些状况下，类内成员变量需要动态开辟堆内存，如果实行浅拷贝，就是<strong>把对象里的值完全复制给另一个对象</strong></li>
+</ul>
+<p>深拷贝和浅拷贝可以简单理解为：如果一个类拥有资源，当这个类的对象发生复制过程的时候，<strong>资源重新分配</strong>，这个过程就是<strong>深拷贝</strong>，反之，<strong>没有重新分配资源，就是浅拷贝。</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CA</span></span><br><span class="line">&#123;</span><br><span class="line">　<span class="keyword">public</span>:</span><br><span class="line">　　<span class="built_in">CA</span>(<span class="type">int</span> b,<span class="type">char</span>* cstr)</span><br><span class="line">　　&#123;</span><br><span class="line">　　　a=b;</span><br><span class="line">　　　str=<span class="keyword">new</span> <span class="type">char</span>[b];</span><br><span class="line">　　　<span class="built_in">strcpy</span>(str,cstr);</span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="built_in">CA</span>(<span class="type">const</span> CA&amp; C)</span><br><span class="line">　　&#123;</span><br><span class="line">　　　a=C.a;</span><br><span class="line">　　　str=<span class="keyword">new</span> <span class="type">char</span>[a]; <span class="comment">//深拷贝</span></span><br><span class="line">　　　<span class="keyword">if</span>(str!=<span class="number">0</span>)</span><br><span class="line">　　　　<span class="built_in">strcpy</span>(str,C.str);</span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="function"><span class="type">void</span> <span class="title">Show</span><span class="params">()</span></span></span><br><span class="line"><span class="function">　　</span>&#123;</span><br><span class="line">　　　cout&lt;&lt;str&lt;&lt;endl;</span><br><span class="line">　　&#125;</span><br><span class="line">　　~<span class="built_in">CA</span>()</span><br><span class="line">　　&#123;</span><br><span class="line">　　　<span class="keyword">delete</span> str;</span><br><span class="line">　　&#125;</span><br><span class="line">　<span class="keyword">private</span>:</span><br><span class="line">　　<span class="type">int</span> a;</span><br><span class="line">　　<span class="type">char</span> *str;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　<span class="function">CA <span class="title">A</span><span class="params">(<span class="number">10</span>,<span class="string">&quot;Hello!&quot;</span>)</span></span>;</span><br><span class="line">　CA B=A;</span><br><span class="line">　B.<span class="built_in">Show</span>();</span><br><span class="line">　<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="浅拷贝危害"><a href="#浅拷贝危害" class="headerlink" title="浅拷贝危害"></a>浅拷贝危害</h5><p>如A&#x3D;B。这时，如果<strong>B中有一个成员变量指针已经申请了内存</strong>，那A中的那个成员变<strong>量也指向同一块内存</strong>。这就出现了问题：当B把内存释放了（如：析构），这时<strong>A内的指针就是野指针了</strong>，出现运行错误。<br /><strong>浅拷贝资源后在释放资源的时候会产生资源归属不清的情况导致程序运行出错。</strong></p>
+<h4 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h4><p><strong>程序员如果不会去做一件事，则编译器会接管，但如果程序员接管了，则编译器什么都不做</strong><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666856786049-79893964-d3f9-48a0-8aa1-644089f67d07.png" alt="image.png"></p>
+<h4 id="易错"><a href="#易错" class="headerlink" title="易错"></a>易错</h4><p><strong>显式地定义了析构函数的情况下，应该也把拷贝构造函数和赋值操作显式定义</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Date</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Date</span>(<span class="type">int</span> year=<span class="number">1990</span>,<span class="type">int</span> month=<span class="number">1</span>,<span class="type">int</span> day=<span class="number">1</span>)</span><br><span class="line">        : _year(year),_month(month),  _day(day)</span><br><span class="line">    &#123;</span><br><span class="line">        p = <span class="keyword">new</span> <span class="type">int</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">Date</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">delete</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> _year=<span class="number">1990</span>;  </span><br><span class="line">    <span class="type">int</span> _month;</span><br><span class="line">    <span class="type">int</span> _day;</span><br><span class="line">    <span class="type">int</span> *p;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>成员中有动态开辟的指针成员，在析构函数中对它进行了delete，如果不显式的定义拷贝构造函数，当你这样：Date d2（d1）来创建d2，我们都知道默认的拷贝构造函数是浅拷贝，那么这么做的结果就会是d2的成员p和d1的p是指向同一块空间的，那么<strong>调用析构函数的时候回导致用一块空间被释放两次</strong>，程序会崩溃的哦！</p>
+<h3 id="移动构造函数"><a href="#移动构造函数" class="headerlink" title="移动构造函数"></a>移动构造函数</h3><p><code>A&amp;&amp;</code>右值引用<br />左值：赋值操作符左边的值。是可以赋值的，通常是一个变量<br />右值：赋值操作符右边的值。是一个值，通常是一个常数、表达式、函数调用</p>
+<ul>
+<li>不能把右值绑定在非<code>const</code>的引用上</li>
+<li>临时变量在再次赋值时可能已经被销毁了</li>
+<li>右值只能绑定在<strong>常量引用</strong>上 <code>const int ＆z = 5</code></li>
+<li>右值通常不能修改</li>
+<li>右值引用可以绑定在右值引用上</li>
+</ul>
+<h4 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h4><p>使用<code>swap</code><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1667283981580-614f64e6-dbb8-4c2f-8ebb-b76bc6905b3e.png" alt="image.png"><br>缺点：总是需要不断拷贝</p>
+<ul>
+<li>移动构造：<strong>把移动完的指针置为</strong><code>**Null**</code><strong>，防止二次释放</strong></li>
+<li>右值绑定在右值引用上时，则<strong>右值可以修改了</strong>，因为获得了其对应的内存</li>
+<li><strong>右值引用是为了提高效率</strong></li>
+<li>没有定义拷贝构造、拷贝赋值、析构函数，则会提供移动构造函数：移动构造是为了降低拷贝的消耗，一旦定义了拷贝构造，则编译器不再提供默认</li>
+<li>定义了析构函数，是对申请资源进行释放，额外的资源需要如何拷贝、如何移动，编译器不知道，所以不会提供移动构造</li>
+</ul>
+<h3 id="类型的匹配顺序"><a href="#类型的匹配顺序" class="headerlink" title="类型的匹配顺序"></a>类型的匹配顺序</h3><p>优先级：<strong>不需要进行数据转换的优先</strong></p>
+<ol>
+<li>如果既有移动构造又有拷贝构造：<ol>
+<li>普通变量：调用拷贝</li>
+<li>右值（临时变量）：调用移动</li>
+</ol>
+</li>
+<li>临时变量的值不能绑定到左值上</li>
+<li>临时变量+<code>const</code>，可以绑定到</li>
+<li>拷贝</li>
+</ol>
+<h2 id="五三原则"><a href="#五三原则" class="headerlink" title="五三原则"></a>五三原则</h2><p><strong>在c++ 中，当我们定义一个类时，我们显式或隐式地定义了此类型的对象在拷贝、赋值和销毁时做什么？</strong><br />一个类通过定义三种特殊成员成员函数来控制这些操作：拷贝构造函数、拷贝赋值函数、析构函数。<br />什么是三法则<br />C++三法则：如果需要析构函数，则一定需要拷贝构造函数和拷贝赋值操作符。<br />如何理解这句话，通常，若一个类需要析构函数，则代表其合成的析构函数不足以释放类所拥有的资源，其中最典型的就是指针成员。<br />所以，我们需要自己写析构函数来释放给指针所分配的内存来防止内存泄露。<br />那么为什么说“一定需要拷贝构造函数和赋值操作符”呢？<br />原因还是这样：类中出现了指针类型的成员。有指针类型的成员，我们必须防止浅拷贝问题，所以，一定需要拷贝构造函数和赋值操作符，这两个函数是防止浅拷贝问题所必须的。<br />什么是五法则<br />在较新的 C++11 标准中，为了支持移动语义，又增加了移动构造函数和移动赋值运算符，这样共有五个特殊的成员函数，所以又称为“C++五法则”；<br />也就是说，“三法则”是针对较旧的 C++89 标准说的，“五法则”是针对较新的 C++11 标准说的；为了统一称呼，后来人们干把它叫做“C++ 三&#x2F;五法则”；<br /><strong>因此，如果自定义了拷贝构造函数&#x2F;拷贝赋值&#x2F;析构函数，则不会提供默认的移动构造函数&#x2F;移动赋值函数</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%83%E8%AF%BE%20OOP/">https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%83%E8%AF%BE%20OOP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/%E6%9C%BA%E8%80%83/" title="机考"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">机考</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E5%BC%95%E7%94%A8%E3%80%81%E5%8F%96%E5%9C%B0%E5%9D%80%E7%AC%A6%E3%80%81%E6%8C%87%E9%92%88/" title="引用、取地址符、指针"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">引用、取地址符、指针</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85-Encapsulation"><span class="toc-number">2.</span> <span class="toc-text">封装 Encapsulation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.1.</span> <span class="toc-text">类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0"><span class="toc-number">3.</span> <span class="toc-text">构造</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">构造函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E6%9E%84%E9%80%A0"><span class="toc-number">3.1.1.</span> <span class="toc-text">数组构造</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E8%A1%A8"><span class="toc-number">3.2.</span> <span class="toc-text">成员初始化表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B"><span class="toc-number">3.2.1.</span> <span class="toc-text">举例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-number">3.2.2.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">3.2.3.</span> <span class="toc-text">注意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">析构函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E4%B8%BAprivate"><span class="toc-number">4.1.</span> <span class="toc-text">声明为private</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD"><span class="toc-number">4.2.</span> <span class="toc-text">栈对象的生命</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GC-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-number">4.3.</span> <span class="toc-text">GC 垃圾回收</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RAII-Resource-Acquisition-Is-Initialization"><span class="toc-number">4.4.</span> <span class="toc-text">RAII  Resource Acquisition Is Initialization</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text">拷贝构造函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">5.1.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D-%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-number">5.2.</span> <span class="toc-text">浅拷贝 深拷贝</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%8D%B1%E5%AE%B3"><span class="toc-number">5.2.1.</span> <span class="toc-text">浅拷贝危害</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="toc-number">5.3.</span> <span class="toc-text">自定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%93%E9%94%99"><span class="toc-number">5.4.</span> <span class="toc-text">易错</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">6.</span> <span class="toc-text">移动构造函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B-1"><span class="toc-number">6.1.</span> <span class="toc-text">举例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8C%B9%E9%85%8D%E9%A1%BA%E5%BA%8F"><span class="toc-number">7.</span> <span class="toc-text">类型的匹配顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E4%B8%89%E5%8E%9F%E5%88%99"><span class="toc-number"></span> <span class="toc-text">五三原则</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%80%E8%AF%BE%20%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B/" title="第一课 发展历程">第一课 发展历程</a><time datetime="2023-03-03T12:13:01.851Z" title="发表于 2023-03-03 20:13:01">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%BA%8C%E8%AF%BE%20SP/" title="第二课 SP">第二课 SP</a><time datetime="2023-03-03T12:13:00.492Z" title="发表于 2023-03-03 20:13:00">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/IO%20%E8%AE%BE%E8%AE%A1/" title="IO 设计">IO 设计</a><time datetime="2023-03-03T12:12:58.166Z" title="发表于 2023-03-03 20:12:58">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%89%E8%AF%BE%20Function/" title="第三课 Function">第三课 Function</a><time datetime="2023-03-03T12:12:57.885Z" title="发表于 2023-03-03 20:12:57">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/%E8%AE%BE%E8%AE%A1%E7%B1%BB%E9%A2%98%E7%9B%AE/" title="设计类题目">设计类题目</a><time datetime="2023-03-03T12:11:38.007Z" title="发表于 2023-03-03 20:11:38">2023-03-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

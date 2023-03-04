@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>常量指针和指针常量 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在C++学习使用过程中，每个人都不可避免地使用指针，而且都或多或少的接触过常量指针或指针常量，但是对这两个概念还是很容易搞糊涂的。本文即是简单描述指针常量和常量指针的区别。 常量指针定义：又叫常指针，可以理解为常量的指针，也即这个是指针，但指向的是个常量，这个常量是指针的值（地址），而不是地址指向的值。通俗理解：指向常量（定语）的指针（主语）。  指向常量：代表不能通过该指针来修改对应对象的值 但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常量指针和指针常量">
+<meta property="og:url" content="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="在C++学习使用过程中，每个人都不可避免地使用指针，而且都或多或少的接触过常量指针或指针常量，但是对这两个概念还是很容易搞糊涂的。本文即是简单描述指针常量和常量指针的区别。 常量指针定义：又叫常指针，可以理解为常量的指针，也即这个是指针，但指向的是个常量，这个常量是指针的值（地址），而不是地址指向的值。通俗理解：指向常量（定语）的指针（主语）。  指向常量：代表不能通过该指针来修改对应对象的值 但">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-03-03T12:11:21.930Z">
+<meta property="article:modified_time" content="2023-03-03T17:05:11.186Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '常量指针和指针常量',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-03-04 01:05:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">常量指针和指针常量</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-03T12:11:21.930Z" title="发表于 2023-03-03 20:11:21">2023-03-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-03T17:05:11.186Z" title="更新于 2023-03-04 01:05:11">2023-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">C++高级程序设计</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">常见问题</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="常量指针和指针常量"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在C++学习使用过程中，每个人都不可避免地使用指针，而且都或多或少的接触过常量指针或指针常量，但是对这两个概念还是很容易搞糊涂的。<br />本文即是简单描述指针常量和常量指针的区别。</p>
+<h2 id="常量指针"><a href="#常量指针" class="headerlink" title="常量指针"></a>常量指针</h2><p>定义：<br /><del>又叫常指针，可以理解为常量的指针，也即这个是指针，但指向的是个常量，这个常量是指针的值（地址），而不是地址指向的值。</del><br />通俗理解：<strong>指向常量</strong>（定语）的指针（主语）。</p>
+<ol>
+<li>指向常量：代表不能通过该指针来修改对应对象的值</li>
+<li>但是可以通过原来的声明修改相应的值</li>
+<li><strong>指针是一个变量</strong></li>
+</ol>
+<p>关键点：</p>
+<ol>
+<li>常量指针指向的对象不能通过这个指针来修改，可是<strong>仍然可以通过原来的声明修改</strong>；</li>
+<li>常量指针可以被赋值为变量的地址，之所以叫常量指针，是<strong>限制了通过这个指针修改变量的值</strong>；</li>
+<li>指针还可以指向别处，因为指针本身只是个变量，可以指向任意地址；</li>
+</ol>
+<p>代码形式：<br /><code>int const* p;  const int* p;</code></p>
+<h2 id="指针常量"><a href="#指针常量" class="headerlink" title="指针常量"></a>指针常量</h2><p>** <strong>定义：<br />~~本质是一个常量，而用指针修饰它。指针常量的值是指针，这个值因为是常量，所以不能被赋值。 ~~<br />通俗理解：是一个指针（定语）的常量（主语）。根据定语表示性质可知，该常量是一个指针，而常量代表着值无法改变，也就是说</strong>指针的值无法改变<strong>，也就是</strong>指针指向的地址不能变化<strong>。但是</strong>指向的地址所对应的内容可以变化。**<br />关键点：</p>
+<ol>
+<li>它是个常量</li>
+<li>指针本身是常量，指向的地址不可以变化,但是<strong>指向的地址所对应的内容可以变化</strong>；</li>
+</ol>
+<p>代码形式：<br /> <code>int* const p;</code></p>
+<h2 id="指向常量的常指针"><a href="#指向常量的常指针" class="headerlink" title="指向常量的常指针"></a>指向常量的常指针</h2><p>定义：<br />指向常量的指针常量就是一个常量，且它指向的对象也是一个常量。<br />关键点：<br />1.一个指针常量，指向的是一个指针对象；<br />2.它指向的指针对象且是一个常量，即它指向的对象不能变化；<br />代码形式：<br /><code>const int* const p;</code></p>
+<h2 id="区分"><a href="#区分" class="headerlink" title="区分"></a>区分</h2><p>那如何区分这几类呢? 带两个const的肯定是指向常量的常指针，很容易理解，主要是如何区分常量指针和指针常量:<br />一种方式是看** * 和 const 的排列顺序<em><em>，比如<br />     int const</em> p; &#x2F;&#x2F;const * 即常量指针<br />     const int</em> p; &#x2F;&#x2F;const * 即常量指针<br />     int* const p; &#x2F;&#x2F;* const 即指针常量<br />还一种方式是<strong>看const离谁近，即从右往左看</strong>，比如<br />     int const* p; &#x2F;&#x2F;const修饰的是<em>p，即</em>p的内容不可通过p改变，但p不是const，p可以修改，<em>p不可修改；<br />     const int</em> p; &#x2F;&#x2F;同上<br />     int* const p; &#x2F;&#x2F;const修饰的是p，p是指针，p指向的地址不能修改，p不能修改，但*p可以修改；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//-------常量指针-------</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> *p1 = &amp;a;</span><br><span class="line">a = <span class="number">300</span>;     <span class="comment">//OK,仍然可以通过原来的声明修改值，</span></span><br><span class="line"><span class="comment">//*p1 = 56;  //Error,*p1是const int的，不可修改，即常量指针不可修改其指向地址</span></span><br><span class="line">p1 = &amp;b;     <span class="comment">//OK,指针还可以指向别处，因为指针只是个变量，可以随意指向；</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//-------指针常量-------//</span></span><br><span class="line"><span class="type">int</span>*  <span class="type">const</span> p2 = &amp;a;</span><br><span class="line">a = <span class="number">500</span>;     <span class="comment">//OK,仍然可以通过原来的声明修改值，</span></span><br><span class="line">*p2 = <span class="number">400</span>;   <span class="comment">//OK,指针是常量，指向的地址不可以变化,但是指向的地址所对应的内容可以变化</span></span><br><span class="line"><span class="comment">//p2 = &amp;b;     //Error,因为p2是const 指针，因此不能改变p2指向的内容</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//-------指向常量的常量指针-------//</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* <span class="type">const</span> p3 = &amp;a;</span><br><span class="line"><span class="comment">//*p3 = 1;    //Error</span></span><br><span class="line"><span class="comment">//p3 = &amp;b;    //Error</span></span><br><span class="line">a = <span class="number">5000</span>;    <span class="comment">//OK,仍然可以通过原来的声明修改值</span></span><br></pre></td></tr></table></figure>
+<p><strong>常量指针中的值不可以通过指针修改，但是可以通过原来的声明修改</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    <span class="type">const</span> <span class="type">int</span>  x = <span class="number">8</span>;</span><br><span class="line"><span class="comment">//    int * p1 = &amp;x;</span></span><br><span class="line"><span class="comment">// Cannot initialize a variable of type &#x27;int *&#x27; with an rvalue of type &#x27;const int *&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><code>**const**</code><strong>本身也是一个类型，因此必须要用</strong><code>**const int ***</code><strong>常量指针来指向，而不能用普通的指针</strong><br />在实际应用中，常量指针要比指针常量用的多，比如常量指针经常用在函数传参中，以避免函数内部修改内容。<br />size_t strlen(const char* src); &#x2F;&#x2F;常量指针，src的值不可改变；<br />char a[] &#x3D; “hello”;<br />char b[] &#x3D; “world”;<br />size_t a1 &#x3D; strlen(a);<br />size_t b1 &#x3D; strlen(b);<br />虽然a、b是可以修改的，但是可以保证在strlen函数内部不会修改a、b的内容。</p>
+<h2 id="指针问题"><a href="#指针问题" class="headerlink" title="指针问题"></a>指针问题</h2><p>既然讲到了指针，那顺便说一下空指针、野指针的问题。<br />空指针就是保存地址为空的指针，使用指针时必须先判断是否空指针，很多问题都是这一步导致的。<br />野指针是在delete掉指针之后，没有置0，导致指针随意指向了一个内存地址，如果继续使用，会造成不可预知的内存错误。<br />另外指针的误用很容易造成BUG或者内存泄漏。<br />看代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//-------空指针-------//</span></span><br><span class="line"><span class="type">int</span> *p4 = <span class="literal">NULL</span>;</span><br><span class="line"><span class="comment">//printf(&quot;%d&quot;,*p4); //运行Error，使用指针时必须先判断是否空指针</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//-------野指针（悬浮、迷途指针）-------//</span></span><br><span class="line"><span class="type">int</span> *p5 = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">delete</span> p5;</span><br><span class="line">p5 = <span class="literal">NULL</span>; <span class="comment">//一定要有这一步</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,*p5);  <span class="comment">//隐藏bug，delete掉指针后一定要置0，不然指针指向位置不可控，运行中可导致系统挂掉</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//-------指针的内存泄漏-------//</span></span><br><span class="line"><span class="type">int</span> *p6 = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">6</span>);</span><br><span class="line">p6 = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">7</span>); <span class="comment">//p6原本指向的那块内存尚未释放，结果p6又指向了别处，原来new的内存无法访问，也无法delete了，造成memory leak</span></span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AF%BE%20IO%E5%A4%84%E7%90%86/" title="第十一课 IO处理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">第十一课 IO处理</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%93%8D%E4%BD%9C%E7%AC%A6=%E7%9A%84%E9%87%8D%E8%BD%BD/" title="拷贝构造函数和操作符=的重载"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">拷贝构造函数和操作符=的重载</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text">常量指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">指针常量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E5%90%91%E5%B8%B8%E9%87%8F%E7%9A%84%E5%B8%B8%E6%8C%87%E9%92%88"><span class="toc-number">3.</span> <span class="toc-text">指向常量的常指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%88%86"><span class="toc-number">4.</span> <span class="toc-text">区分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">指针问题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%80%E8%AF%BE%20%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B/" title="第一课 发展历程">第一课 发展历程</a><time datetime="2023-03-03T12:13:01.851Z" title="发表于 2023-03-03 20:13:01">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%BA%8C%E8%AF%BE%20SP/" title="第二课 SP">第二课 SP</a><time datetime="2023-03-03T12:13:00.492Z" title="发表于 2023-03-03 20:13:00">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/IO%20%E8%AE%BE%E8%AE%A1/" title="IO 设计">IO 设计</a><time datetime="2023-03-03T12:12:58.166Z" title="发表于 2023-03-03 20:12:58">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%89%E8%AF%BE%20Function/" title="第三课 Function">第三课 Function</a><time datetime="2023-03-03T12:12:57.885Z" title="发表于 2023-03-03 20:12:57">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/%E8%AE%BE%E8%AE%A1%E7%B1%BB%E9%A2%98%E7%9B%AE/" title="设计类题目">设计类题目</a><time datetime="2023-03-03T12:11:38.007Z" title="发表于 2023-03-03 20:11:38">2023-03-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>第五课 数组与指针 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="关于数组和指针的分析  指明了类型，就指明了操作  特征：  相同类型 连续存储  可以按下标访问，也可以按地址访问。C++是基于实现的C++中的二维数组是复合类型，没有Array。数据类型决定范围和取值方式，什么样的类型定义了什么样的访问方式int len &#x3D; sizeof(arr)&#x2F;sizeof(arr[0]) 12345678910int a[6];f(a)  &#x2F;&#x2F;在参数传递时，发生了变化，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第五课 数组与指针">
+<meta property="og:url" content="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%95%B0%E7%BB%84%E4%B8%8E%E6%8C%87%E9%92%88/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="关于数组和指针的分析  指明了类型，就指明了操作  特征：  相同类型 连续存储  可以按下标访问，也可以按地址访问。C++是基于实现的C++中的二维数组是复合类型，没有Array。数据类型决定范围和取值方式，什么样的类型定义了什么样的访问方式int len &#x3D; sizeof(arr)&#x2F;sizeof(arr[0]) 12345678910int a[6];f(a)  &#x2F;&#x2F;在参数传递时，发生了变化，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-03-03T12:11:35.979Z">
+<meta property="article:modified_time" content="2023-03-03T17:13:25.208Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%95%B0%E7%BB%84%E4%B8%8E%E6%8C%87%E9%92%88/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第五课 数组与指针',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-03-04 01:13:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">第五课 数组与指针</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-03T12:11:35.979Z" title="发表于 2023-03-03 20:11:35">2023-03-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-03T17:13:25.208Z" title="更新于 2023-03-04 01:13:25">2023-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">C++高级程序设计</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/">课程内容</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="第五课 数组与指针"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://www.yuque.com/austyn-c3emm/yxffx0/ob20zu">关于数组和指针的分析</a></p>
+<blockquote>
+<p>指明了类型，就指明了操作</p>
+</blockquote>
+<p>特征：</p>
+<ul>
+<li>相同类型</li>
+<li>连续存储</li>
+</ul>
+<p>可以按下标访问，也可以按地址访问。<strong>C++是基于实现的</strong><br />C++中的二维数组是复合类型，没有Array。<br />数据类型决定范围和取值方式，<strong>什么样的类型定义了什么样的访问方式</strong><br /><code>int len = sizeof(arr)/sizeof(arr[0])</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a[<span class="number">6</span>];</span><br><span class="line"><span class="built_in">f</span>(a)  <span class="comment">//在参数传递时，发生了变化，变成了表达式，由一个数组变成了相关的指针</span></span><br><span class="line"><span class="comment">// a是数组类型，只不过进行了隐式类型转换</span></span><br><span class="line">    <span class="comment">// 所有的指针的sizeof(*p) 都是一样的</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> a[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;<span class="built_in">sizeof</span>(a)/<span class="built_in">sizeof</span>(a[<span class="number">0</span>]);i++)&#123;</span><br><span class="line">        <span class="comment">// 所以此时不能输出a中的每一个元素</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 因此，元素个数需要通过参数显式给出</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>C++是允许数组下标越界的，因为越界是<strong>有用的</strong>前提是空间是合理的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span> <span class="params">(<span class="type">char</span>[] a )</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (a[i+ <span class="number">1</span>] !=<span class="string">&#x27;/0&#x27;</span>)&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665470118492-ef584ee7-e92f-400c-966e-4a0dfbbc1e76.png" alt="image.png">** <strong><br />所以</strong>输出s2时，会一直输出下去**，直到刚好碰到<code>&#39;\0&#39;</code><br />没有初始化的空间全部默认为 0xcc，代表中文的烫<br />利用malloc时不初始化，空间会默认为0xcd，代表中文的屯。【debug版本中打开&#x2F;GZ开关，方便找到潜在的错误 &#x3D; 》现在使用&#x2F;RTC1】<br />C++中的变量是不会自己初始化的<br />mallopt指定自己配置的空间是什么【写在代码中的】<br />valgrind设置栈、堆里面的填充【不修改代码】</p>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><p>指针必须初始化，防止调用垃圾地址并修改了其中的内容<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665470614133-7c6a4d2b-0068-4eb5-ae6a-7e2d2c25c935.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665470621676-09712e81-2dda-48c5-b4ba-919448538fb2.png" alt="image.png"></p>
+<h3 id="void"><a href="#void" class="headerlink" title="void*"></a>void*</h3><p><code>void *v</code> 则 <code>*v</code>是不被运行的。所以<code>**v**</code><strong>可以作为任何类型指针的公共接口，只具有记录地址的作用，是可以被信任的。任何指针都可以赋值给</strong><code>**void ***</code><strong>，但void * 不能赋值给其他指针</strong><br />清零<br />int a[100]  全部赋值为0</p>
+<ol>
+<li><code>for</code>循环</li>
+<li><code>memset函数(起始地址，大小)</code> 则起始地址必须为<code>**void ***</code><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">memset</span><span class="params">(<span class="type">void</span> *p,<span class="type">int</span>  n)</span></span>&#123;</span><br><span class="line">    <span class="type">char</span> *q = (<span class="type">char</span> *)p; <span class="comment">// 进行强制类型转换为char *，一个一个字节的删除即可</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    *(q+i) = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="数组与指针"><a href="#数组与指针" class="headerlink" title="数组与指针"></a>数组与指针</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665471919019-8d7f5fe9-3fe5-40e7-874b-6e48c8a30770.png" alt="image.png"><br><strong>a 是一个常量指针，数组名是常量指针</strong></p>
+<ol>
+<li><strong>通过数组下标访问</strong></li>
+<li><strong>通过指针访问</strong></li>
+<li><strong>通过数组名访问</strong></li>
+</ol>
+<p>动态数组<br /><code>int *p =(int*) malloc (……)</code></p>
+<h3 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h3><p>通过一维数组不断复合，依然是一段连续的数据。<br />参数传递：缺少第一维，因为对应的就是<strong>指针</strong>，指向后面的维度</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> T[<span class="number">2</span>]; <span class="comment">// </span></span><br><span class="line"><span class="keyword">using</span> T = <span class="type">int</span>[<span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> a[<span class="number">3</span>][<span class="number">2</span>] &lt;=&gt; T a[<span class="number">3</span>]; 相当于额外定义了基类型</span><br></pre></td></tr></table></figure>
+<p>升维操作：动态多维数组需要借助一维数组来实现，利用升维操作 </p>
+<h4 id="降维操作p-i"><a href="#降维操作p-i" class="headerlink" title="降维操作p[i]"></a>降维操作<code>p[i]</code></h4><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665581024915-f41d6b67-1dab-441b-844b-52c88e4c310b.png" alt="image.png"></p>
+<h4 id="降维操作q-i-j"><a href="#降维操作q-i-j" class="headerlink" title="降维操作q[i][j]"></a>降维操作<code>q[i][j]</code></h4><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665581379222-762137c7-14c5-486f-b348-21e20686a00a.png" alt="image.png"><br>为了能通过<code>q[i][j]</code>的形式表示，则需要<code>q</code>指针指向的是一个小方块，而不是一个具体从存储单元。在这个小方块中，包含若干个的最小存储单元，从而通过<code>j</code>这一坐标找到最小的存储单元<br /><code>**p+11**</code><strong>其实是越界了，方便用数组的形式访问多维数组</strong></p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665581592478-98bde056-546e-4210-a1db-9b9f172eb4da.png" alt="image.png"></p>
+<h3 id="数组升维降维"><a href="#数组升维降维" class="headerlink" title="数组升维降维"></a>数组升维降维</h3><h4 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h4><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665473312121-9afd89d3-dc73-4752-a275-03d745a1eece.png" alt="image.png"></p>
+<h4 id="升维"><a href="#升维" class="headerlink" title="升维"></a>升维</h4><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665473730499-f85ba331-6cbb-4a7f-bef5-34ec0b9b8c30.png" alt="image.png"></p>
+<h4 id="ragged-array"><a href="#ragged-array" class="headerlink" title="ragged array"></a>ragged array</h4><p>java 中的二维数组不是规整的，可能是锯齿状的，不对等的<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665472501018-b591c0b0-b173-4784-90f8-bedc5fdba0cf.png" alt="image.png"></p>
+<h3 id="动态变量"><a href="#动态变量" class="headerlink" title="动态变量"></a>动态变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p = mall</span><br></pre></td></tr></table></figure>
+<p>在使用new时，会<strong>逐个调用constructor</strong>，从而实现强制类型转换。OO使得数据进入时能进行部分操作<br />new malloc 和inline一样，可能会申请不成功，所以需要<strong>有效性判定</strong><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1665474543745-69965375-c6bd-413e-976a-18b57777cde8.png" alt="image.png"></p>
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><ol>
+<li>可以预见：new可能会失败</li>
+<li>无法避免</li>
+</ol>
+<p>可以由系统处理，也可以自定义处理。为了allocate成功，可以自己选择释放一些特定内存，要么停掉，要么交给系统处理，要么自主修改环境</p>
+<h3 id="归还"><a href="#归还" class="headerlink" title="归还"></a>归还</h3><p>防止内存泄漏</p>
+<ul>
+<li>操作符 <code>new</code>、<code>delete</code></li>
+<li>函数 <code>malloc</code>、<code>free</code><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>  *p1  =<span class="keyword">new</span> <span class="built_in">int</span> (<span class="number">8</span>);</span><br><span class="line"><span class="type">int</span>  *p2 = <span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line"><span class="type">int</span>  *q  = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">8</span>];</span><br><span class="line"><span class="type">int</span>  *q2 = <span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(<span class="type">int</span>)*<span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+int *q &#x3D; new int[8]<br />delete q 只调用一个析构函数<br />delete [] q  逐个调用析构函数<br />free(q) <br />如何知道有8个？</li>
+</ul>
+<ol>
+<li>符号表：耗时+会导致表的大小未定，空间不确定</li>
+<li>用空间换取时间：在分配内存时，额外用一个空间<code>**cookie**</code>，<code>cookie</code>中存储块的大小</li>
+</ol>
+<p>申请的指针不要随意改变，否则容易归还失败。因此使用时要用<code>int *p1 = p;</code> </p>
+<h3 id="RAII"><a href="#RAII" class="headerlink" title="RAII"></a>RAII</h3><p>compiler会自动调用<code>destructor</code>，确保对象被释放。生命周期结束的时候会自动调用delete，利用析构函数的自动调用防止内存泄漏，确保资源的初始化。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666074024946-ffa46879-1310-4887-b37d-4909916b340a.png" alt="image.png"><br>unique_ptr shared _ptr  解决资源共享或者独享问题</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>&#123;</span><br><span class="line">    <span class="type">int</span>  i;</span><br><span class="line">    <span class="type">int</span>  *p;</span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="built_in">A</span>()&#123;</span><br><span class="line">        i = <span class="number">1</span>;</span><br><span class="line">        p = <span class="keyword">new</span> <span class="built_in">int</span> (<span class="number">8</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>A a;<br />A b &#x3D;a;<br />会导致悬挂指针<code>idle point</code>，a 和 b 的生命周期结束不一致。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Sturct"><a href="#Sturct" class="headerlink" title="Sturct"></a>Sturct</h3><p>定义数据的顺序会影响到内存的占用，<strong>会数据对齐</strong><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666074365737-1888f32f-4ded-4835-bdcb-21ff0757e473.png" alt="image.png"></p>
+<h3 id="Union"><a href="#Union" class="headerlink" title="Union"></a>Union</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666074423419-fb8927df-deaa-42b3-b5ae-2604197c1924.png" alt="image.png"><br><strong>B的存储空间是最大占有的内存</strong>，所有的域代表一个公共的空间，<strong>里面的内容共享一块存储空间</strong>。<br />对于<code>struct</code>，</p>
+<h4 id="matrix"><a href="#matrix" class="headerlink" title="matrix"></a>matrix</h4><p>表示方法1：<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666074582185-d728c632-d5ba-4306-ac70-9ac07edefba7.png" alt="image.png"><br>表示方法2：<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666074654444-cd439362-d28e-4643-a723-db033c24cc2d.png" alt="image.png"><br>两种访问方式：<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666074727649-7e1b8cd2-af2f-4f95-917d-a453a7bc54c5.png" alt="image.png"></p>
+<h4 id="数组-—-多态性"><a href="#数组-—-多态性" class="headerlink" title="数组 — 多态性"></a>数组 — 多态性</h4><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666075224937-9b6c1cc8-bcb7-47f6-b725-39a5908b45f3.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1666075202245-1d61c00f-e253-41a1-b4cf-f65e5e719670.png" alt="image.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%95%B0%E7%BB%84%E4%B8%8E%E6%8C%87%E9%92%88/">https://austynding.github.io/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%BA%94%E8%AF%BE%20%E6%95%B0%E7%BB%84%E4%B8%8E%E6%8C%87%E9%92%88/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/OJ%20%E4%BD%BF%E7%94%A8/" title="OJ 使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">OJ 使用</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E5%85%AD%E8%AF%BE%20%E6%8C%87%E9%92%88/" title="第六课 指针"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">第六课 指针</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text">指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#void"><span class="toc-number">1.1.</span> <span class="toc-text">void*</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%B8%8E%E6%8C%87%E9%92%88"><span class="toc-number">1.2.</span> <span class="toc-text">数组与指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">多维数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%8D%E7%BB%B4%E6%93%8D%E4%BD%9Cp-i"><span class="toc-number">1.3.1.</span> <span class="toc-text">降维操作p[i]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%8D%E7%BB%B4%E6%93%8D%E4%BD%9Cq-i-j"><span class="toc-number">1.3.2.</span> <span class="toc-text">降维操作q[i][j]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.3.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%8D%87%E7%BB%B4%E9%99%8D%E7%BB%B4"><span class="toc-number">1.4.</span> <span class="toc-text">数组升维降维</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%8D%E7%BB%B4"><span class="toc-number">1.4.1.</span> <span class="toc-text">降维</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%87%E7%BB%B4"><span class="toc-number">1.4.2.</span> <span class="toc-text">升维</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ragged-array"><span class="toc-number">1.4.3.</span> <span class="toc-text">ragged array</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8F%98%E9%87%8F"><span class="toc-number">1.5.</span> <span class="toc-text">动态变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.6.</span> <span class="toc-text">异常处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E8%BF%98"><span class="toc-number">1.7.</span> <span class="toc-text">归还</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RAII"><span class="toc-number">1.8.</span> <span class="toc-text">RAII</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">2.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sturct"><span class="toc-number">2.1.</span> <span class="toc-text">Sturct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Union"><span class="toc-number">2.2.</span> <span class="toc-text">Union</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#matrix"><span class="toc-number">2.2.1.</span> <span class="toc-text">matrix</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84-%E2%80%94-%E5%A4%9A%E6%80%81%E6%80%A7"><span class="toc-number">2.2.2.</span> <span class="toc-text">数组 — 多态性</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%80%E8%AF%BE%20%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B/" title="第一课 发展历程">第一课 发展历程</a><time datetime="2023-03-03T12:13:01.851Z" title="发表于 2023-03-03 20:13:01">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%BA%8C%E8%AF%BE%20SP/" title="第二课 SP">第二课 SP</a><time datetime="2023-03-03T12:13:00.492Z" title="发表于 2023-03-03 20:13:00">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/IO%20%E8%AE%BE%E8%AE%A1/" title="IO 设计">IO 设计</a><time datetime="2023-03-03T12:12:58.166Z" title="发表于 2023-03-03 20:12:58">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%89%E8%AF%BE%20Function/" title="第三课 Function">第三课 Function</a><time datetime="2023-03-03T12:12:57.885Z" title="发表于 2023-03-03 20:12:57">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/%E8%AE%BE%E8%AE%A1%E7%B1%BB%E9%A2%98%E7%9B%AE/" title="设计类题目">设计类题目</a><time datetime="2023-03-03T12:11:38.007Z" title="发表于 2023-03-03 20:11:38">2023-03-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

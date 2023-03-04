@@ -1,0 +1,313 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>第十一课 冗余磁盘阵列 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="RAID有哪几种？有什么区别？ - 知乎各种 RAID 详解  RAID3是如何找到错误并纠错的？ RAID50 的容量利用率为什么比RAID5 高 关于RAID 2的思考题  在已知坏了哪2块盘的情况下，RAID 2是否能够重构数据？   RAID10：结合RAID0 和RAID1 大IO 小IO：大小描述数据量的多少  RAID 0按条带的顺序而不是磁盘的顺序存储数据。从条带0、条带1……进行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十一课 冗余磁盘阵列">
+<meta property="og:url" content="https://austynding.github.io/2023/02/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AF%BE%20%E5%86%97%E4%BD%99%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="RAID有哪几种？有什么区别？ - 知乎各种 RAID 详解  RAID3是如何找到错误并纠错的？ RAID50 的容量利用率为什么比RAID5 高 关于RAID 2的思考题  在已知坏了哪2块盘的情况下，RAID 2是否能够重构数据？   RAID10：结合RAID0 和RAID1 大IO 小IO：大小描述数据量的多少  RAID 0按条带的顺序而不是磁盘的顺序存储数据。从条带0、条带1……进行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-02-27T11:59:09.000Z">
+<meta property="article:modified_time" content="2023-03-03T16:28:23.978Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/02/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AF%BE%20%E5%86%97%E4%BD%99%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第十一课 冗余磁盘阵列',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-03-04 00:28:23'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">第十一课 冗余磁盘阵列</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-27T11:59:09.000Z" title="发表于 2023-02-27 19:59:09">2023-02-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-03T16:28:23.978Z" title="更新于 2023-03-04 00:28:23">2023-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="第十一课 冗余磁盘阵列"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20131784">RAID有哪几种？有什么区别？ - 知乎</a><br /><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/119452913">各种 RAID 详解</a></p>
+<ul>
+<li>RAID3是如何找到错误并纠错的？</li>
+<li>RAID50 的容量利用率为什么比RAID5 高</li>
+<li>关于RAID 2的思考题</li>
+</ul>
+<p>在已知坏了哪2块盘的情况下，RAID 2是否能够重构数据？</p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668702216809-9f66c46f-12ee-48f1-a8f7-7d6786847a21.png" alt="image.png"><br><br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668505094811-f40d5c16-15d0-4fbb-b581-cf5b565c0064.png" alt="image.png"></p>
+<ul>
+<li>RAID10：结合RAID0 和RAID1</li>
+<li>大IO 小IO：大小描述数据量的多少<br><a name="YPRMc"></a></li>
+</ul>
+<h2 id="RAID-0"><a href="#RAID-0" class="headerlink" title="RAID 0"></a>RAID 0</h2><p>按条带的顺序而不是磁盘的顺序存储数据。从条带0、条带1……进行存储，而不是存完磁盘1后再存磁盘2<br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668702198817-0a7b4ce8-592e-40fa-b868-67050c1df025.png" alt="image.png"><br><br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668505569008-a1f5c31a-d2a9-4ac7-aa0d-9ef2609e126f.png" alt="image.png"><br><br /><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668505609551-624c04a2-e7e6-448b-8785-6edb6834b87d.png" alt="image.png"><br />与单个大容器磁盘相比：</p>
+<ul>
+<li>高数据传输率：多个硬盘可以同时提供读写操作（每个硬盘都有缓存，提高传输速率）<strong>针对大的数据块</strong></li>
+<li>高速响应I&#x2F;O请求：<strong>两个I&#x2F;O</strong>请求所需要的数据块可能<strong>在不同的磁盘上 针对的是小的IO块</strong></li>
+</ul>
+<p><strong>缺点：数据可靠性比单盘低。因为只要有一个磁盘出错了，整个RIAD0就无法正常工作</strong><br><a name="o5kWn"></a></p>
+<h2 id="RAID-1"><a href="#RAID-1" class="headerlink" title="RAID 1"></a>RAID 1</h2><p>读取速度是单盘的两倍 — 因为可以同时使用两个条带<br />写入速度受限于两个条带中更慢的磁盘。</p>
+<ul>
+<li>优点</li>
+</ul>
+<ol>
+<li>高速响应IO请求:即便是<strong>同一个磁盘上</strong>的数据块，也可以由<strong>两组硬盘（原装+备份）分别响应</strong></li>
+<li>读请求可以由包含请求数据的两个对应磁盘中的某一个提供服务，可以<strong>选择寻道时间较小的那个（选择磁头位置离目标位置更近的）</strong></li>
+<li>写请求需要更新两个对应的条带:可以并行完成，但<strong>受限于写入较慢的磁盘</strong>。</li>
+<li>单个磁盘损坏时不会影响数据访问，<strong>恢复受损磁盘简单</strong></li>
+<li><strong>小IO请求可以由两组硬盘响应，所以读取速度是单盘两倍。大IO请求可能设计到同一磁盘的多个条带，所以比单盘块，但是没有涉及到两倍的速度</strong></li>
+</ol>
+<ul>
+<li>缺点：价格昂贵，有一半的磁盘用于存放冗余数据</li>
+<li>用途</li>
+</ul>
+<ol>
+<li>只限于用在存储系统软件、数据和其他关键文件的驱动器中</li>
+</ol>
+<ul>
+<li>与RAIDO相比</li>
+</ul>
+<ol>
+<li>如果有<strong>大批的读请求</strong>，则RAID 1能实现高速的IO速率，性能可以达到RAID 0（<strong>如果两个条带都在一个单盘上时，只能和普通单盘一样去响应</strong>）的两倍</li>
+<li>如果IO请求有相当大的部分是写请求，则它不比RAID 0的性能好多少</li>
+</ol>
+<ul>
+<li>采用了数据条带</li>
+<li>采用简单地<strong>备份所有数据的方法</strong>来实现冗余</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668505752836-d076f564-d0ed-403d-8a25-83f60f432e05.png" alt="image.png"><br><br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668506181935-38580cc6-c7cf-4a7a-b9ef-67d21ab6136c.png" alt="image.png"><br><a name="Eh0c6"></a></p>
+<h2 id="RAID10-和-RAID01比较"><a href="#RAID10-和-RAID01比较" class="headerlink" title="RAID10 和 RAID01比较"></a>RAID10 和 RAID01比较</h2><ol>
+<li><strong>RAID10比RAID01安全性要好</strong></li>
+<li>RAID1的特性是同一组的磁盘互为镜像，其中一个损坏时，<strong>同组的另一个会代替损坏的继续提供服务</strong></li>
+<li>RAID0没有冗余功能，<strong>任何一个磁盘的损坏就会导致的数据不可用。</strong></li>
+<li>RAID01可以当做普通的RAID1</li>
+</ol>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668672966673-85910e16-3028-4e35-831b-677b1d24cff9.png" alt="image.png"><br />因此，对于RAID 01</p>
+<ul>
+<li>如果Disk0坏了，Disk1是不能正常工作的 – 是不能配合Disk2工作的</li>
+<li>如果Disk3坏了，Disk2也是不能正常工作的</li>
+</ul>
+<p>对于RAID 10</p>
+<ul>
+<li>如果Disk0坏了，同组的Disk1仍然可以正常工作 – 可以配合Disk2工作</li>
+<li>如果Disk3坏了，同组的Disk2也是可以正常工作的<br><a name="x7bwO"></a></li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ol>
+<li>RAID0解决的是条带化的问题。多个磁盘，不是独立的应用，而是条带化，一起使用</li>
+<li>RAID1解决的是冗余的问题，通过直接的简单备份，提高数据的可用性、容错能力</li>
+<li>RAID10和RAID01的搭配问题<br><a name="zhq8d"></a></li>
+</ol>
+<h2 id="RAID2"><a href="#RAID2" class="headerlink" title="RAID2"></a>RAID2</h2><p>并行存取的特点：</p>
+<ol>
+<li>各个驱动器的轴同步旋转</li>
+<li>采用非常小的数据条带</li>
+</ol>
+<p>并行存取的目标：<strong>所有</strong>磁盘都参与<strong>每个</strong>io请求（不论大小）。<br /><strong>条带很小</strong>：写入时才能让所有磁盘都能调用。因为一个条带必须用满了才能使用下一个条带，所以条带需要很容易被填满。从而使得所有磁盘都参与进去。<br /><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668672924570-bed0abee-c51e-462a-abdd-359a657b997c.png" alt="image.png"></p>
+<ul>
+<li>利用海明码校验，根据公式<img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/c3c20b7c5e26e4fda0b3b2188b2355bf.svg"></li>
+<li>在写入时，RAID 2在<strong>写入数据位同时</strong>还要<strong>计算出它们的汉明码并写入校验阵列</strong>，读取时也要对数据即时地进行校验，最后再发向系统。</li>
+<li><strong>海明码只能对一个位的出错进行定位和纠错</strong>，所以RAID 2也只能允许一个硬盘出问题，如果两个或以上的硬盘出问题，RAID 2的数据就将受到破坏</li>
+<li>RAID0的条带是KB级，RAID2的条带是字节级。同样很小的IO请求，RAID0只需要一个盘，RAID2需要4个数据盘</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668673179868-9c487527-463e-4f75-aa86-ac93edfcabde.png" alt="image.png"></p>
+<ul>
+<li>单个磁盘本身具有校验位</li>
+</ul>
+<p>磁盘数量：<code>n+m</code>，m个磁盘用来存储校验位<br><a name="x7Yr2"></a></p>
+<h2 id="RAID3"><a href="#RAID3" class="headerlink" title="RAID3"></a>RAID3</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668703045075-e6abfe0f-3fb9-43de-a6c3-319d8d0d3334.png" alt="image.png"><br><br /><br>RAID 3 是把数据分成多个“位元组”，按照 一定的容错算法，连续存放在N+1个磁盘上，<strong>N个磁盘存数据，第N+1个磁盘上存储校验容错信息</strong>，当这N+1个磁盘中的一个磁盘出现故障时，依据其它N个硬盘中的数据，可以恢复完整的原始数据，这样，仅使用这N个硬盘也可以带伤继续工作（如采集和回放素材），当更换一个新硬盘后，系统可以重新恢复。<br />奇偶校验码只能发现有错，不能发现谁出错了。在RAID中，是为了防止<strong>磁盘坏了</strong>，而不是数据出错。磁盘坏了，能够清楚的<strong>明确是哪一个磁盘出错了</strong>，而数据出错则无法发现。<strong>在RAID中的冗余，是为了防止磁盘损坏</strong><br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668673540430-fc64810c-9495-4467-b33e-fa1f8af415de.png" alt="image.png"><br><br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668673915863-5ebb1285-2abf-4a20-a8fc-b7be05e627b4.png" alt="image.png"></p>
+<ul>
+<li>奇偶校验码码距是2，只具有检错的能力，不具有纠错的能力，不能纠错是因为不知道哪一位数据出错了</li>
+<li>磁盘损坏是已知的，所以通过奇偶校验可以知道是哪一个出错了<blockquote>
+<p>RAID 3 使用字节级别的条带化技术，并<strong>采用专用的奇偶校验磁盘</strong>。RAID 3 阵列能在一个磁盘出现故障的情况下确保数据不丢失。如果一个物理磁盘出现故障，该磁盘上的数据可以重建到更换磁盘上。如果数据尚未重建到更换驱动器上，而此时又有一个磁盘出现故障，那么阵列中的所有数据都将丢失。</p>
+</blockquote>
+</li>
+</ul>
+<p><a name="bdbj8"></a></p>
+<h2 id="RAID4"><a href="#RAID4" class="headerlink" title="RAID4"></a>RAID4</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668674101595-1f204daf-2380-48d2-a1d2-3253f7d6f9e5.png" alt="image.png"><br><br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668674199002-ba45f835-cdeb-4b73-b4e2-cfc27602f1e9.png" alt="image.png"></p>
+<ul>
+<li>不需要向RAID3一样所有盘都同步传动</li>
+<li>瓶颈：写入四个盘时，都会争夺同一个校验盘（<strong>校验盘指的是一整个磁盘，因为磁盘本身是同步转动的</strong>），因此会产生瓶颈。<strong>无法实现写操作的独立</strong></li>
+<li>两次读写：当写入一位数据时，因为需要同步修改校验码，所以需要修改校验码。同时，由于不知道其他盘的数据，因此需要知道该盘之前的数据以及之前的校验码，所以需要写两次和读两次。<strong>读两次：读旧的数据和旧的校验码，写两次：写新的数据和新的校验码</strong></li>
+</ul>
+<p>对于小IO请求，也需要使用奇偶校验码，看上去使用了4位，4个任务都会争夺同一个校验码。对于RAID3，因为读写同步，所以b1 b2 b3都是已知的，但是对于RAID4，写入B0时，其他的都是未知的，需要读出B1 B2 B3。所以，写入之前，先把<code>P(B)</code>   <code>B0</code>都先读出来。每一次写操作，实际上都要<strong>写两次，读两次</strong><br /><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668674833267-027f9199-002c-493e-a577-cdc3b4b3c76a.png" alt="image.png"><br><a name="vFa3i"></a></p>
+<h2 id="RAID5"><a href="#RAID5" class="headerlink" title="RAID5"></a>RAID5</h2><blockquote>
+<ol>
+<li>RAID5 应该是目前最常见的 RAID 等级，它的原理与 RAID4 相似，<strong>区别在于校验数据分布在阵列中的所有磁盘上，而没有采用专门的校验磁盘。</strong>对于数据和校验数据，它们的写操作可以同时发生在完全不同的磁盘上。因此， RAID5 不存在 RAID4 中的并发写操作时的校验盘性能瓶颈问题。</li>
+<li>RAID5 的磁盘上同时存储数据和校验数据，<strong>数据块和对应的校验信息存保存在不同的磁盘上</strong>，当一个数据盘损坏时，<strong>系统可以根据同一条带的其他数据块和对应的校验数据来重建损坏的数据</strong>。与其他 RAID 等级一样，重建数据时， RAID5 的性能会受到较大的影响。</li>
+</ol>
+</blockquote>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668674484168-d8a5e506-0168-4d4a-9bf3-4748335df37c.png" alt="image.png"></p>
+<ul>
+<li>没有单独的校验盘，没有单独的数据盘</li>
+<li>避免RAID4中集中访问同一个校验盘的现象</li>
+<li>修改时还是会涉及到<strong>两读两写</strong></li>
+<li><strong>在写操作时，一个平面的块都会受到影响，无法写入，但是相比RAID 4，不会对一整个磁盘造成影响。例如块0和块9，在不同平面，在RAID5中不会有冲突，但是在RAID 4中就会造成冲突</strong><br><a name="B1xwQ"></a></li>
+</ul>
+<h2 id="RAID-50"><a href="#RAID-50" class="headerlink" title="RAID 50"></a>RAID 50</h2><blockquote>
+<p>RAID 5与RAID 0的组合，先作RAID 5，再作RAID 0，也就是对多组RAID 5彼此构成Stripe访问。由于RAID 50是以RAID 5为基础，而<strong>RAID 5至少需要3颗硬盘</strong>，因此要以多组RAID 5构成RAID 50，至少需要6颗硬盘。以RAID 50最小的6颗硬盘配置为例，先把6颗硬盘分为2组，每组3颗构成RAID 5，如此就得到两组RAID 5，然后再把两组RAID 5构成RAID 0。<br>RAID 50在底层的任一组或多组RAID 5中出现1颗硬盘损坏时，仍能维持运作，不过如果任一组RAID 5中出现2颗或2颗以上硬盘损毁，整组RAID 50就会失效。<br>RAID 50由于在上层把多组RAID 5构成Stripe，<strong>性能比起单纯的RAID 5高，容量利用率比RAID5要低</strong>。比如同样使用9颗硬盘，由各3颗RAID 5再组成RAID 0的RAID 50，每组RAID 5浪费一颗硬盘，利用率为(1-3&#x2F;9)，RAID 5则为(1-1&#x2F;9)。</p>
+</blockquote>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668675235775-9454f75a-079d-41ed-863c-f1ca012cef8b.png" alt="image.png"><br />用3个磁盘空间去做奇偶校验，而如果只是RAID5，则只需要用一个磁盘的空间<br><a name="vHKMr"></a></p>
+<h2 id="RAID-6"><a href="#RAID-6" class="headerlink" title="RAID 6"></a>RAID 6</h2><ul>
+<li>前面所述的各个 RAID 等级都<strong>只能保护因单个磁盘失效而造成的数据丢失</strong>。如果两个磁盘同时发生故障，数据将无法恢复。 RAID6 引入<strong>双重校验</strong>的概念，它<strong>可以保护阵列中同时出现两个磁盘失效时，阵列仍能够继续工作，不会发生数据丢失</strong>。 RAID6 等级是在 RAID5 的基础上为了进一步增强数据保护而设计的一种 RAID 方式，它可以看作是一种扩展的 RAID5 等级。</li>
+<li>RAID6 不仅要支持数据的恢复，还要支持校验数据的恢复，因此实现代价很高，控制器的设计也比其他等级更复杂、更昂贵。 <strong>RAID6 思想最常见的实现方式是采用两个独立的校验算法</strong>，假设称为 P 和 Q ，校验数据可以分别存储在两个不同的校验盘上，或者分散存储在所有成员磁盘中。<strong>当两个磁盘同时失效时，即可通过求解两元方程来重建两个磁盘上的数据。</strong></li>
+<li>RAID6 具有快速的读取性能、更高的容错能力。但是，它的<strong>成本要高于 RAID5 许多，写性能也较差</strong>，并有设计和实施非常复杂。因此， RAID6 很少得到实际应用，主要用于对数据安全等级要求非常高的场合。它一般是替代 RAID10 方案的经济性选择</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668675293673-f7a370f3-3233-4932-bb5c-156b133a221c.png" alt="image.png"><br><a name="MgIW2"></a></p>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668703858623-88a01b8a-8ac7-48ea-a149-b293be444d8b.png" alt="image.png"><br><br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668675564994-2e8d74a6-8f92-4c9d-84d9-9dce33907f99.png" alt="image.png"><br><br /></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668675632716-b5bb40ae-f19c-4f7c-a1c8-0ebcdd01727a.png" alt="image.png"><br><br /><br>RAID3适合大数据的单次的IO读写，按顺序读写-寻道时间更少<br><br /><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668675671383-a37e8860-2040-44a5-8f23-2f33d32be087.png" alt="image.png"><br><br />RAID2 RAID4已经弃用了</p>
+<hr>
+<p>RAID 0：如果你有n块磁盘，原来只能同时写一块磁盘，写满了再下一块，做了RAID 0之后，n块可以同时写，速度提升很快，但由于没有备份，可靠性很差。n最少为2。<br />RAID 1：正因为RAID 0太不可靠，所以衍生出了RAID 1。如果你有n块磁盘，把其中n&#x2F;2块磁盘作为镜像磁盘，在往其中一块磁盘写入数据时，也同时往另一块写数据。坏了其中一块时，镜像磁盘自动顶上，可靠性最佳，但空间利用率太低。n最少为2。<strong>写操作可以并行完成</strong><br />RAID 3：为了说明白RAID 5，先说RAID 3.RAID 3是若你有n块盘，其中1块盘作为校验盘，剩余n-1块盘相当于作RAID 0同时读写，当其中一块盘坏掉时，可以通过校验码还原出坏掉盘的原始数据。这个校验方式比较特别，<strong>奇偶检验</strong>，1 XOR 0 XOR 1&#x3D;0，0 XOR 1 XOR 0&#x3D;1，最后的数据时校验数据，当中间缺了一个数据时，可以通过其他盘的数据和校验数据推算出来。但是这有个问题，由于n-1块盘做了RAID 0，每一次读写都要牵动所有盘来为它服务，而且万一校验盘坏掉就完蛋了。<strong>最多允许坏一块盘</strong>。n最少为3.<br />RAID 5：在RAID 3的基础上有所区别，同样是相当于是1块盘的大小作为校验盘，n-1块盘的大小作为数据盘，但校验码分布在各个磁盘中，不是单独的一块磁盘，也就是分布式校验盘，这样做好处多多。最多坏一块盘。n最少为3.<br /><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1668703844625-2b4cfea9-a8f9-4d60-adaf-232a18531f30.png" alt="image.png"></p>
+<ul>
+<li>RAID 3 是采取<strong>并行存取技术</strong>，所以只需要一次写操作和一次读操作就能更新校验码</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/02/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AF%BE%20%E5%86%97%E4%BD%99%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97/">https://austynding.github.io/2023/02/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AF%BE%20%E5%86%97%E4%BD%99%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E7%AC%AC%E5%85%AB%E8%AF%BE%20%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%99%A8/" title="第八课 高速缓存器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">第八课 高速缓存器</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE%20%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" title="第十七课 输入输出"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">第十七课 输入输出</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID-0"><span class="toc-number">1.</span> <span class="toc-text">RAID 0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID-1"><span class="toc-number">2.</span> <span class="toc-text">RAID 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID10-%E5%92%8C-RAID01%E6%AF%94%E8%BE%83"><span class="toc-number">3.</span> <span class="toc-text">RAID10 和 RAID01比较</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.1.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID2"><span class="toc-number">4.</span> <span class="toc-text">RAID2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID3"><span class="toc-number">5.</span> <span class="toc-text">RAID3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID4"><span class="toc-number">6.</span> <span class="toc-text">RAID4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID5"><span class="toc-number">7.</span> <span class="toc-text">RAID5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID-50"><span class="toc-number">8.</span> <span class="toc-text">RAID 50</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID-6"><span class="toc-number">9.</span> <span class="toc-text">RAID 6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E8%BE%83"><span class="toc-number">10.</span> <span class="toc-text">比较</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%80%E8%AF%BE%20%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B/" title="第一课 发展历程">第一课 发展历程</a><time datetime="2023-03-03T12:13:01.851Z" title="发表于 2023-03-03 20:13:01">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%BA%8C%E8%AF%BE%20SP/" title="第二课 SP">第二课 SP</a><time datetime="2023-03-03T12:13:00.492Z" title="发表于 2023-03-03 20:13:00">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/IO%20%E8%AE%BE%E8%AE%A1/" title="IO 设计">IO 设计</a><time datetime="2023-03-03T12:12:58.166Z" title="发表于 2023-03-03 20:12:58">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E7%AC%AC%E4%B8%89%E8%AF%BE%20Function/" title="第三课 Function">第三课 Function</a><time datetime="2023-03-03T12:12:57.885Z" title="发表于 2023-03-03 20:12:57">2023-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/03/C++%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E7%BC%96%E7%A8%8B/%E8%AE%BE%E8%AE%A1%E7%B1%BB%E9%A2%98%E7%9B%AE/" title="设计类题目">设计类题目</a><time datetime="2023-03-03T12:11:38.007Z" title="发表于 2023-03-03 20:11:38">2023-03-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>
