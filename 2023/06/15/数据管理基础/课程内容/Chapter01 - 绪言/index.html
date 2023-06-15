@@ -1,0 +1,415 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Chapter01 - 绪言 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据模型数据模型是对现实世界数据特征的抽象，用以抽象、表示和处理现实世界中的数据和信息  数据模型应满足三方面要求 能比较真实地模拟现实世界 容易为人所理解 便于在计算机上实现   数据模型是数据库系统的核心和基础  概念&#x2F;逻辑&#x2F;物理模型概念模型，也称信息模型  按用户的观点来对数据和信息建模，用于数据库设计  逻辑模型  按计算机系统的观点对数据建模，用于DBMS实现 主要包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter01 - 绪言">
+<meta property="og:url" content="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter01%20-%20%E7%BB%AA%E8%A8%80/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="数据模型数据模型是对现实世界数据特征的抽象，用以抽象、表示和处理现实世界中的数据和信息  数据模型应满足三方面要求 能比较真实地模拟现实世界 容易为人所理解 便于在计算机上实现   数据模型是数据库系统的核心和基础  概念&#x2F;逻辑&#x2F;物理模型概念模型，也称信息模型  按用户的观点来对数据和信息建模，用于数据库设计  逻辑模型  按计算机系统的观点对数据建模，用于DBMS实现 主要包">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-06-15T08:27:12.300Z">
+<meta property="article:modified_time" content="2023-06-15T08:35:57.315Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter01%20-%20%E7%BB%AA%E8%A8%80/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Chapter01 - 绪言',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-06-15 16:35:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">90</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Chapter01 - 绪言</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-15T08:27:12.300Z" title="发表于 2023-06-15 16:27:12">2023-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-15T08:35:57.315Z" title="更新于 2023-06-15 16:35:57">2023-06-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/">数据管理基础</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/">课程内容</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Chapter01 - 绪言"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h1><p>数据模型是对现实世界数据特征的抽象，用以抽象、表示和处理现实世界中的数据和信息</p>
+<ul>
+<li>数据模型应满足三方面要求<ul>
+<li>能比较真实地模拟现实世界</li>
+<li>容易为人所理解</li>
+<li>便于在计算机上实现</li>
+</ul>
+</li>
+<li>数据模型是数据库系统的核心和基础</li>
+</ul>
+<h2 id="概念-x2F-逻辑-x2F-物理模型"><a href="#概念-x2F-逻辑-x2F-物理模型" class="headerlink" title="概念&#x2F;逻辑&#x2F;物理模型"></a>概念&#x2F;逻辑&#x2F;物理模型</h2><p>概念模型，也称信息模型</p>
+<ul>
+<li>按用户的观点来对数据和信息建模，用于数据库设计</li>
+</ul>
+<p>逻辑模型</p>
+<ul>
+<li>按计算机系统的观点对数据建模，用于DBMS实现</li>
+<li>主要包括网状模型、层次模型、关系模型、面向对象数据模型、对象关系数据模型、半结构化数据模型等。</li>
+</ul>
+<p>物理模型</p>
+<ul>
+<li>是对数据最底层的抽象，描述数据在系统内部的表示方式和存取方法</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676530559189-1ed91a48-52e5-4a49-b468-cddda16ecaf3.png" alt="image.png"></p>
+<h3 id="完整性约束条件"><a href="#完整性约束条件" class="headerlink" title="完整性约束条件"></a>完整性约束条件</h3><p>数据的完整性约束条件，一组完整性规则的集合</p>
+<ul>
+<li>完整性规则：给定的数据模型中数据及其联系所具有的<strong>制约和依存规则</strong></li>
+<li>用以限定符合数据模型的数据库状态以及状态的变化，以<strong>保证数据的正确、有效和相容</strong></li>
+</ul>
+<p>数据模型对完整性约束条件的定义</p>
+<ul>
+<li>反映和规定必须遵守的<strong>基本的通用的完整性约束条件</strong>。</li>
+<li>提供定义完整性约束条件的机制，以反映具体应用所涉及的数据必须遵守的<strong>特定的语义约束条件</strong>。</li>
+</ul>
+<h3 id="概念模型"><a href="#概念模型" class="headerlink" title="概念模型"></a>概念模型</h3><p>概念模型的用途</p>
+<ul>
+<li>概念模型用于信息世界的建模</li>
+<li>是现实世界到机器世界的一个中间层次</li>
+<li>是数据库设计的有力工具</li>
+<li>数据库设计人员和用户之间进行交流的语言</li>
+</ul>
+<p>对概念模型的基本要求</p>
+<ul>
+<li>较强的语义表达能力</li>
+<li>简单、清晰、易于用户（非IT从业人员）理解</li>
+</ul>
+<h3 id="信息世界中的基本概念"><a href="#信息世界中的基本概念" class="headerlink" title="信息世界中的基本概念"></a>信息世界中的基本概念</h3><p><strong>实体（Entity</strong></p>
+<ul>
+<li>客观存在并可相互区别的事物称为实体。</li>
+<li>可以是具体的人、事、物或抽象的概念。</li>
+</ul>
+<p><strong>属性（Attribute）</strong></p>
+<ul>
+<li>实体所具有的某一特性称为属性。</li>
+<li>一个实体可以由若干个属性来刻画。</li>
+</ul>
+<p><strong>码（Key</strong>） <strong>唯一标识实体的属性集称为码。</strong><br />属性相同的就是同一个实体。一个属性的集合就是一个实体。<br /><code>key</code>是属性的一部分，但是唯一标识实体。<code>key</code>一样的就是同一个实体。类比：身份证号<br /><code>key</code>可以是单一的属性，也可以是一个集合（足以区分不同实体的属性集合）。<br />每一个实体都有<code>key</code></p>
+<p><strong>实体型（Entity Type）</strong> </p>
+<ul>
+<li>用实体名及其属性名集合来抽象和刻画<strong>同类实体</strong>称为实体型</li>
+</ul>
+<p><strong>实体集（Entity Set）</strong></p>
+<ul>
+<li>同一类型实体的集合称为实体集</li>
+</ul>
+<p><strong>联系（Relationship）</strong></p>
+<ul>
+<li><strong>现实世界</strong>中事物内部以及事物之间的<strong>联系</strong>在信息世界中<strong>反映</strong>为实体（型）内部的联系和实体（型）之间的<strong>联系</strong>。</li>
+</ul>
+<p>实体型≈实体集</p>
+<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><h3 id="实体之间的联系"><a href="#实体之间的联系" class="headerlink" title="实体之间的联系"></a>实体之间的联系</h3><p>实体之间的联系通常是指不同实体集之间的联系<br />实体之间的联系有一对一、一对多和多对多等多种类型<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676530202898-e9d84b19-fb33-40de-9104-75a22e8b2a4e.png" alt="image.png"><br>一对一：一位同学<strong>至多拥有</strong>一张学生卡<br />一对多：一个行政班拥有多名同学，一个同学最多归属一个行政班<br />多对多：一个同学可以选n门课，一门课可以有m个同学</p>
+<h3 id="实体内部的联系"><a href="#实体内部的联系" class="headerlink" title="实体内部的联系"></a>实体内部的联系</h3><p>实体内部的联系通常是指组成实体的各属性之间的联系<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676531681995-ab17e78c-6051-4241-853d-ce534eb24117.png" alt="image.png"></p>
+<ul>
+<li>一对一：配偶关系</li>
+</ul>
+<h3 id="实体-联系方法-ER模型"><a href="#实体-联系方法-ER模型" class="headerlink" title="实体-联系方法 ER模型"></a>实体-联系方法 ER模型</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676531391468-c3df5a78-52bf-43fb-b4c6-759ebc1bd713.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676531464323-e416ce9a-5997-4cef-bb47-b16f09bec4bd.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676531809872-0eb8eb25-4134-4548-9595-75cb77b858f4.png" alt="image.png"><br>联系建立了两个实体，让联系也包含了属性。<strong>“成绩”隶属于联系“选修”。选一次课，就会产生一次成绩。所以成绩隶属于联系“选修”</strong></p>
+<h2 id="逻辑模型"><a href="#逻辑模型" class="headerlink" title="逻辑模型"></a>逻辑模型</h2><p>逻辑模型作为接口，物理模型作为载体，在外面封装一层应用的壳<br />如何“多快好省”地将信息世界转换为机器世界？<br />基本问题，如何在机器世界中表达“低层”数据结构和“高层”数据结构？</p>
+<ul>
+<li>方案1：尽量独立于应用层，采用“中立”的方式表达概念模型。面向应用层的壳**中立，不受到应用层的影响 ** （数据库作为中转站的方式，实现多个应用的数据共享）</li>
+<li>方案2：在应用层中，使用<strong>特定数据结构</strong>，并在逻辑模型中高效支持这一数据结构。对于效率非常追求，“中立”的好处不大（共享范围小、共享的应用对数据的要求相似）。</li>
+<li>方案*：通用数据结构采用方案1，关键性数据结构采用方案2</li>
+</ul>
+<h3 id="常用数据模型"><a href="#常用数据模型" class="headerlink" title="常用数据模型"></a>常用数据模型</h3><p>格式化模型（不常用了）</p>
+<ul>
+<li>层次模型（Hierarchical Model）</li>
+<li>网状模型（Network Model）</li>
+</ul>
+<p>关系模型（Relational Model)）<br />对象模型（和上层应用紧密联系，难以实现共享）</p>
+<ul>
+<li>面向对象数据模型（Object Oriented Data Model）</li>
+<li>对象关系数据模型（Object Relational Data Model）</li>
+</ul>
+<h3 id="关系模型"><a href="#关系模型" class="headerlink" title="关系模型"></a>关系模型</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676533205576-3e697d05-e48f-489a-8272-ea23224f3f8b.png" alt="image.png"></p>
+<ul>
+<li>关系（Relation）：<strong>一个关系对应通常说的一张表</strong>。是满足某种条件的<strong>集合</strong>。</li>
+<li>元组（Tuple）：表中的一行即为一个元组，是<strong>具体的</strong>属性值的集合（无序、不重复）</li>
+<li>属性（Attribute）：表中的一列即为一个属性，给每一个属性起一个名称即属性名</li>
+<li>主码（Key）：也称码键。表中的某个属性组，它可以唯一确定一个元组</li>
+<li>域（Domain）：是一组具有相同数据类型的值的集合。<strong>属性的取值范围来自某个域。</strong></li>
+<li>分量：元组中的一个属性值。</li>
+<li>关系模式<ul>
+<li>对关系的描述</li>
+<li>关系名（属性1，属性2，…，属性n）<code>1 2 3</code>和<code>3 2 1</code>在集合中是等价的</li>
+<li>学生（学号，姓名，年龄，性别，系名，年级）</li>
+</ul>
+</li>
+<li>关系必须是规范化的，满足一定的规范条件</li>
+<li>最基本的规范条件：关系的每一个分量必须是一个<strong>不可分的数据项, 不允许表中还有表</strong></li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676533442959-94841cc7-b3d4-4c86-88dd-9d7163badb8d.png" alt="image.png"><br>上表不是一个关系，有嵌套的表</p>
+<h3 id="操作与完整性约束"><a href="#操作与完整性约束" class="headerlink" title="操作与完整性约束"></a>操作与完整性约束</h3><p>数据操作（查询、插入、删除、更新）是集合操作，操作对象和操作结果都是关系<br />存取路径对用户隐蔽，用户只要指出“干什么”，不必详细说明“怎么干”<br />关系的完整性约束条件 </p>
+<ul>
+<li>实体完整性：里面的任何一条元祖都确定了一个实体</li>
+<li>参照完整性：实体必须存在</li>
+<li>用户定义的完整性</li>
+</ul>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>关系模型类似于保姆性质的，进行了检查，效率较低<br />优点</p>
+<ul>
+<li>足够统一且简单</li>
+<li>有严格的数学概念的基础</li>
+<li>对用户（底层）透明</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>没有办法对底层进行优化</li>
+</ul>
+<h3 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1676533873194-9bf1d87e-4932-4a82-9af5-47484f86b2b9.png" alt="image.png"><br>列族模型：针对网络的处理<br />文档模型：类似于树</p>
+<h2 id="ch06-数据库系统的结构"><a href="#ch06-数据库系统的结构" class="headerlink" title="ch06 数据库系统的结构"></a>ch06 数据库系统的结构</h2><p>从数据库应用开发人员角度</p>
+<ul>
+<li>看数据库系统通常采用三级模式结构，是数据库系统内部的系统结构</li>
+</ul>
+<p>从数据库最终用户角度看<br />数据库系统的结构分为:</p>
+<ul>
+<li>单用户结构</li>
+<li>主从式结构</li>
+<li>分布式结构</li>
+<li>客户-服务器</li>
+<li>浏览器-应用服务器／数据库服务器多层结构等</li>
+</ul>
+<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686746566793-767c67e1-47d9-46d5-9ada-8e412283b88c.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677572677389-40b72bb6-464e-4964-a324-dcb66c8ffd55.png" alt="image.png"></p>
+<ul>
+<li>内模式是对模式的物理实现、落地。模式本身绝大多数下是固定的，内模式在不同时间下有不同形式。</li>
+<li>在<strong>模式不变</strong>的情况下，<strong>内模式可以根据需要进行修改。</strong></li>
+<li><strong>所以模式可以隔离来自底层物理模式&#x2F;内模式的变化。</strong></li>
+</ul>
+<p>在统一模式下的不同应用，对数据的访问、需要是相同的或者类似的，处在同一个应用域。如果模式暴露给应用，而应用<strong>不需要这么多</strong>数据同时也会<strong>有安全问题</strong>。同时模式中数据的变化，会对<strong>不同的外模式都会造成影响。</strong>如果只改变外模式1，是不会对其他的外模式造成影响的。<br />所以应用群变得更加安全了，不易受到其他改变的影响<br />外模式（External Schema） </p>
+<ul>
+<li>也称子模式或用户模式</li>
+<li>数据库用户（包括应用程序员和最终用户）使用的局部数据的逻辑结构和特征的描述</li>
+<li>数据库用户的数据视图，是与某一应用有关的数据的逻辑表示</li>
+</ul>
+<p>外模式的地位:介于模式与应用之间<br />模式与外模式的关系:一对多</p>
+<ul>
+<li>外模式通常是模式的子集</li>
+<li>一个数据库可以有多个外模式。反映了不同的用户的应用需求、看待数据的方式、对数据保密的要求</li>
+<li>对模式中同一数据，在外模式中的结构、类型、长度、保密级别等都可以不同</li>
+</ul>
+<p>外模式与应用的关系:一对多</p>
+<ul>
+<li>同一外模式也可以为某一用户的多个应用系统所使用</li>
+<li>但一个应用程序只能使用一个外模式</li>
+</ul>
+<p>外模式的用途</p>
+<ul>
+<li>保证数据库<strong>安全性</strong>的一个有力措施</li>
+<li>每个用户只能看见和访问<strong>所对应的外模式中的数据（隔离）</strong></li>
+</ul>
+<h2 id="三级模式与二级映像"><a href="#三级模式与二级映像" class="headerlink" title="三级模式与二级映像"></a>三级模式与二级映像</h2><p>三级模式是对数据的三个抽象级别<br />二级映象在数据库管理系统内部实现这三个抽象层次的联系和转换</p>
+<ul>
+<li>外模式／模式映像</li>
+<li>模式／内模式映像</li>
+</ul>
+<h3 id="外模式-x2F-模式映像"><a href="#外模式-x2F-模式映像" class="headerlink" title="外模式&#x2F;模式映像"></a>外模式&#x2F;模式映像</h3><ul>
+<li>模式：描述的是<strong>数据的全局逻辑结构</strong></li>
+<li>外模式：描述的是<strong>数据的局部逻辑结构</strong></li>
+<li>同一个模式可以有任意多个外模式 </li>
+<li>每一个外模式，数据库系统都有一个外模式／模式映象，定义外模式与模式之间的对应关系</li>
+<li>映象定义通常包含在各自外模式的描述中</li>
+<li><strong>保证数据的逻辑独立性</strong><ul>
+<li>当模式改变时，数据库管理员对外模式／模式映象作相应改变，使外模式保持不变</li>
+<li><strong>应用程序是依据数据的外模式编写的，应用程序不必修改，保证了数据与程序的逻辑独立性，简称数据的逻辑独立性</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="模式-x2F-内模式映像"><a href="#模式-x2F-内模式映像" class="headerlink" title="模式&#x2F;内模式映像"></a>模式&#x2F;内模式映像</h3><ul>
+<li>模式／内模式映象定义了数据全局逻辑结构与存储结构之间的对应关系。</li>
+</ul>
+<p>例如，说明逻辑记录和字段在内部是如何表示的</p>
+<ul>
+<li>数据库中模式／内模式映象是唯一的</li>
+<li>该映象定义通常包含在模式描述中</li>
+<li><strong>保证数据的物理独立性</strong><ul>
+<li>当数据库的存储结构改变了（例如选用了另一种存储结构），数据库管理员修改模式／内模式映象，使模式保持不变。</li>
+<li><strong>应用程序不受影响。保证了数据与程序的物理独立性，简称数据的物理独立性。</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><h3 id="数据库模式"><a href="#数据库模式" class="headerlink" title="数据库模式"></a>数据库模式</h3><ul>
+<li><strong>即全局逻辑结构是数据库的中心与关键</strong></li>
+<li>独立于数据库的其他层次</li>
+<li>设计数据库模式结构时应首先确定数据库的逻辑模式</li>
+</ul>
+<h3 id="数据库的内模式"><a href="#数据库的内模式" class="headerlink" title="数据库的内模式"></a>数据库的内模式</h3><ul>
+<li><strong>依赖于它的全局逻辑结构</strong></li>
+<li>独立于数据库的用户视图，即外模式</li>
+<li>独立于具体的存储设备：内模式是数据<strong>物理结构和存储方式</strong>的描述，定义数据在数据库内部的表示方式，而不是具体的存储位置</li>
+<li>将全局逻辑结构中所定义的数据结构及其联系按照一定的物理存储策略进行组织，以达到较好的时间与空间效率</li>
+</ul>
+<h3 id="数据库的外模式"><a href="#数据库的外模式" class="headerlink" title="数据库的外模式"></a>数据库的外模式</h3><ul>
+<li><strong>面向具体的应用程序</strong></li>
+<li>定义在逻辑模式之上</li>
+<li>独立于存储模式和存储设备</li>
+<li><strong>当应用需求发生较大变化，相应外模式不能满足其视图要求时，该外模式就得做相应改动</strong></li>
+<li>设计外模式时应充分考虑到应用的扩充性</li>
+</ul>
+<h3 id="特定的应用程序"><a href="#特定的应用程序" class="headerlink" title="特定的应用程序"></a>特定的应用程序</h3><ul>
+<li>在外模式描述的数据结构上编制的</li>
+<li><strong>依赖于特定的外模式</strong></li>
+<li>与数据库的模式和存储结构独立</li>
+<li>不同的应用程序有时可以共用同一个外模式</li>
+</ul>
+<h3 id="二级映像"><a href="#二级映像" class="headerlink" title="二级映像"></a>二级映像</h3><p>数据库的二级映像</p>
+<ul>
+<li>保证了数据库外模式的稳定性</li>
+<li>从底层保证了应用程序的稳定性，除非应用需求本身发生变化，否则应用程序一般不需要修改</li>
+</ul>
+<p>数据与程序之间的独立性，使得数据的定义和描述可以从应用程序中分离出去 <br />数据的存取由数据库管理系统管理</p>
+<ul>
+<li>简化了应用程序的编制大大</li>
+<li>减少了应用程序的维护和修改</li>
+</ul>
+<h1 id="ch07-数据库系统的组成"><a href="#ch07-数据库系统的组成" class="headerlink" title="ch07 数据库系统的组成"></a>ch07 数据库系统的组成</h1><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677573295354-e98dec6e-9676-4d2f-b9e4-80f946829430.png" alt="image.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter01%20-%20%E7%BB%AA%E8%A8%80/">https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter01%20-%20%E7%BB%AA%E8%A8%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment7/" title="Experiment7"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Experiment7</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">90</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5-x2F-%E9%80%BB%E8%BE%91-x2F-%E7%89%A9%E7%90%86%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">概念&#x2F;逻辑&#x2F;物理模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.1.</span> <span class="toc-text">完整性约束条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">概念模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.3.</span> <span class="toc-text">信息世界中的基本概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%94%E7%B3%BB"><span class="toc-number">1.2.</span> <span class="toc-text">联系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-number">1.2.1.</span> <span class="toc-text">实体之间的联系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E5%86%85%E9%83%A8%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-number">1.2.2.</span> <span class="toc-text">实体内部的联系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93-%E8%81%94%E7%B3%BB%E6%96%B9%E6%B3%95-ER%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.3.</span> <span class="toc-text">实体-联系方法 ER模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">逻辑模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">常用数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">关系模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.3.3.</span> <span class="toc-text">操作与完整性约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.3.4.</span> <span class="toc-text">优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NoSQL"><span class="toc-number">1.3.5.</span> <span class="toc-text">NoSQL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch06-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">ch06 数据库系统的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.1.</span> <span class="toc-text">模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E6%A8%A1%E5%BC%8F%E4%B8%8E%E4%BA%8C%E7%BA%A7%E6%98%A0%E5%83%8F"><span class="toc-number">1.5.</span> <span class="toc-text">三级模式与二级映像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E6%A8%A1%E5%BC%8F-x2F-%E6%A8%A1%E5%BC%8F%E6%98%A0%E5%83%8F"><span class="toc-number">1.5.1.</span> <span class="toc-text">外模式&#x2F;模式映像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F-x2F-%E5%86%85%E6%A8%A1%E5%BC%8F%E6%98%A0%E5%83%8F"><span class="toc-number">1.5.2.</span> <span class="toc-text">模式&#x2F;内模式映像</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.6.1.</span> <span class="toc-text">数据库模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%86%85%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.6.2.</span> <span class="toc-text">数据库的内模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A4%96%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.6.3.</span> <span class="toc-text">数据库的外模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%AE%9A%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.4.</span> <span class="toc-text">特定的应用程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E6%98%A0%E5%83%8F"><span class="toc-number">1.6.5.</span> <span class="toc-text">二级映像</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch07-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">ch07 数据库系统的组成</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter01%20-%20%E7%BB%AA%E8%A8%80/" title="Chapter01 - 绪言">Chapter01 - 绪言</a><time datetime="2023-06-15T08:27:12.300Z" title="发表于 2023-06-15 16:27:12">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment7/" title="Experiment7">Experiment7</a><time datetime="2023-06-15T07:52:21.904Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment6/" title="Experiment6">Experiment6</a><time datetime="2023-06-15T07:52:21.901Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment5/" title="Experiment5">Experiment5</a><time datetime="2023-06-15T07:52:21.899Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment4/" title="Experiment4">Experiment4</a><time datetime="2023-06-15T07:52:21.898Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>
