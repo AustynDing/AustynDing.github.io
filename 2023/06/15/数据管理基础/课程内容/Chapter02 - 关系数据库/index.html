@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Chapter02 - 关系数据库 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ch08 关系、关系模式和关系数据库域域是一组具有相同数据类型的值的集合，可以是有穷的也可以是无穷的，是一种单一的数据类型的取值范围复合数据类型：简单数据类型的复合 笛卡尔积（Cartesian Product）给定一组域D1，D2笛卡尔积为D1×D2×…×Dn＝｛（d1，d2，…，dn）｜di属于Di，i＝1，2，…，n｝  所有域的所有取值（每个域中选取一个合适的值）的一个组合。 不能重复 –">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter02 - 关系数据库">
+<meta property="og:url" content="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter02%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="ch08 关系、关系模式和关系数据库域域是一组具有相同数据类型的值的集合，可以是有穷的也可以是无穷的，是一种单一的数据类型的取值范围复合数据类型：简单数据类型的复合 笛卡尔积（Cartesian Product）给定一组域D1，D2笛卡尔积为D1×D2×…×Dn＝｛（d1，d2，…，dn）｜di属于Di，i＝1，2，…，n｝  所有域的所有取值（每个域中选取一个合适的值）的一个组合。 不能重复 –">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-06-15T07:02:43.280Z">
+<meta property="article:modified_time" content="2023-06-15T07:52:57.703Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter02%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Chapter02 - 关系数据库',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-06-15 15:52:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Chapter02 - 关系数据库</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-15T07:02:43.280Z" title="发表于 2023-06-15 15:02:43">2023-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-15T07:52:57.703Z" title="更新于 2023-06-15 15:52:57">2023-06-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/">数据管理基础</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/">课程内容</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Chapter02 - 关系数据库"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ch08-关系、关系模式和关系数据库"><a href="#ch08-关系、关系模式和关系数据库" class="headerlink" title="ch08 关系、关系模式和关系数据库"></a>ch08 关系、关系模式和关系数据库</h1><h2 id="域"><a href="#域" class="headerlink" title="域"></a>域</h2><p><strong>域是一组具有相同数据类型的值的集合</strong>，可以是有穷的也可以是无穷的，是一种单一的数据类型的取值范围<br />复合数据类型：简单数据类型的复合</p>
+<h2 id="笛卡尔积（Cartesian-Product）"><a href="#笛卡尔积（Cartesian-Product）" class="headerlink" title="笛卡尔积（Cartesian Product）"></a>笛卡尔积（Cartesian Product）</h2><p>给定一组域D1，D2笛卡尔积为<br />D1×D2×…×Dn＝｛（d1，d2，…，dn）｜di属于Di，i＝1，2，…，n｝</p>
+<ul>
+<li>所有域的所有取值（每个域中选取一个合适的值）的一个组合。</li>
+<li>不能重复 – 集合的基本要求</li>
+<li><strong>Di和Dj的域是可以相同的</strong>，例如都是int，一个代表年龄，一个代表得分，是可以组合成一个复杂数据类型。</li>
+<li>笛卡尔积中每一个元素（d1，d2，…，dn）叫作一个n元组（n-tuple）或简称<strong>元组</strong></li>
+<li>笛卡尔积元素（d1，d2，…，dn）中的每一个值di叫作一个<strong>分量</strong></li>
+<li>若Di（i＝1，2，…，n）为有限集，<strong>域中所包含的值的个数称为域的基数，</strong>其基数为mi （i ＝ 1，2，… ，n），则D1×D2×…×Dn的基数M为：M&#x3D;mi的连乘；</li>
+<li>元祖也是一个集合，是无序的。</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686571577001-6bec2715-679c-4edd-a29c-fdd22cfa1b9f.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686571587217-b7f168ac-c915-4c63-b02a-de7f790a7ad7.png" alt="image.png"></p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686571619507-3ac00f8b-e806-43cd-bf53-a1ce7dde06b5.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686571628891-be392bbd-64c9-4bd6-a8d3-2ff57a55cd16.png" alt="image.png"></p>
+<h2 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h2><p>D1×D2×…×Dn的子集叫作在域D1，D2，…，Dn上的关系，表示为R（D1，D2，…，Dn）。<br />R ：关系名<br />n ：关系的目或度（Degree）</p>
+<ul>
+<li>当n&#x3D;1时，称该关系为单元关系（Unary relation）或一元关系                         </li>
+<li>当n&#x3D;2时，称该关系为二元关系（Binary relation）</li>
+</ul>
+<p><strong>关系可以是空集</strong>。对关系进行增删后，关系就会改变。所以是<strong>只在当下</strong>作用，是对<strong>客观世界某一时刻</strong>的状态的正确匹配。<br />关系也是一个二维表，表的每行对应一个元组，表的每列对应一个域。</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li>关系中不同列可以对应相同的域</li>
+<li>为了加以区分，必须对<strong>每列起一个名字</strong>，称为属性（Attribute）</li>
+<li>n目关系必有n个属性</li>
+<li>不同的属性可以共享一个域。age和score都可以是int域的</li>
+</ul>
+<h3 id="码"><a href="#码" class="headerlink" title="码"></a>码</h3><p>码反映了<strong>数据的依赖关系</strong><code>F</code> ：属性间数据的依赖关系的集合，说明了有哪些码可以挑选<br />候选码（Candidate key）</p>
+<ul>
+<li>若关系中的某一属性组的值能<strong>唯一地标识一个元组</strong>，<strong>而其子集不能</strong>，则称该属性组为候选码。在学生中，假设性别、年龄、学号的组成的元祖可以区分其他学生，则这三个是候选码。</li>
+<li>候选码是有穷属性的子集，候选码是可穷举的。</li>
+<li>简单的情况：候选码可以只包含一个属性</li>
+<li>最极端的情况：关系模式的所有属性组是这个关系模式的候选码，称为全码（All-key）。关系是一个集合，所以不会出现相同的元祖。</li>
+</ul>
+<p>主码</p>
+<ul>
+<li>若一个关系有多个候选码，则选定其中一个为主码<strong>（Primary key）</strong></li>
+</ul>
+<p>主属性</p>
+<ul>
+<li><strong>候选码的诸属性</strong>称为主属性（Prime attribute）</li>
+<li><strong>不包含在任何侯选码中的属性称为非主属性（Non-Prime attribute）或非码属性（Non-key attribute）</strong></li>
+</ul>
+<h3 id="关系的类别"><a href="#关系的类别" class="headerlink" title="关系的类别"></a>关系的类别</h3><p>对关系操作得到的结果也是一个关系  – &gt; 可以实现流水线操作</p>
+<ul>
+<li>基本关系（基本表或基表）实际存在的表，是<strong>实际存储数据的逻辑表示</strong></li>
+<li>查询表<strong>查询结果对应的表</strong></li>
+<li>视图表由基本表或其他视图表导出的表，是虚表，<strong>不对应实际存储的数据。</strong><ul>
+<li>知道更少的内容，开发更具有效率</li>
+<li>更高的安全性</li>
+<li>可以掩盖部分元组、也可以掩盖部分属性，也可以都掩盖部分。</li>
+<li>实际上是在一个集合中挑选子集的过程，并对子集处理，是<strong>实现外模式</strong>的一种手段</li>
+</ul>
+</li>
+</ul>
+<h3 id="基本关系的性质"><a href="#基本关系的性质" class="headerlink" title="基本关系的性质"></a>基本关系的性质</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677809343460-f0a8a333-0f92-4d06-aa33-d56e7a7efe83.png" alt="image.png"></p>
+<h3 id="关系模式与关系"><a href="#关系模式与关系" class="headerlink" title="关系模式与关系"></a>关系模式与关系</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677809551385-9376105d-0cd1-4c5a-9c32-9de032fc9cac.png" alt="image.png"><br>关系模式</p>
+<ul>
+<li>对关系的描述</li>
+<li><strong>静态的、稳定的</strong></li>
+</ul>
+<p>关系</p>
+<ul>
+<li>关系模式在某一时刻的状态或内容</li>
+<li><strong>动态的、随时间不断变化的</strong></li>
+</ul>
+<p>关系模式和关系往往笼统称为关系通过上下文加以区别</p>
+<h3 id="关系数据库"><a href="#关系数据库" class="headerlink" title="关系数据库"></a>关系数据库</h3><p>关系数据库</p>
+<ul>
+<li>在一个给定的应用领域中，所有关系的集合构成一个关系数据库</li>
+</ul>
+<p>关系数据库的型与值</p>
+<ul>
+<li>关系数据库的型: 关系数据库模式，是对关系数据库的描述</li>
+<li>关系数据库的值: <strong>关系模式在某一时刻对应的关系的集合</strong>，通常称为关系数据库</li>
+</ul>
+<h1 id="ch09-关系的完整性"><a href="#ch09-关系的完整性" class="headerlink" title="ch09 关系的完整性"></a>ch09 关系的完整性</h1><h2 id="三类完整性约束"><a href="#三类完整性约束" class="headerlink" title="三类完整性约束"></a>三类完整性约束</h2><p>实体完整性和参照完整性关系</p>
+<ul>
+<li>模型必须满足的完整性约束条件称为关系的两个不变性，应该由关系系统自动支持</li>
+</ul>
+<p>用户定义的完整性</p>
+<ul>
+<li>应用领域需要遵循的约束条件，体现了具体领域中的语义约束</li>
+</ul>
+<h2 id="实体完整性-Entity-Integrity"><a href="#实体完整性-Entity-Integrity" class="headerlink" title="实体完整性 Entity Integrity"></a>实体完整性 Entity Integrity</h2><p>实体完整性规则（Entity Integrity）— <strong>确保不能犯错</strong>，不能先取<code>Null</code>，然后再对<code>Null</code>取值。如果有多个<code>Null</code>，就无法正常赋值了。</p>
+<ul>
+<li>若属性A是基本关系R的主码属性，则属性A不能取空值</li>
+<li>空值就是“不知道”或“不存在”或“无意义”的值</li>
+<li>主码有属性取空值，就说明存在某个不可标识的实体，即存在不可区分的实体</li>
+</ul>
+<p>例：选修（学号，课程号，成绩）</p>
+<ul>
+<li>“学号、课程号”为主码</li>
+<li>“学号”和“课程号”两个属性都不能取空值 — <strong>主码的任意一个属性值不能为空</strong></li>
+</ul>
+<p>对于实体完整性规则说明如下：</p>
+<ol>
+<li>实体完整性规则<strong>是针对基本关系而言的。</strong>一个基本表通常对应现实世界的一个实体集。例如学生关系对应于学生的集合。</li>
+<li><strong>现实世界中的实体是可区分的，即它们具有某种唯一性标识。</strong>例如每个学生都是独立的个体，是不一样的。</li>
+<li>相应地，<strong>关系模型中以主码作为唯一性标识。</strong></li>
+<li>主码中的属性即主属性不能取空值。<strong>如果主码存在一个属性取空值，就说明存在某个不可标识的实体，即存在不可区分的实体</strong>，这与第(2)点相矛盾，因此这个规则称为实体完整性。</li>
+</ol>
+<h2 id="参照完整性"><a href="#参照完整性" class="headerlink" title="参照完整性"></a>参照完整性</h2><h3 id="关系间的引用"><a href="#关系间的引用" class="headerlink" title="关系间的引用"></a>关系间的引用</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686572115932-4691bfb2-42cb-480c-a42e-78ffe62c1dba.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686572125974-6544e5ce-78e0-415e-898d-c7c92eb91c1f.png" alt="image.png"></p>
+<h3 id="外码"><a href="#外码" class="headerlink" title="外码"></a>外码</h3><p>设<strong>F是基本关系R的一个或一组属性</strong>，但<strong>不是关系R的码</strong>。如果<strong>F与基本关系S的主码Ks相对应</strong>，则称F是R的外码（Foreign Key）</p>
+<ul>
+<li>基本关系R称为参照关系（Referencing  Relation）</li>
+<li>基本关系S称为被参照关系（Referenced Relation）或目标关系（Target Relation）</li>
+</ul>
+<p>其中</p>
+<ul>
+<li>关系R和S不一定是不同的关系</li>
+<li>目标关系S的主码Ks和参照关系的外码F必须定义在同一个（或一组）域上</li>
+<li><strong>外码并不一定要与相应的主码同名</strong><ul>
+<li>当外码与相应的主码属于不同关系时，往往取相同的名字，以便于识别</li>
+</ul>
+</li>
+</ul>
+<p>A表中有外码指向B，则</p>
+<ol>
+<li><strong>创建时需要先创建B，因为A是依赖B存在的</strong></li>
+<li><strong>删除时需要先删除A，因为如果先删除B，则A依赖B就会出错</strong>。</li>
+</ol>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677810264884-e5852903-9f77-4214-8ed8-dd6b43acc035.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686572557695-1acfa379-ada0-4cd0-a337-c84275cd3c33.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686572570391-d135270e-f9f1-4b1d-b671-b814124a58da.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686572610280-69453209-32eb-452c-9b04-be4e9edbc9c8.png" alt="image.png"></p>
+<h3 id="参照完整性规则"><a href="#参照完整性规则" class="headerlink" title="参照完整性规则"></a>参照完整性规则</h3><ul>
+<li>若属性（或属性组）F是基本关系R的外码，它与基本关系S的主码Ks相对应（基本关系R和S不一定是不同的关系），则对于R中每个元组在F上的值必须为：</li>
+<li><strong>或者取空值（F的每个属性值均为空值）：F中有一个为空值，则所有的都为空值。因为R的外码F实际上是映射了S的主码Ks，而Ks不能为空。所以，如果F中有空值，则必须不存在这种对应关系，否则会导致Ks也为空。</strong></li>
+<li><strong>或者等于S中某个元组的主码值</strong></li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677810447025-65ca0f92-4b2d-4a11-94c7-92f08da63f4c.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677810452691-7291607a-ac85-4fb2-9434-97591d1e6a93.png" alt="image.png"></p>
+<h3 id="用户定义的完整性"><a href="#用户定义的完整性" class="headerlink" title="用户定义的完整性"></a>用户定义的完整性</h3><ul>
+<li>针对某一具体关系数据库的约束条件，反映某一具体应用所涉及的数据必须满足的语义要求</li>
+<li>关系模型应提供定义和检验这类完整性的机制，以便用统一的系统的方法处理它们，而不需由应用程序承担这一功能</li>
+<li>例：课程（课程号，课程名，学分）<ul>
+<li>“课程号”属性必须取唯一值非主属性</li>
+<li>“课程名”也不能取空值“</li>
+<li>学分”属性只能取值{1，2，3，4}</li>
+</ul>
+</li>
+<li><strong>数据对象本身是不是业务逻辑的一部分</strong></li>
+</ul>
+<h1 id="ch10-关系操作和关系代数"><a href="#ch10-关系操作和关系代数" class="headerlink" title="ch10 关系操作和关系代数"></a>ch10 关系操作和关系代数</h1><h2 id="关系操作"><a href="#关系操作" class="headerlink" title="关系操作"></a>关系操作</h2><p>设关系模式为R(A1，A2，…，An)</p>
+<ul>
+<li>它的一个关系设为R</li>
+<li>t属于R表示t是R的一个元组</li>
+<li>t[Ai]则表示元组t中相应于属性Ai的一个分量</li>
+<li>若A&#x3D;{Ai1，Ai2，…，Aik}，其中Ai1，Ai2，…，Aik是A1，A2，…，An中的一部分，则A称为属性列或属性组。</li>
+<li>t[A]&#x3D;(t[Ai1]，t[Ai2]，…，t[Aik])表示元组t在属性列A上诸分量的集合。</li>
+<li>A ̅则表示{A1，A2，…，An}中去掉{Ai1，Ai2，…，Aik}后剩余的属性组。</li>
+</ul>
+<h2 id="关系代数"><a href="#关系代数" class="headerlink" title="关系代数"></a>关系代数</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677737657887-8fcadc45-452e-4b93-891e-9f534b78c017.png" alt="image.png"></p>
+<h3 id="并操作"><a href="#并操作" class="headerlink" title="并操作"></a>并操作</h3><p>其实就是同一个关系下的两个实例进行并操作<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677738240562-a38bb5d4-564e-4194-aac2-d6c4057f46bc.png" alt="image.png"></p>
+<h3 id="差操作"><a href="#差操作" class="headerlink" title="差操作"></a>差操作</h3><p>不满足交换律<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677738299901-dfdef3e6-1f2e-4132-8e14-9497d170fb69.png" alt="image.png"></p>
+<h3 id="交操作"><a href="#交操作" class="headerlink" title="交操作"></a>交操作</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677738341366-70434831-22b4-4ff6-a9a8-4468d66445e4.png" alt="image.png"></p>
+<h3 id="笛卡尔积"><a href="#笛卡尔积" class="headerlink" title="笛卡尔积"></a>笛卡尔积</h3><ul>
+<li>通过两个关系，构成更大的关系。</li>
+<li>不需要两个关系是同一个关系集合</li>
+<li>关系的笛卡尔积是值的笛卡尔积。域的笛卡尔积和值的笛卡尔积的区别？</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677738489743-8e321f2f-3002-4b46-8e6d-039c8e60acf5.png" alt="image.png"><br>举例<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677738543078-a670f256-e0e2-4139-9ca6-07335422a6a0.png" alt="image.png"></p>
+<h3 id="记号"><a href="#记号" class="headerlink" title="记号"></a>记号</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677811187612-bca20ca6-34e5-4ce4-b9f5-49589b1966f3.png" alt="image.png"></p>
+<ul>
+<li>属性组是所有属性的一个子集</li>
+<li><code>t[Ai]</code>表示的是一个分量，<code>t[A]</code>表示的是一个分量的集合</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677810964052-25f39660-fdc3-4241-9339-a9916c383254.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677810970986-18571cce-b255-479e-a7c5-adc3a9d3eaea.png" alt="image.png"></p>
+<h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><ul>
+<li>结果中属性是完备的，只是减少了元祖的数量。</li>
+<li>操作的结果也是一个集合</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677738747979-b47bc772-faab-4a7b-a5e3-3d7e79d3438a.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677738902094-1451aa9b-a756-4402-b93b-d9d6c9fdacc2.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686575246423-6576045f-af5e-4e96-acb9-75d3b515adde.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686575256318-01b2afdf-58cd-40ea-a806-4f5555d79688.png" alt="image.png"></p>
+<h3 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h3><p>挑选一部分的属性，排除掉对应解决问题没有作用的属性<br />因为关系是一个集合，所以删除了特定列后，会导致重复的元祖出现，需要额外操作。属于投影的副作用<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677739046408-1cdb6fb8-0b31-4c1f-accb-3bc8afe01b3b.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686575314519-fdd4bb1e-4802-495d-9ee5-a66c4ee862b2.png" alt="image.png"></p>
+<h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677739385848-096f1beb-a848-457e-820e-bd0e39472992.png" alt="image.png"></p>
+<ol>
+<li>等值连接：A可以是年龄，B是价格，A、B属性值相等，就可以连接。A B并不一定要相等</li>
+<li>自然连接：A B中是相同的含义、相同的域，只是隶属于不同关系</li>
+</ol>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677739584661-7bd4cd66-103d-443a-9f99-01e28632c3c8.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677739813112-556e68ac-f251-4300-9a61-5c381f5e170f.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677811604722-b2bff014-2c9e-454e-95b4-9bc396aee860.png" alt="image.png"><br>R的第四个元组和S的第五个元组都是<strong>悬浮元组</strong></p>
+<h3 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677740696900-73ff8395-273a-47bd-bfe1-5a8edd230a56.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677811929654-5daa923c-a026-40b6-96a9-36d90cd42fbc.png" alt="image.png"></p>
+<h3 id="除操作"><a href="#除操作" class="headerlink" title="除操作"></a>除操作</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686576270841-05dedc96-ca6c-4e75-b8fa-5a5b9ed31af5.png" alt="image.png"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Imomoco/article/details/102727039">数据库-——关系代数的除法运算</a><br><strong>除操作是同时从行和列的角度进行运算</strong><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677741325599-e8be8b05-de57-4123-aa17-7948ea68bdfd.png" alt="image.png"></p>
+<ol>
+<li>棕黄方框只有一个</li>
+<li>蓝绿色方框的a1都满足BC中的</li>
+<li>通过<strong>象集</strong>的概念理解</li>
+</ol>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677741400756-73e18140-8318-48a7-b63c-cf5083227cfc.png" alt="image.png"></p>
+<h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><ol>
+<li>先投影，保留需要的列</li>
+<li>通过除法</li>
+</ol>
+<p><code>sno</code>学号<code>cno</code>课程号<code>sc</code>选修关系<code>cpno</code>先行课<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677741586927-10e365ce-9aad-4526-922f-b85f5a3884b0.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677741594062-5ad2f0fe-a239-48ea-9115-7248d2bd328f.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677741616884-91212c9e-4ab6-4123-84f0-ec045f58628a.png" alt="image.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter02%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/">https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter02%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/%E6%B7%B7%E6%B7%86%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/" title="混淆的知识点"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">混淆的知识点</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter03%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A0%87%E5%87%86%E8%AF%AD%E8%A8%80SQL/" title="Chapter03 - 关系数据库标准语言SQL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Chapter03 - 关系数据库标准语言SQL</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ch08-%E5%85%B3%E7%B3%BB%E3%80%81%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">ch08 关系、关系模式和关系数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F"><span class="toc-number">1.1.</span> <span class="toc-text">域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF%EF%BC%88Cartesian-Product%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">笛卡尔积（Cartesian Product）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B"><span class="toc-number">1.2.1.</span> <span class="toc-text">举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB"><span class="toc-number">1.3.</span> <span class="toc-text">关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">1.3.1.</span> <span class="toc-text">属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%81"><span class="toc-number">1.3.2.</span> <span class="toc-text">码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E7%9A%84%E7%B1%BB%E5%88%AB"><span class="toc-number">1.3.3.</span> <span class="toc-text">关系的类别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%85%B3%E7%B3%BB%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">1.3.4.</span> <span class="toc-text">基本关系的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%85%B3%E7%B3%BB"><span class="toc-number">1.3.5.</span> <span class="toc-text">关系模式与关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.3.6.</span> <span class="toc-text">关系数据库</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch09-%E5%85%B3%E7%B3%BB%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">ch09 关系的完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%B1%BB%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="toc-number">2.1.</span> <span class="toc-text">三类完整性约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E5%AE%8C%E6%95%B4%E6%80%A7-Entity-Integrity"><span class="toc-number">2.2.</span> <span class="toc-text">实体完整性 Entity Integrity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">参照完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E9%97%B4%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-number">2.3.1.</span> <span class="toc-text">关系间的引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E7%A0%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">外码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7%E8%A7%84%E5%88%99"><span class="toc-number">2.3.3.</span> <span class="toc-text">参照完整性规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%AE%9A%E4%B9%89%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-number">2.3.4.</span> <span class="toc-text">用户定义的完整性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch10-%E5%85%B3%E7%B3%BB%E6%93%8D%E4%BD%9C%E5%92%8C%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">ch10 关系操作和关系代数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%93%8D%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">关系操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">关系代数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.1.</span> <span class="toc-text">并操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%AE%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.2.</span> <span class="toc-text">差操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.3.</span> <span class="toc-text">交操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF"><span class="toc-number">3.2.4.</span> <span class="toc-text">笛卡尔积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%8F%B7"><span class="toc-number">3.2.5.</span> <span class="toc-text">记号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9"><span class="toc-number">3.2.6.</span> <span class="toc-text">选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%95%E5%BD%B1"><span class="toc-number">3.2.7.</span> <span class="toc-text">投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.2.8.</span> <span class="toc-text">连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.2.9.</span> <span class="toc-text">外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.10.</span> <span class="toc-text">除操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B-1"><span class="toc-number">3.2.11.</span> <span class="toc-text">举例</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment7/" title="Experiment7">Experiment7</a><time datetime="2023-06-15T07:52:21.904Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment6/" title="Experiment6">Experiment6</a><time datetime="2023-06-15T07:52:21.901Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment5/" title="Experiment5">Experiment5</a><time datetime="2023-06-15T07:52:21.899Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment4/" title="Experiment4">Experiment4</a><time datetime="2023-06-15T07:52:21.898Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment3/" title="Experiment3">Experiment3</a><time datetime="2023-06-15T07:52:21.895Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

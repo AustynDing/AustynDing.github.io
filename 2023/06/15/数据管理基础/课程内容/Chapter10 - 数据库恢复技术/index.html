@@ -1,0 +1,553 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Chapter10 - 数据库恢复技术 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ch48 事务事务(Transaction)是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。事务和程序是两个概念  在关系数据库中，一个事务可以是一条SQL语句，一组SQL语句或整个程序 一个程序通常包含多个事务  事务是恢复和并发控制的基本单位 定义事务COMMIT:  事务正常结束 提交事务的所有操作（读+更新） 事务中所有对数据库的更新写回到磁盘上的物">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter10 - 数据库恢复技术">
+<meta property="og:url" content="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter10%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="ch48 事务事务(Transaction)是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。事务和程序是两个概念  在关系数据库中，一个事务可以是一条SQL语句，一组SQL语句或整个程序 一个程序通常包含多个事务  事务是恢复和并发控制的基本单位 定义事务COMMIT:  事务正常结束 提交事务的所有操作（读+更新） 事务中所有对数据库的更新写回到磁盘上的物">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-06-15T07:02:38.463Z">
+<meta property="article:modified_time" content="2023-06-15T07:53:48.202Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter10%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Chapter10 - 数据库恢复技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-06-15 15:53:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Chapter10 - 数据库恢复技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-15T07:02:38.463Z" title="发表于 2023-06-15 15:02:38">2023-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-15T07:53:48.202Z" title="更新于 2023-06-15 15:53:48">2023-06-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/">数据管理基础</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/">课程内容</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Chapter10 - 数据库恢复技术"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ch48-事务"><a href="#ch48-事务" class="headerlink" title="ch48 事务"></a>ch48 事务</h1><p>事务(Transaction)是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。<br />事务和程序是两个概念</p>
+<ul>
+<li>在关系数据库中，一个事务可以是一条SQL语句，一组SQL语句或整个程序</li>
+<li>一个程序通常包含多个事务</li>
+</ul>
+<p>事务是恢复和并发控制的基本单位</p>
+<h2 id="定义事务"><a href="#定义事务" class="headerlink" title="定义事务"></a>定义事务</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686108977614-465f25e2-1a8e-47e5-87a4-d4d0dfd55d84.png" alt="image.png"><br>COMMIT:</p>
+<ul>
+<li>事务正常结束</li>
+<li><strong>提交事务的所有操作（读+更新）</strong></li>
+<li>事务中所有对数据库的更新写回到磁盘上的物理数据库中</li>
+</ul>
+<p>ROLLBACK:</p>
+<ul>
+<li>事务异常</li>
+<li><strong>终止事务运行的过程中发生了故障，不能继续执行</strong></li>
+<li>系统将事务中对数据库的所有已完成的操作<strong>全部撤销</strong></li>
+<li>事务滚回到开始时的状态</li>
+</ul>
+<h2 id="事务的特性"><a href="#事务的特性" class="headerlink" title="事务的特性"></a>事务的特性</h2><p><strong>事务的ACID特性</strong>：</p>
+<ol>
+<li>原子性（Atomicity）</li>
+<li>一致性（Consistency）</li>
+<li>隔离性（Isolation）</li>
+<li>持续性&#x2F;持久性（Durability）</li>
+</ol>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>事务是数据库的逻辑工作单位事务中包括的诸操作<strong>要么都做，要么都不做all or nothing</strong></p>
+<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>事务执行的结果必须是使数据库从一个一致性状态变到另一个一致性状态</p>
+<ul>
+<li>一致性状态：数据库中只包含成功事务提交的结果</li>
+<li>不一致状态：<ul>
+<li>数据库系统运行中发生故障，有些事务尚未完成就被迫中断</li>
+<li>这些未完成事务对数据库所做的修改有一部分已写入物理数据库，这时数据库就处于一种不正确的状态</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686109343186-956b8fb9-6a55-4f93-9da4-e2545aafc3c2.png" alt="image.png"></p>
+<h3 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h3><p>隔离性</p>
+<ul>
+<li>一个事务的执行不能被其他事务干扰</li>
+<li>一个事务内部的操作及使用的数据对其他并发事务是隔离的</li>
+<li>并发执行的各个事务之间不能互相干扰</li>
+</ul>
+<h3 id="持续性"><a href="#持续性" class="headerlink" title="持续性"></a>持续性</h3><p>持续性也称永久性（Permanence）</p>
+<ul>
+<li>一个事务一旦提交，它对数据库中数据的改变就应该是永久性的。</li>
+<li>接下来的其他操作或故障不应该对其执行结果有任何影响。</li>
+</ul>
+<h3 id="事务的特性-1"><a href="#事务的特性-1" class="headerlink" title="事务的特性"></a>事务的特性</h3><p>保证事务ACID特性是事务处理的任务<br />破坏事务ACID特性的因素</p>
+<ul>
+<li>多个事务并行运行时，不同事务的操作交叉执行<ul>
+<li>数据库管理系统必须<strong>保证多个事务的交叉运行不影响这些事务的隔离性</strong></li>
+</ul>
+</li>
+<li>事务在运行过程中被强行停止<ul>
+<li>数据库管理系统必须**保证被强行终止的事务对数据库和其他事务没有任何影响 **</li>
+</ul>
+</li>
+</ul>
+<h1 id="ch49-故障和数据库恢复"><a href="#ch49-故障和数据库恢复" class="headerlink" title="ch49 故障和数据库恢复"></a>ch49 故障和数据库恢复</h1><p>故障是不可避免的</p>
+<ul>
+<li>计算机硬件故障</li>
+<li>软件的错误</li>
+<li>操作员的失误</li>
+<li>恶意的破坏</li>
+</ul>
+<p>故障的影响</p>
+<ul>
+<li>运行事务非正常中断，影响数据库中数据的正确性</li>
+<li>破坏数据库，全部或部分丢失数据</li>
+</ul>
+<p>数据库的恢复数据库：管理系统必须具有把数据库从错误状态恢复到某一已知的正确状态(亦称为一致状态或完整状态)的功能，这就是数据库的恢复管理系统对故障的对策<br />恢复子系统是数据库管理系统的一个重要组成部分<br />恢复技术是衡量系统优劣的重要指标</p>
+<h2 id="故障"><a href="#故障" class="headerlink" title="故障"></a>故障</h2><p>故障的种类：</p>
+<ul>
+<li>事务内部的故障</li>
+<li>系统故障</li>
+<li>介质故障</li>
+<li>计算机病毒</li>
+</ul>
+<p>各类故障，对数据库的影响有两种可能性</p>
+<ul>
+<li>一是数据库本身被破坏</li>
+<li>二是数据库没有被破坏，但数据可能不正确，这是由于<strong>事务的运行被非正常终止造成的。</strong></li>
+</ul>
+<h2 id="事物内部的故障"><a href="#事物内部的故障" class="headerlink" title="事物内部的故障"></a>事物内部的故障</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686109998816-3f4d32c4-4346-45a6-88d1-132aae3c2b26.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686110014397-0d230e17-7207-41a6-8a44-3f44cec88db9.png" alt="image.png"></p>
+<h3 id="事务故障的恢复"><a href="#事务故障的恢复" class="headerlink" title="事务故障的恢复"></a>事务故障的恢复</h3><p>事务故障意味着</p>
+<ul>
+<li>事务没有达到预期的终点(COMMIT或者显式的ROLLBACK)</li>
+<li>数据库可能处于不正确状态。</li>
+</ul>
+<p>事务故障的恢复：事务撤消（UNDO）<br />强行回滚（ROLLBACK）该事务：撤销该事务已经作出的任何对数据库的修改，使得该事务象根本没有启动一样</p>
+<h2 id="系统故障"><a href="#系统故障" class="headerlink" title="系统故障"></a>系统故障</h2><p>系统故障，称为软故障，是指造成系统停止运转的任何事件（特定类型的硬件错误（如CPU故障）、操作系统故障、数据库管理系统代码错误、系统断电），使得系统要重新启动。 </p>
+<ul>
+<li>整个系统的正常运行突然被破坏</li>
+<li>所有正在运行的事务都非正常终止</li>
+<li>不破坏数据库</li>
+<li>内存中数据库缓冲区的信息全部丢失</li>
+</ul>
+<h3 id="系统故障的恢复"><a href="#系统故障的恢复" class="headerlink" title="系统故障的恢复"></a>系统故障的恢复</h3><ul>
+<li>发生系统故障时，一些尚未完成的事务的结果可能已送入物理数据库，造成数据库可能处于不正确状态。 <ul>
+<li>恢复策略：系统重新启动时，恢复程序让所有非正常终止的事务回滚，<strong>强行撤消（UNDO）所有未完成事务</strong></li>
+</ul>
+</li>
+<li>发生系统故障时，有些已完成的事务可能有一部分甚至全部留在缓冲区，尚未写回到磁盘上的物理数据库中，系统故障使得这些事务对数据库的修改部分或全部丢失<ul>
+<li>恢复策略：系统重新启动时，恢复程序需要<strong>重做（REDO）所有已提交的事务</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686309208696-df71fea0-a86d-436b-ad14-1d2043be6b2f.png" alt="image.png"></p>
+<h2 id="介质故障"><a href="#介质故障" class="headerlink" title="介质故障"></a>介质故障</h2><p><strong>介质故障，称为硬故障，指外存故障</strong></p>
+<ul>
+<li>磁盘损坏</li>
+<li>磁头碰撞</li>
+<li>瞬时强磁场干扰</li>
+<li>介质故障破坏数据库或部分数据库，并影响正在存取这部分数据的所有事务</li>
+<li>介质故障比前两类故障的<strong>可能性小得多，但破坏性大得多</strong></li>
+</ul>
+<h2 id="计算机病毒"><a href="#计算机病毒" class="headerlink" title="计算机病毒"></a>计算机病毒</h2><p>计算机病毒</p>
+<ul>
+<li>一种人为的故障或破坏，是一些恶作剧者研制的一种计算机程序</li>
+<li>可以繁殖和传播，造成对计算机系统包括数据库的危害</li>
+</ul>
+<p>计算机病毒已成为计算机系统的主要威胁，自然也是数据库系统的主要威胁<br />数据库一旦被破坏仍要用恢复技术把数据库加以恢复</p>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><ul>
+<li>恢复操作的基本原理：<strong>冗余</strong><ul>
+<li><strong>利用存储在系统别处的冗余数据来重建数据库中已被破坏或不正确的那部分数据</strong></li>
+</ul>
+</li>
+<li>恢复的实现技术：复杂<ul>
+<li>一个大型数据库产品，恢复子系统的代码要占全部代码的10%以上</li>
+</ul>
+</li>
+<li>恢复机制涉及的关键问题：<ul>
+<li><strong>如何建立冗余数据</strong>（数据转储，登记日志文件）</li>
+<li><strong>如何利用这些冗余数据实施数据库恢复</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="ch50-数据转储和日志文件"><a href="#ch50-数据转储和日志文件" class="headerlink" title="ch50 数据转储和日志文件"></a>ch50 数据转储和日志文件</h1><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686309566911-a152eb81-1e1c-435f-a1cb-670bf57c10e5.png" alt="image.png"></p>
+<h2 id="数据转储"><a href="#数据转储" class="headerlink" title="数据转储"></a>数据转储</h2><ul>
+<li>转储是指数据库管理员定期地将整个数据库复制到磁带、磁盘或其他存储介质上保存起来的过程</li>
+<li>备用的数据文本称为后备副本(backup)或后援副本</li>
+<li>数据库遭到破坏后可以将后备副本重新装入</li>
+<li>重装后备副本<strong>只能将数据库恢复到转储时的状态</strong></li>
+<li><strong>要想恢复到故障发生时的状态，必须重新运行自转储以后的所有更新事务</strong></li>
+</ul>
+<p>一个事务中有一个控制流，从入口到出口的路径。<br />ta和tb的数据库状态是一样的：数据库此时是静态的，只能访问，不能增删改查<br />恢复：在运行事务后出错时，需要尽量的逼近。理论上是恢复到Tf之前的某一刻的一致性状态。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686309655248-983dddff-b871-4c77-a5a2-45acc3d4febf.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686309811986-6fae8c3a-755d-4f92-b084-fda9a04e0a30.png" alt="image.png"></p>
+<h3 id="静态转储"><a href="#静态转储" class="headerlink" title="静态转储"></a>静态转储</h3><p>没有对数据库进行增删改的事务（all or nothing一个事务如果全是读操作，其实和不操作一样。如果讨论事务，基本有对数据库进行增删改），所以也可以理解为无运行事务<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683620615064-5b43d1f8-8fe7-4010-b22c-ca8e51d4c6f9.png" alt="image.png"><br>适用场景：应用可以有一段时间的暂停（只能查询）</p>
+<h3 id="动态转储"><a href="#动态转储" class="headerlink" title="动态转储"></a>动态转储</h3><p>恢复过程中应用是不可用的状态。但是转储还是可以并发<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683620854256-2cf09977-4fed-4d4d-9d57-64f4cb8abbac.png" alt="image.png"></p>
+<ul>
+<li>不能保证备份的时间点，某个数据资源具有一致性。还没来得及执行完或者还没有来得及回滚。</li>
+<li>当前记录是以事务为粒度，而某一个时刻可以是事务中的一个状态</li>
+<li>没有办法等待到一个合适的时机去备份</li>
+<li>所以，需要记录事务中的每一次增删改操作</li>
+</ul>
+<h3 id="海量转储与增量转储"><a href="#海量转储与增量转储" class="headerlink" title="海量转储与增量转储"></a>海量转储与增量转储</h3><p>恢复更方便：海量转储<br />备份更方便：增量转储<br />增量：需要把若干个备份累计在一块<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683621507040-97f1b855-438e-4196-b0f0-7523812db736.png" alt="image.png"></p>
+<h2 id="日志文件"><a href="#日志文件" class="headerlink" title="日志文件"></a>日志文件</h2><p>记录的是事务的更新操作（粒度更细）<br />记录查询操作：</p>
+<ul>
+<li>方便对权限进行管理</li>
+<li>方便及时发现异常</li>
+<li>更新日志会变得很大：增删改的次数（因为数据库的标准操作是按需操作）远远小于查询次数</li>
+</ul>
+<p>以记录为单位：对元组&#x2F;属性进行修改-逻辑层</p>
+<ul>
+<li><strong>日志文件(log file)是用来记录事务对数据库的更新操作的文件</strong></li>
+<li>日志文件的格式<ul>
+<li>以记录为单位的日志文件</li>
+<li>以数据块为单位的日志文件</li>
+</ul>
+</li>
+<li>用途<ul>
+<li>进行<strong>事务故障恢复</strong></li>
+<li>进行<strong>系统故障恢复</strong></li>
+<li>协助后备副本进行<strong>介质故障恢复</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="以记录为单位的日志文件"><a href="#以记录为单位的日志文件" class="headerlink" title="以记录为单位的日志文件"></a>以记录为单位的日志文件</h3><p>以记录为单位的日志文件，<strong>日志文件</strong>中的**一个日志记录(log record)**包含</p>
+<ul>
+<li>各个事务的开始标记(BEGIN TRANSACTION)</li>
+<li>各个事务的结束标记(COMMIT或ROLLBACK)</li>
+<li>各个事务的所有更新操作</li>
+</ul>
+<p>以记录为单位的日志文件，<strong>每条日志记录的内容</strong></p>
+<ul>
+<li>事务标识（标明是哪个事务)</li>
+<li>操作类型（插入、删除或修改)</li>
+<li>操作对象（记录内部标识)</li>
+<li>更新前数据的旧值（对插入操作而言，此项为空值)</li>
+<li>更新后数据的新值（对删除操作而言,此项为空值)</li>
+</ul>
+<h3 id="以数据块为单位的日志文件"><a href="#以数据块为单位的日志文件" class="headerlink" title="以数据块为单位的日志文件"></a>以数据块为单位的日志文件</h3><p>以数据块为单位的日志文件，每条日志记录的内容</p>
+<ul>
+<li>事务标识</li>
+<li>被更新的数据块</li>
+</ul>
+<h3 id="日志文件的作用"><a href="#日志文件的作用" class="headerlink" title="日志文件的作用"></a>日志文件的作用</h3><p>具体作用</p>
+<ul>
+<li><strong>事务故障恢复（会在中途故障）和系统故障恢复</strong>必须用日志文件。</li>
+<li><strong>在动态转储方式中必须建立日志文件</strong>，后备副本和日志文件结合起来才能有效地恢复数据库。</li>
+</ul>
+<p>在静态转储方式（是一致性状态，所以可以不建立日志文件）中，也可以建立日志文件。</p>
+<ul>
+<li>当数据库毁坏后可重新装入后援副本把数据库恢复到转储结束时刻的正确状态</li>
+<li><strong>利用日志文件，把已完成的事务进行重做处理</strong></li>
+<li><strong>对故障发生时尚未完成的事务进行撤销处理</strong></li>
+<li>不必重新运行（可能需要大量的其他资源）那些已完成的事务程序就可把数据库恢复到故障前某一时刻的正确状态：根据各位的成绩算均分，进行更新。<ul>
+<li>如果重做，需要重新+200多次。</li>
+<li>日志文件：读200+的成绩，不会留有记录。算出均分，更新某一元组的某一属性：0-&gt;78。会有3条记录：开始，更新0变78，提交</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683622663449-2e1c87e0-f623-428f-af2f-ee5bdaa3e102.png" alt="image.png"></p>
+<h3 id="登记日志文件"><a href="#登记日志文件" class="headerlink" title="登记日志文件"></a>登记日志文件</h3><p>为保证数据库是可恢复的，登记日志文件时必须遵循两条原则</p>
+<ul>
+<li><strong>登记的次序严格按并发事务执行的时间次序</strong></li>
+<li><strong>必须先写日志文件，后写数据库</strong><ul>
+<li>写日志文件操作：把表示这个修改的日志记录写到日志文件中</li>
+<li>写数据库操作：把对数据的修改写到数据库中（可以根据日志文件实现该数据库操作，防止先操作数据库时，数据库崩溃，就不知到0变78是什么时候发生的）</li>
+</ul>
+</li>
+</ul>
+<p>为什么要先写日志文件</p>
+<ul>
+<li>写数据库和写日志文件是两个不同的操作</li>
+<li>在这两个操作之间可能发生故障</li>
+<li>如果先写了数据库修改，而在日志文件中没有登记下这个修改，则以后就无法恢复这个修改了</li>
+<li>如果先写日志，但没有修改数据库，按日志文件恢复时只不过是多执行一次不必要的UNDO操作，并不会影响数据库的正确性</li>
+</ul>
+<h1 id="ch51-恢复策略"><a href="#ch51-恢复策略" class="headerlink" title="ch51 恢复策略"></a>ch51 恢复策略</h1><p>事务故障：在业务上没有触发一个正常的终止链</p>
+<h2 id="事务故障的恢复-1"><a href="#事务故障的恢复-1" class="headerlink" title="事务故障的恢复"></a>事务故障的恢复</h2><ul>
+<li>事务故障：事务在运行至正常终止点前被终止</li>
+<li>恢复方法：由恢复子系统**利用日志文件撤消(UNDO)**此事务已对数据库进行的修改</li>
+<li>事务故障的恢复由系统自动完成，对用户是透明的，不需要用户干预</li>
+</ul>
+<h2 id="事务故障的恢复步骤"><a href="#事务故障的恢复步骤" class="headerlink" title="事务故障的恢复步骤"></a>事务故障的恢复步骤</h2><p>反向扫描文件日志（即从最后向前扫描日志文件），查找该事务的更新操作。对该事务的更新操作执行逆操作。即将日志记录中“更新前的值” 写入数据库。</p>
+<ul>
+<li>插入操作， “更新前的值”为空，则相当于做删除操作</li>
+<li>删除操作，“更新后的值”为空，则相当于做插入操作</li>
+<li>若是修改操作，则相当于用修改前值代替修改后值</li>
+</ul>
+<p>继续反向扫描日志文件，查找该事务的其他更新操作，并做同样处理。<br />如此处理下去，<strong>直至读到此事务的开始标记，事务故障恢复就完成了。</strong></p>
+<h2 id="系统故障的恢复-1"><a href="#系统故障的恢复-1" class="headerlink" title="系统故障的恢复"></a>系统故障的恢复</h2><p>系统故障造成数据库不一致状态的原因</p>
+<ul>
+<li>未完成事务对数据库的更新可能已写入数据库</li>
+<li>已提交事务对数据库的更新可能还留在缓冲区没来得及写入数据库</li>
+</ul>
+<p>恢复方法</p>
+<ul>
+<li><strong>Undo 故障发生时未完成的事务</strong></li>
+<li><strong>Redo 已完成的事务</strong></li>
+</ul>
+<p>系统故障的恢复由系统在重新启动时自动完成，不需要用户干预</p>
+<h2 id="系统故障的恢复步骤"><a href="#系统故障的恢复步骤" class="headerlink" title="系统故障的恢复步骤"></a>系统故障的恢复步骤</h2><ol>
+<li>正向扫描日志文件（即从头扫描日志文件）</li>
+</ol>
+<ul>
+<li>重做(REDO) 队列: 在故障发生前已经提交的事务<ul>
+<li>这些事务既有BEGIN TRANSACTION记录，也有COMMIT记录</li>
+</ul>
+</li>
+<li>撤销 (UNDO)队列:故障发生时尚未完成的事务<ul>
+<li>这些事务只有BEGIN TRANSACTION记录，无相应的COMMIT记录</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>对撤销(UNDO)队列事务进行撤销(UNDO)处理<ol>
+<li>反向扫描日志文件，<strong>对每个撤销事务的更新操作执行逆操作</strong></li>
+<li>即将日志记录中“更新前的值”写入数据库</li>
+</ol>
+</li>
+<li>对重做(REDO)队列事务进行重做(REDO)处理<ol>
+<li>正向扫描日志文件，<strong>对每个重做事务重新执行登记的操作</strong></li>
+<li>即将日志记录中“更新后的值”写入数据库</li>
+</ol>
+</li>
+</ol>
+<h2 id="介质故障的恢复"><a href="#介质故障的恢复" class="headerlink" title="介质故障的恢复"></a>介质故障的恢复</h2><ul>
+<li>介质故障的恢复的工作<ul>
+<li>重装数据库</li>
+<li>重做已完成的事务</li>
+</ul>
+</li>
+<li>介质故障的恢复需要数据库管理员介入</li>
+<li>数据库管理员的工作<ul>
+<li>重装最近转储的数据库副本和有关的各日志文件副本</li>
+<li>执行系统提供的恢复命令</li>
+</ul>
+</li>
+<li>具体的恢复操作仍由数据库管理系统完成</li>
+</ul>
+<h2 id="介质故障的恢复步骤"><a href="#介质故障的恢复步骤" class="headerlink" title="介质故障的恢复步骤"></a>介质故障的恢复步骤</h2><ul>
+<li><strong>装入最新的后备数据库副本</strong>(离故障发生时刻最近的转储副本) ，<strong>使数据库恢复到最近一次转储时的一致性状态。</strong><ul>
+<li>对于静态转储的数据库副本，装入后数据库即处于一致性状态</li>
+<li>对于动态转储的数据库副本，还须<strong>同时装入转储时刻的日志文件副本</strong>，利用恢复系统故障的方法（即<strong>REDO+UNDO</strong>），才能将数据库恢复到一致性状态。</li>
+</ul>
+</li>
+<li><strong>装入有关的日志文件副本(转储结束时刻的日志文件副本) ，重做已完成的事务。</strong><ul>
+<li>首先扫描日志文件，找出故障发生时已提交的事务的标识，将其记入重做队列。</li>
+<li>然后正向扫描日志文件，对重做队列中的所有事务进行重做处理。即将日志记录中“更新后的值”写入数据库。</li>
+</ul>
+</li>
+</ul>
+<h1 id="ch52-具有检查点的恢复技术"><a href="#ch52-具有检查点的恢复技术" class="headerlink" title="ch52 具有检查点的恢复技术"></a>ch52 具有检查点的恢复技术</h1><p>恢复的两个问题</p>
+<ul>
+<li><strong>搜索整个日志将耗费大量的时间</strong></li>
+<li><strong>重做处理：重新执行，浪费了大量时间</strong></li>
+</ul>
+<p>具有检查点（checkpoint）的恢复技术</p>
+<ul>
+<li>在日志文件中增加检查点记录（checkpoint）</li>
+<li>增加重新开始文件</li>
+<li>恢复子系统在登录日志文件期间动态地维护日志</li>
+</ul>
+<h2 id="检查点技术"><a href="#检查点技术" class="headerlink" title="检查点技术"></a>检查点技术</h2><p>检查点记录的内容</p>
+<ul>
+<li>建立检查点时刻所有正在执行的事务清单</li>
+<li>这些事务最近一个日志记录的地址</li>
+</ul>
+<p>重新开始文件的内容</p>
+<ul>
+<li>记录各个检查点记录在日志文件中的地址</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683625265440-b09e9893-de09-4e84-ab35-029d7abc7472.png" alt="image.png"></p>
+<h2 id="维护日志文件的方法"><a href="#维护日志文件的方法" class="headerlink" title="维护日志文件的方法"></a>维护日志文件的方法</h2><p>动态维护日志文件的方法</p>
+<ul>
+<li>周期性地执行如下操作：建立检查点，保存数据库状态。</li>
+<li>具体步骤是：<ul>
+<li>将当前<strong>日志缓冲区</strong>中的所有日志记录写入磁盘的日志文件上</li>
+<li>在日志文件中写入一个检查点记录</li>
+<li><strong>将当前数据缓冲区的所有数据记录写入磁盘的数据库中</strong>（强制要求把所有数据都记录在磁盘中了。因此，只需要从该checkpoint后开始）</li>
+<li>把检查点记录在日志文件中的地址写入一个重新开始文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="建立检查点"><a href="#建立检查点" class="headerlink" title="建立检查点"></a>建立检查点</h2><p>恢复子系统可以定期或不定期地建立检查点,保存数据库状态 </p>
+<ul>
+<li>定期：按照预定的一个时间间隔，如每隔一小时建立一个检查点</li>
+<li>不定期：按照某种规则，如日志文件已写满一半建立一个检查点</li>
+</ul>
+<h2 id="利用检查点的恢复策略"><a href="#利用检查点的恢复策略" class="headerlink" title="利用检查点的恢复策略"></a>利用检查点的恢复策略</h2><p>使用检查点方法可以改善恢复效率</p>
+<ul>
+<li>当事务T在一个检查点之前提交，T对数据库所做的修改已写入数据库</li>
+<li>写入时间是在这个检查点建立之前或在这个检查点建立之时，在进行恢复处理时，没有必要对事务T执行重做操作</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683625515068-274a9e2b-0c2b-4736-90d1-db5ba665768a.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683625847672-9b75ca09-b1fd-4fd0-bc2d-37c1fd360f52.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683625828736-bb9843d5-f99b-452c-9136-adfd3807895b.png" alt="image.png"></p>
+<h1 id="ch53-数据库镜像"><a href="#ch53-数据库镜像" class="headerlink" title="ch53 数据库镜像"></a>ch53 数据库镜像</h1><p>介质故障是对系统影响最为严重的一种故障，严重影响数据库的可用性</p>
+<ul>
+<li>介质故障恢复比较费时</li>
+<li>为预防介质故障，数据库管理员必须周期性地转储数据库</li>
+</ul>
+<p>提高数据库可用性的解决方案：数据库镜像（Mirror）<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683625922902-0bc2eea5-1f17-4a0b-9b2a-375b49febdfe.png" alt="image.png"></p>
+<h2 id="出现介质故障"><a href="#出现介质故障" class="headerlink" title="出现介质故障"></a>出现介质故障</h2><ul>
+<li>可由镜像磁盘继续提供使用</li>
+<li>同时数据库管理系统自动利用镜像磁盘数据进行数据库的恢复</li>
+<li>不需要关闭系统和重装数据库副本</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683626031333-260347b3-a745-41f2-833e-a0218927c3f6.png" alt="image.png"></p>
+<h2 id="没有出现故障"><a href="#没有出现故障" class="headerlink" title="没有出现故障"></a>没有出现故障</h2><ul>
+<li>可用于并发操作</li>
+<li>一个用户对数据加排他锁修改数据，其他用户可以读镜像数据库上的数据，而不必等待该用户释放锁</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1683626045794-22f87b29-9bc9-401b-915d-091d181562e9.png" alt="image.png"><br>频繁地复制数据自然会降低系统运行效率</p>
+<ul>
+<li>在实际应用中用户往往<strong>只选择对关键数据和日志文件镜像</strong></li>
+<li>不是对整个数据库进行镜像</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter10%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/">https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter10%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter06%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/" title="Chapter06 - 关系数据理论"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Chapter06 - 关系数据理论</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter11%20-%20%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" title="Chapter11 - 并发控制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Chapter11 - 并发控制</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ch48-%E4%BA%8B%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">ch48 事务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%BA%8B%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">定义事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">事务的特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="toc-number">1.2.1.</span> <span class="toc-text">原子性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.2.2.</span> <span class="toc-text">一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%94%E7%A6%BB%E6%80%A7"><span class="toc-number">1.2.3.</span> <span class="toc-text">隔离性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%81%E7%BB%AD%E6%80%A7"><span class="toc-number">1.2.4.</span> <span class="toc-text">持续性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%89%B9%E6%80%A7-1"><span class="toc-number">1.2.5.</span> <span class="toc-text">事务的特性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch49-%E6%95%85%E9%9A%9C%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D"><span class="toc-number">2.</span> <span class="toc-text">ch49 故障和数据库恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%85%E9%9A%9C"><span class="toc-number">2.1.</span> <span class="toc-text">故障</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E7%89%A9%E5%86%85%E9%83%A8%E7%9A%84%E6%95%85%E9%9A%9C"><span class="toc-number">2.2.</span> <span class="toc-text">事物内部的故障</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E6%95%85%E9%9A%9C%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="toc-number">2.2.1.</span> <span class="toc-text">事务故障的恢复</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%95%85%E9%9A%9C"><span class="toc-number">2.3.</span> <span class="toc-text">系统故障</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%95%85%E9%9A%9C%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="toc-number">2.3.1.</span> <span class="toc-text">系统故障的恢复</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E8%B4%A8%E6%95%85%E9%9A%9C"><span class="toc-number">2.4.</span> <span class="toc-text">介质故障</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%97%85%E6%AF%92"><span class="toc-number">2.5.</span> <span class="toc-text">计算机病毒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D"><span class="toc-number">2.6.</span> <span class="toc-text">恢复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch50-%E6%95%B0%E6%8D%AE%E8%BD%AC%E5%82%A8%E5%92%8C%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">ch50 数据转储和日志文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E5%82%A8"><span class="toc-number">3.1.</span> <span class="toc-text">数据转储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%BD%AC%E5%82%A8"><span class="toc-number">3.1.1.</span> <span class="toc-text">静态转储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%BD%AC%E5%82%A8"><span class="toc-number">3.1.2.</span> <span class="toc-text">动态转储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E9%87%8F%E8%BD%AC%E5%82%A8%E4%B8%8E%E5%A2%9E%E9%87%8F%E8%BD%AC%E5%82%A8"><span class="toc-number">3.1.3.</span> <span class="toc-text">海量转储与增量转储</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.</span> <span class="toc-text">日志文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E8%AE%B0%E5%BD%95%E4%B8%BA%E5%8D%95%E4%BD%8D%E7%9A%84%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.1.</span> <span class="toc-text">以记录为单位的日志文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E6%95%B0%E6%8D%AE%E5%9D%97%E4%B8%BA%E5%8D%95%E4%BD%8D%E7%9A%84%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.2.</span> <span class="toc-text">以数据块为单位的日志文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">3.2.3.</span> <span class="toc-text">日志文件的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E8%AE%B0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.4.</span> <span class="toc-text">登记日志文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch51-%E6%81%A2%E5%A4%8D%E7%AD%96%E7%95%A5"><span class="toc-number">4.</span> <span class="toc-text">ch51 恢复策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E6%95%85%E9%9A%9C%E7%9A%84%E6%81%A2%E5%A4%8D-1"><span class="toc-number">4.1.</span> <span class="toc-text">事务故障的恢复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E6%95%85%E9%9A%9C%E7%9A%84%E6%81%A2%E5%A4%8D%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.2.</span> <span class="toc-text">事务故障的恢复步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%95%85%E9%9A%9C%E7%9A%84%E6%81%A2%E5%A4%8D-1"><span class="toc-number">4.3.</span> <span class="toc-text">系统故障的恢复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%95%85%E9%9A%9C%E7%9A%84%E6%81%A2%E5%A4%8D%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.4.</span> <span class="toc-text">系统故障的恢复步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E8%B4%A8%E6%95%85%E9%9A%9C%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="toc-number">4.5.</span> <span class="toc-text">介质故障的恢复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E8%B4%A8%E6%95%85%E9%9A%9C%E7%9A%84%E6%81%A2%E5%A4%8D%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.6.</span> <span class="toc-text">介质故障的恢复步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch52-%E5%85%B7%E6%9C%89%E6%A3%80%E6%9F%A5%E7%82%B9%E7%9A%84%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF"><span class="toc-number">5.</span> <span class="toc-text">ch52 具有检查点的恢复技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%82%B9%E6%8A%80%E6%9C%AF"><span class="toc-number">5.1.</span> <span class="toc-text">检查点技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">维护日志文件的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="toc-number">5.3.</span> <span class="toc-text">建立检查点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A3%80%E6%9F%A5%E7%82%B9%E7%9A%84%E6%81%A2%E5%A4%8D%E7%AD%96%E7%95%A5"><span class="toc-number">5.4.</span> <span class="toc-text">利用检查点的恢复策略</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch53-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%95%9C%E5%83%8F"><span class="toc-number">6.</span> <span class="toc-text">ch53 数据库镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E4%BB%8B%E8%B4%A8%E6%95%85%E9%9A%9C"><span class="toc-number">6.1.</span> <span class="toc-text">出现介质故障</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%9C%89%E5%87%BA%E7%8E%B0%E6%95%85%E9%9A%9C"><span class="toc-number">6.2.</span> <span class="toc-text">没有出现故障</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment7/" title="Experiment7">Experiment7</a><time datetime="2023-06-15T07:52:21.904Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment6/" title="Experiment6">Experiment6</a><time datetime="2023-06-15T07:52:21.901Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment5/" title="Experiment5">Experiment5</a><time datetime="2023-06-15T07:52:21.899Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment4/" title="Experiment4">Experiment4</a><time datetime="2023-06-15T07:52:21.898Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment3/" title="Experiment3">Experiment3</a><time datetime="2023-06-15T07:52:21.895Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

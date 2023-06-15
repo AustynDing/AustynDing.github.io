@@ -1,0 +1,640 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Chapter06 - 关系数据理论 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ch32 关系模式及范式U和D：不同属性可以拥有相同的域 数据依赖数据依赖  是一个关系内部属性与属性之间的一种约束关系 通过属性间值的相等与否体现出来的数据间相关联系是现实世界属性间相互联系的抽象 是数据内在的性质 是语义的体现   数据依赖的主要类型 函数依赖（Functional Dependency，简记为FD) 多值依赖（Multi-Valued Dependency，简记为MVD)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter06 - 关系数据理论">
+<meta property="og:url" content="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter06%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="ch32 关系模式及范式U和D：不同属性可以拥有相同的域 数据依赖数据依赖  是一个关系内部属性与属性之间的一种约束关系 通过属性间值的相等与否体现出来的数据间相关联系是现实世界属性间相互联系的抽象 是数据内在的性质 是语义的体现   数据依赖的主要类型 函数依赖（Functional Dependency，简记为FD) 多值依赖（Multi-Valued Dependency，简记为MVD)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-06-15T07:02:39.285Z">
+<meta property="article:modified_time" content="2023-06-15T07:53:42.404Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter06%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Chapter06 - 关系数据理论',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-06-15 15:53:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Chapter06 - 关系数据理论</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-15T07:02:39.285Z" title="发表于 2023-06-15 15:02:39">2023-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-15T07:53:42.404Z" title="更新于 2023-06-15 15:53:42">2023-06-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/">数据管理基础</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/">课程内容</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Chapter06 - 关系数据理论"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ch32-关系模式及范式"><a href="#ch32-关系模式及范式" class="headerlink" title="ch32 关系模式及范式"></a>ch32 关系模式及范式</h1><p>U和D：不同属性可以拥有相同的域<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681367886563-8d651c22-5f6b-43aa-88e6-7f6a98ddb84d.png" alt="image.png"></p>
+<h2 id="数据依赖"><a href="#数据依赖" class="headerlink" title="数据依赖"></a>数据依赖</h2><p>数据依赖</p>
+<ul>
+<li>是一个关系内部属性与属性之间的一种约束关系<ul>
+<li>通过属性间值的相等与否体现出来的数据间相关联系是现实世界属性间相互联系的抽象</li>
+<li>是数据内在的性质</li>
+<li>是语义的体现</li>
+</ul>
+</li>
+<li>数据依赖的主要类型<ul>
+<li>函数依赖（Functional Dependency，简记为FD)</li>
+<li>多值依赖（Multi-Valued Dependency，简记为MVD)</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682507677102-7f4ba1b8-3991-45da-ab8d-4f718932cea3.png" alt="image.png"></p>
+<h2 id="1NF"><a href="#1NF" class="headerlink" title="1NF"></a>1NF</h2><p>但凡是关系，就是1NF<br /><code>F=&#123;Sno-→Sdept, Sdept→Mname, (Sno, Cno)→Grade&#125;</code><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681368679429-8ea610e1-188d-437f-869b-0a039ed294fb.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682507773791-e76cb493-6023-4c4e-918a-a0c227f7775c.png" alt="image.png"><br>关系模式Student&lt;U, F&gt;中存在的问题:</p>
+<ul>
+<li><strong>数据冗余：不仅浪费空间，也需要统一的完成修改</strong><ul>
+<li>浪费大量的存储空间：每一个系主任的姓名重复出现，重复次数与该系所有学生的所有课程成绩出现次数相同。</li>
+</ul>
+</li>
+<li><strong>更新异常(Update Anomalies)</strong><ul>
+<li>数据冗余，更新数据时，维护数据<strong>完整性</strong>代价大，否则会面临<strong>数据不一致</strong>的情况。</li>
+<li>某系更换系主任后，必须修改与该系学生有关的每一个元组。如果有元组没有修改，则会出错-完整性约束条件出错</li>
+</ul>
+</li>
+<li><strong>插入异常（Insertion Anomalies)</strong><ul>
+<li>如果一个系刚成立，尚无学生，则无法把这个系及其系主任的信息存入数据库。</li>
+</ul>
+</li>
+<li><strong>删除异常（Deletion Anomalies)</strong><ul>
+<li>如果某个系的学生全部毕业了，则在删除该系学生信息的同时，把这个系及其系主任的信息也丢掉了。</li>
+</ul>
+</li>
+<li>结论：Student关系模式不是一个好的模式。</li>
+<li>一个“好”的模式应当<strong>不会发生插入异常、删除异常和更新异常，数据冗余应尽可能少。</strong></li>
+<li>原因：由存在于模式中的某些数据依赖引起的。</li>
+<li>解决方法：用规范化理论改造关系模式来消除其中不合适的数据依赖</li>
+<li>把这个单一的模式分成三个关系模式;</li>
+</ul>
+<p>s(Sno,Sdept,Sno → Sdept);<br />sc(Sno,Cno,Grade,(Sno,Cno)→Grade);<br />DEPT(Sdept,Mname,SdeptMname);<br />这三个模式都不会发生插入异常、删除异常的问题，数据的冗余也得到了控制。</p>
+<ul>
+<li>规范化以后的结果：<ul>
+<li>应该是节约空间的，去除数据的冗余</li>
+<li>浪费了查询的时间，拥有了更多的表，如果涉及到多张表，需要进行连接操作来进行查询</li>
+</ul>
+</li>
+</ul>
+<h2 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681369969827-3ea578ed-ecb9-4ba4-9911-339893fe167d.png" alt="image.png"><br>越往右：越严格，表的划分越细致<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681369983564-940dfc7f-b3bb-4710-9323-9832f90a4533.png" alt="image.png"></p>
+<h1 id="ch33-函数依赖与码"><a href="#ch33-函数依赖与码" class="headerlink" title="ch33 函数依赖与码"></a>ch33 函数依赖与码</h1><h2 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h2><p>定义6.1：设R(U)是一个属性集U上的关系模式，X和Y是U的子集。若对于R(U)的任意一个可能的关系r，r 中不可能存在两个元组在X上的属性值相等， 而在Y上的属性值不等， 则称“X函数确定Y”或“Y函数依赖于X”，记作X→Y，X称为这个函数依赖的决定因素（Determinant）。</p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682508193585-a6236d5f-1736-4afc-b855-5ab8cb36537d.png" alt="image.png"></p>
+<ul>
+<li>函数依赖不是指关系模式R的某个或某些关系实例满足的约束条件，而是<strong>指R的所有关系实例均要满足的约束条件。</strong></li>
+<li>函数依赖<strong>是语义范畴的概念</strong>。只能根据数据的语义来确定函数依赖。<ul>
+<li>例如“姓名→年龄”这个函数依赖只有在不允许有同名人的条件下成立</li>
+</ul>
+</li>
+<li>数据库设计者<strong>可以对现实世界作强制的规定</strong>。<ul>
+<li>例如规定不允许同名人出现，函数依赖“姓名→年龄”成立。所插入的元组必须满足规定的函数依赖，若发现有同名人存在，则拒绝插入该元组。</li>
+</ul>
+</li>
+</ul>
+<h3 id="平凡函数依赖与非平凡函数依赖"><a href="#平凡函数依赖与非平凡函数依赖" class="headerlink" title="平凡函数依赖与非平凡函数依赖"></a>平凡函数依赖与非平凡函数依赖</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682508369861-50a4e71b-5aee-4f08-a4b3-ccaa4d63e130.png" alt="image.png"></p>
+<blockquote>
+<p>举例来说，如果有一个关系模式R(学号，姓名，性别)，那么学号对姓名和性别有非平凡函数依赖，因为学号可以唯一确定姓名和性别，而姓名和性别不是学号的子集。但是学号对学号有平凡函数依赖，因为学号可以由自身确定。同样，姓名对姓名和性别有平凡函数依赖，因为姓名是姓名和性别的子集。</p>
+</blockquote>
+<h3 id="完全函数依赖与部分函数依赖"><a href="#完全函数依赖与部分函数依赖" class="headerlink" title="完全函数依赖与部分函数依赖"></a>完全函数依赖与部分函数依赖</h3><p>完全函数：X不可以拿出部分属性，可以增加部分属性变为部分函数依赖。也就是说，<strong>X的所有属性一起才能决定Y，去掉任何一个属性都不行</strong><br />部分函数：X可以拿出部分属性。也就是说，<strong>X中的部分属性就可以决定Y，用不着全部</strong><br />F：完全依赖，P：部分依赖<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681370921815-f346c388-fd57-45d2-a3cc-8f42c8678199.png" alt="image.png"></p>
+<blockquote>
+<p>举例来说，如果有一个关系模式R(学号，姓名，课程号，成绩)，那么：</p>
+<ul>
+<li>学号和课程号对姓名和成绩有非平凡函数依赖，因为学号和课程号可以唯一确定姓名和成绩，而姓名和成绩不是学号和课程号的子集。</li>
+<li>学号和课程号对姓名有部分函数依赖，因为学号可以单独决定姓名，而不需要课程号。</li>
+<li>学号和课程号对成绩有完全函数依赖，因为学号或课程号单独都不能决定成绩，而只有两者一起才能决定成绩</li>
+</ul>
+</blockquote>
+<h3 id="传递函数依赖"><a href="#传递函数依赖" class="headerlink" title="传递函数依赖"></a>传递函数依赖</h3><p>一一对应：信息量上可以看做是冗余的<br />传递性：从业务逻辑上判断，是由需求决定的依赖关系（直接依赖），还是由推导得出来的依赖关系（传递依赖）。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681371040425-a7b37edc-9508-4afa-b29d-fba2f9dd2382.png" alt="image.png"></p>
+<blockquote>
+<p>如果我知道了一个学生的学号Sno，那我就能知道他所在的系Sdept。(因为理论上一个学生只属于一个系)<br>如果我知道了某一个系Sdept，那么我就能知道这个系的系主任的姓名Mname。(一个系只有一个正的系主任。)<br>也就是说，我知道了一个学生的学号Sno，其实我就知道了他所在系的系主任的姓名Mname。但这个过程中，他们是<strong>不存在直接函数依赖</strong>的，我需要<strong>通过系名称Sdept作为一个桥梁去把二者联系起来的。</strong></p>
+</blockquote>
+<h2 id="码"><a href="#码" class="headerlink" title="码"></a>码</h2><p>在这里，是通过函数依赖的概率来定义码</p>
+<ul>
+<li>如果U<strong>完全依赖</strong>于K，则称K为R的候选码</li>
+<li>如果U<strong>部分依赖</strong>于K，则称K为R的超码</li>
+<li>候选码是最小的超码</li>
+<li>如果候选码多于一个，则选定其中的一个为<strong>主码</strong></li>
+<li>候选码的超集是超码，候选码的真子集一定不是超码</li>
+<li>包含在候选码中的<strong>属性</strong>称为<strong>主属性</strong>(prime attribute)：<strong>主属性是候选码的并集</strong></li>
+<li>不包含在任何候选码中的属性称为<strong>非主属性</strong>(nonprime attribute）或<strong>非码属性</strong>(non-key attribute)（非主属性-&gt;非码属性：不在任何一个候选码中出现过的属性）</li>
+<li>最简单的情况,单个属性是码；最极端的情况，整个属性组是码，称为全码（all-key)。<blockquote>
+<p>在后面的章节中<strong>主码或候选码都简称为码</strong>。读者可以根据上下文加以识别。</p>
+</blockquote>
+</li>
+</ul>
+<p>记录数据时，可以记录完备的数据，也可以记录部分数据</p>
+<ul>
+<li>应用需不需要使用这些数据（要什么记录什么）</li>
+</ul>
+<p>主属性与非主属性：</p>
+<blockquote>
+<p>你之所以为你，是有你的个性和你的共性（挑选个性来区分独特的你 – 候选码挑选为主码的过程）<br>骨架和皮肉（非主属性越多–越具备详细分析的潜在价值，画像越具体）的关系<br>只有骨架：全码</p>
+</blockquote>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682509588786-681c4eb5-290a-4361-a895-a6fde7a92cac.png" alt="image.png"></p>
+<h3 id="外码"><a href="#外码" class="headerlink" title="外码"></a>外码</h3><p>定义6.5 关系模式R中属性或属性组X并非R的码，但X是另一个关系模式的码,则称X是R的外部码（foreign key)，也称外码。<br />如在SC (Sno,Cno, Grade）中，Sno不是码，但Sno是关系模式S (Sno, Sdept, Sage)的码,则 Sno是关系模式SC的外码。<br /><strong>主码与外码提供了一个表示关系间联系的手段</strong>，如例6.2中关系模式S与SC的联系就是通过Sno来体现的。</p>
+<h1 id="ch34-1NF-2NF-3NF"><a href="#ch34-1NF-2NF-3NF" class="headerlink" title="ch34* 1NF 2NF 3NF"></a>ch34* 1NF 2NF 3NF</h1><h2 id="范式-1"><a href="#范式-1" class="headerlink" title="范式"></a>范式</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682509738017-3118b023-95e3-47c1-8b3e-296fbb6e6e42.png" alt="image.png"></p>
+<h2 id="1NF-1"><a href="#1NF-1" class="headerlink" title="1NF"></a>1NF</h2><p>定义：<strong>关系中每一分量不可再分。即不能以集合、序列等作为属性。</strong>（也就是不能表中套表，要保证数据的原子性。）</p>
+<ul>
+<li>如果一个关系模式R的所有属性都是不可分的基本数据项，则R∈1NF。</li>
+<li>第一范式是对关系模式的最起码的要求。不满足第一范式的数据库模式不能称为关系数据库。</li>
+<li>但是满足第一范式的关系模式并不一定是一个好的关系模式。</li>
+</ul>
+<p>举例<br />学生编号	课程编号</p>
+<table>
+<thead>
+<tr>
+<th><strong>学生编号</strong></th>
+<th><strong>课程编号</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S01</td>
+<td>{C1，C2，C3}</td>
+</tr>
+<tr>
+<td>S02</td>
+<td>{C1，C4}</td>
+</tr>
+</tbody></table>
+<p>它就不满足1NF，因为{C1，C2，C3}和{C1，C4}是集合。<br />修改为符合1NF：<br />学生编号	课程编号</p>
+<table>
+<thead>
+<tr>
+<th><strong>学生编号</strong></th>
+<th><strong>课程编号</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S01</td>
+<td>C1</td>
+</tr>
+<tr>
+<td>S01</td>
+<td>C2</td>
+</tr>
+<tr>
+<td>S01</td>
+<td>C3</td>
+</tr>
+<tr>
+<td>S02</td>
+<td>C1</td>
+</tr>
+<tr>
+<td>S02</td>
+<td>C4</td>
+</tr>
+</tbody></table>
+<h2 id="2NF"><a href="#2NF" class="headerlink" title="2NF"></a>2NF</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681372099475-e0443512-2e48-4ce9-8867-0abe821c909d.png" alt="image.png"><br>虚线：部分函数依赖<br />一个关系模式R不属于2NF，就会产生以下几个问题:</p>
+<ol>
+<li><strong>插入异常</strong>。假若要插入一个学生Sno&#x3D;S7，Sdept&#x3D;PHY，Sloc&#x3D;BLD2，但该生还未选课，即这个学生无Cno，这样的元组就插不进S-L-C中。因为<strong>插入元组时必须给定码值,而这时码值的一部分为空，因而学生的固有信息无法插入。</strong></li>
+<li><strong>删除异常</strong>。假定某个学生只选一门课，如S4就选了一门课C3，现在C3这门课他也不选了，那么C3这个数据项就要删除。而C3是主属性，删除了C3，整个元组就必须一起删除，使得S4 的其他信息也被删除了，从而造成删除异常，即<strong>不应删除的信息也删除了。</strong></li>
+<li><strong>修改复杂</strong>。某个学生从数学系（MA）转到计算机科学系（CS)，这本来只需修改此学生元组中的Sdept分量即可，但因为关系模式S-L-C中还含有系的住处Sloc属性，学生转系将同时改变住处，因而还必须修改元组中的Sloc分量。另外，如果这个学生选修了k门课，Sdept、Sloc<strong>重复存储了k次，不仅存储冗余度大，而且必须无遗漏地修改k个元组中全部Sdept、Sloc信息，造成修改的复杂化。</strong></li>
+</ol>
+<h3 id="旧问题解决"><a href="#旧问题解决" class="headerlink" title="旧问题解决"></a>旧问题解决</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681372205228-cb5f3265-7b4d-4f4a-85b5-190c2c92975e.png" alt="image.png"></p>
+<ol>
+<li>插入异常：学生选课和学生基本信息分别在两个表中，所以即使没有选课的学生也可以加入SL。</li>
+<li>删除异常：删除一个学生的选课记录只影响SC,对SL没有影响，大四老哥（没有选课记录了）不用退学了，好耶！</li>
+<li>数据冗余度大：选课跟基本信息不在一张表里，重复的都是必要数据，大大降低了数据冗余。修改复杂：数据都不怎么冗余了，修改操作自然也随之减少</li>
+</ol>
+<h3 id="新问题出现"><a href="#新问题出现" class="headerlink" title="新问题出现"></a>新问题出现</h3><p>SL中仍存在着对于我们简化关系结构有障碍的关系，即Sloc对于Sdept的函数依赖，这个关系我们是不想要的，他看上去很多余，明明已经可以通过Sno确定Sloc，可是Sloc偏偏还和Sdept有不得不说的关系，这个关系也导致SL存在一些问题。</p>
+<ol>
+<li>插入异常：一个系刚刚成立，还没有学生，那么码Sno就没有数据，这个系就没了，系长哭泣。</li>
+<li>删除异常：某系决定暂停招生一段时间，把最后一批学生送走时候，删除学生数据，Sno又空了，这个系又没了，系长又哭了。</li>
+<li>数据冗余大：一个系的所有学生都住在一起，可是Sloc这个属性却每个学生重复一次。</li>
+<li>修改复杂：同上，Sloc重复的多，如果该系调整住址位置，修改的也多</li>
+</ol>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>定义：在1NF基础上，消除非主属性对键的部分依赖，则称它符合2NF。<br />根据上面对部分依赖的分析，对于Student表：</p>
+<table>
+<thead>
+<tr>
+<th><strong>学生编号</strong></th>
+<th><strong>学生姓名</strong></th>
+<th><strong>班级编号</strong></th>
+<th><strong>院系</strong></th>
+<th><strong>课程编号</strong></th>
+<th><strong>成绩</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S01</td>
+<td>杨明</td>
+<td>D01</td>
+<td>思齐</td>
+<td>C01</td>
+<td>90</td>
+</tr>
+<tr>
+<td>S02</td>
+<td>李婉</td>
+<td>D01</td>
+<td>思齐</td>
+<td>C01</td>
+<td>87</td>
+</tr>
+<tr>
+<td>S01</td>
+<td>杨明</td>
+<td>D01</td>
+<td>思齐</td>
+<td>C02</td>
+<td>92</td>
+</tr>
+<tr>
+<td>S03</td>
+<td>刘海</td>
+<td>D02</td>
+<td>述圣</td>
+<td>C01</td>
+<td>95</td>
+</tr>
+<tr>
+<td>S04</td>
+<td>安然</td>
+<td>D02</td>
+<td>述圣</td>
+<td>C02</td>
+<td>78</td>
+</tr>
+<tr>
+<td>S05</td>
+<td>乐天</td>
+<td>D03</td>
+<td>省身</td>
+<td>C01</td>
+<td>82</td>
+</tr>
+</tbody></table>
+<p>对于学生姓名、学生所属的班级编号、院系，这三个属性可以直接通过学生编号来确定，在这里课程编号#显得很多余。也就是，学生姓名、班级编号、院系对（学生编号#、课程编号#）<strong>部分函数依赖</strong>。把Student表进行拆分，可以消除部分依赖。<br />其中，学生表Student如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>学生编号</strong></th>
+<th><strong>学生姓名</strong></th>
+<th><strong>班级编号</strong></th>
+<th><strong>院系</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S01</td>
+<td>杨明</td>
+<td>D01</td>
+<td>思齐</td>
+</tr>
+<tr>
+<td>S02</td>
+<td>李婉</td>
+<td>D01</td>
+<td>思齐</td>
+</tr>
+<tr>
+<td>S01</td>
+<td>杨明</td>
+<td>D01</td>
+<td>思齐</td>
+</tr>
+<tr>
+<td>S03</td>
+<td>刘海</td>
+<td>D02</td>
+<td>述圣</td>
+</tr>
+<tr>
+<td>S04</td>
+<td>安然</td>
+<td>D02</td>
+<td>述圣</td>
+</tr>
+<tr>
+<td>S05</td>
+<td>乐天</td>
+<td>D03</td>
+<td>省身</td>
+</tr>
+</tbody></table>
+<p>学生-课程表如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>学生编号</strong></th>
+<th><strong>课程编号</strong></th>
+<th><strong>成绩</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S01</td>
+<td>C01</td>
+<td>90</td>
+</tr>
+<tr>
+<td>S02</td>
+<td>C01</td>
+<td>87</td>
+</tr>
+<tr>
+<td>S01</td>
+<td>C02</td>
+<td>92</td>
+</tr>
+<tr>
+<td>S03</td>
+<td>C01</td>
+<td>95</td>
+</tr>
+<tr>
+<td>S04</td>
+<td>C02</td>
+<td>78</td>
+</tr>
+<tr>
+<td>S05</td>
+<td>C01</td>
+<td>82</td>
+</tr>
+</tbody></table>
+<h2 id="3NF"><a href="#3NF" class="headerlink" title="3NF"></a>3NF</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p><strong>定义：在2NF基础上，消除非主属性对键的传递依赖，则称它符合3NF。</strong><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682510881657-eee206c4-40ed-457c-9e82-06c01eaf42c1.png" alt="image.png"><br>第二个不分解为<code>Sno,Sloc</code>的原因</p>
+<ol>
+<li>保持函数依赖性</li>
+<li>减少数据冗余：这样会出现不同的学号对应相同的sloc</li>
+</ol>
+<h3 id="旧问题解决-1"><a href="#旧问题解决-1" class="headerlink" title="旧问题解决"></a>旧问题解决</h3><p>把Sno和Sloc的直接关系断掉，Sno依然可以通过先找到对应的Sdept，然后再通过Sdept找到Sloc，效果没变，但是减少了无用的关系。<br />将新的表命名为SD和DL。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682511377653-b7108c52-5dbc-4dc4-9773-af5d5a1de6db.png" alt="image.png"><br>这样我们就把SL这个2NF分解成了两个3NF，一定程度上解决了之前提到的问题：</p>
+<ol>
+<li>插入异常：新建立的系可以直接放入DL中，与学生无关。</li>
+<li>删除异常：学生数据在SD中，删除不会影响到DL中的内容。</li>
+<li>数据冗余大：DL中的Sdept和SLoc的内容只会存储一次。</li>
+<li>修改复杂：同上，Sloc无重复，如果该系调整住址位置，修改只需要修改一条内容即可。</li>
+</ol>
+<h3 id="新问题产生"><a href="#新问题产生" class="headerlink" title="新问题产生"></a>新问题产生</h3><p>过度拆分为3NF，可能会有以下缺点：</p>
+<ul>
+<li>查询效率降低：由于数据表被拆分为多个，查询时可能需要进行多表连接，这会增加查询的时间和复杂度。</li>
+<li>数据完整性难以保证：由于数据表被拆分为多个，更新时可能需要修改多个表，这会增加更新的时间和复杂度，也可能导致数据不一致的风险。</li>
+<li>数据冗余仍然存在：即使满足了3NF，数据表中仍然可能存在主属性对候选键的部分或传递函数依赖，这会造成数据冗余和异常。</li>
+</ul>
+<h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><p>根据上面对传递依赖的分析，对于Student表，学生编号可以唯一确定他所在的院系，但是注意到这中间存在传递过程，即学生编号唯一确定该学生所对应的班级编号，班级编号对应唯一的院系。我们称，院系对学生编号传递函数依赖。<br />把Student表继续进行拆分，可以消除传递依赖。<br />其中，学生表Student如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>学生编号</strong></th>
+<th><strong>学生姓名</strong></th>
+<th><strong>班级编号</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S01</td>
+<td>杨明</td>
+<td>D01</td>
+</tr>
+<tr>
+<td>S02</td>
+<td>李婉</td>
+<td>D01</td>
+</tr>
+<tr>
+<td>S01</td>
+<td>杨明</td>
+<td>D01</td>
+</tr>
+<tr>
+<td>S03</td>
+<td>刘海</td>
+<td>D02</td>
+</tr>
+<tr>
+<td>S04</td>
+<td>安然</td>
+<td>D02</td>
+</tr>
+<tr>
+<td>S05</td>
+<td>乐天</td>
+<td>D03</td>
+</tr>
+</tbody></table>
+<p>班级-院系表如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>班级编号</strong></th>
+<th><strong>院系</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>D01</td>
+<td>思齐</td>
+</tr>
+<tr>
+<td>D02</td>
+<td>述圣</td>
+</tr>
+<tr>
+<td>D03</td>
+<td>省身</td>
+</tr>
+</tbody></table>
+<p>符合3NF。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>1NF，2NF和3NF都是关系数据库设计中的范式，用来规范数据表的结构，避免数据冗余和异常。简单来说，它们的区别如下：</p>
+<ul>
+<li>1NF要求数据表中的每一列都是不可拆分的最小单元，也就是确保每一列的原子性。</li>
+<li>2NF要求在1NF的基础上，<strong>消除非主属性对候选键的部分函数依赖</strong>，也就是确保每一列都完全依赖于候选键。</li>
+<li>3NF要求在2NF的基础上，<strong>消除非主属性对候选键的传递函数依赖</strong>，也就是确保每一列只直接依赖于候选键。</li>
+</ul>
+<h1 id="ch35-BCNF"><a href="#ch35-BCNF" class="headerlink" title="ch35 BCNF"></a>ch35 BCNF</h1><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1686661263649-085f9cb8-b3f4-4352-a3ea-e2b8bbe42681.png" alt="image.png"></p>
+<h1 id="ch36-多值依赖与4NF"><a href="#ch36-多值依赖与4NF" class="headerlink" title="ch36 多值依赖与4NF"></a>ch36 多值依赖与4NF</h1><h2 id="多值依赖"><a href="#多值依赖" class="headerlink" title="多值依赖"></a>多值依赖</h2><p><strong>判定方法：对于任意关系中，如果存在两个元组（就是行），记为A,B，如果他们的某一属性X的值相等，那么我们交换它们另外的属性Y的值后，得到的新的两个元组，在表中是可以在原来的表中找到与它们相匹配的元组的。</strong><br />一对多：和函数（多对一）不同</p>
+<ul>
+<li>用表和表之间的连接，建立多对一的关系</li>
+<li>通过组合的方式，枚举一对一的关系</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681808185312-c63cbc12-3063-4a94-bf0b-0e84a4dfd322.png" alt="image.png"><br>对于C的每一个值，T有一组值与之对应，而不论B取何值。因此T多值依赖于C，即C→→T。</p>
+<ul>
+<li>数据冗余度大：有多少名任课教师，参考书就要存储多少次。</li>
+<li>增加操作复杂：当某一课程增加一名任课教师时，该课程有多少本参照书，就必须插入多少个元组。</li>
+<li>删除操作复杂：某一门课要去掉一本参考书，该课程有多少名教师，就必须删除多少个元组。修改操作复杂：某一门课要修改一本参考书，该课程有多少名教师，就必须修改多少个元组。</li>
+<li>产生原因:	存在多值依赖</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681810189736-546ad876-7d4d-48c1-b642-834286e48b3d.png" alt="image.png"></p>
+<h2 id="举例-2"><a href="#举例-2" class="headerlink" title="举例"></a>举例</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681810882550-01d1c07c-1fbd-4ad7-9927-4809813ca023.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1681810902423-de122dca-2e08-4356-8ee3-c187de667bcf.png" alt="image.png"></p>
+<h2 id="多值依赖与函数依赖的区别"><a href="#多值依赖与函数依赖的区别" class="headerlink" title="多值依赖与函数依赖的区别"></a>多值依赖与函数依赖的区别</h2><blockquote>
+<p>函数依赖：一夫一妻制下，我只能有一个老婆，所以我决定了我的老婆，反之亦然，这就是函数依赖。<br>多值依赖：我有3个女朋友，5栋房子。女朋友多值依赖于我，房子也多值依赖于我，因为他们各自的选择与另一者无关（选定房子只与我有关，与女朋友无关，另一组同样）。<br>平凡的多值依赖：未成年人不允许有女朋友，但是可以有5栋房子，即女朋友为空集，这种情况就是平凡的多值依赖。</p>
+</blockquote>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><p>![E%))~VH&#96;NL$0OO2$L2DN_OX.png](<a target="_blank" rel="noopener" href="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682516595032-bfa70c66-e953-43e1-a8b5-92731853110c.png">https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1682516595032-bfa70c66-e953-43e1-a8b5-92731853110c.png</a>)</p>
+<ol start="2">
+<li>这个关系不符合2NF。原因如下：</li>
+</ol>
+<ul>
+<li>2NF的定义是：在一个关系模式中，如果每个非主属性都完全函数依赖于候选码，那么这个关系模式就符合2NF。</li>
+<li>在这个例子中，假设关系模式为R(员工，部门，经理，日期，零件数)，那么候选码是(员工，日期)，因为它可以决定其他所有属性，而且它的任何真子集都不能决定其他所有属性。</li>
+<li>在这个例子中，部门和经理这两个非主属性都不完全函数依赖于候选码(员工，日期)，而是部分函数依赖于候选码的一部分(员工)。这就违反了2NF的要求。</li>
+<li>为了使这个关系模式符合2NF，可以将其分解为两个关系模式：这样就可以消除部门和经理的部分函数依赖。<ul>
+<li>R1(员工，部门，经理)，其中员工是候选码</li>
+<li>R2(员工，日期，零件数)，其中(员工，日期)是候选码</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><br /></li>
+</ol>
+<ul>
+<li>对于R1(员工，部门，经理)，它的最小函数依赖集为{员工→部门，部门→经理}，根据算法，可以构造两个关系模式：<ul>
+<li>R11(员工，部门)，其中员工是候选码</li>
+<li>R12(部门，经理)，其中部门是候选码</li>
+</ul>
+</li>
+<li>对于R2(员工，日期，零件数)，它的最小函数依赖集为{(员工，日期)→零件数}，根据算法，可以构造一个关系模式：<ul>
+<li>R21(员工，日期，零件数)，其中(员工，日期)是候选码</li>
+</ul>
+</li>
+</ul>
+<p>为什么R12不是（员工，经理）<br />部门→经理是一个函数依赖，所以R12是(部门，经理)。<br />如果R12是(员工，经理)，那么就没有体现出部门→经理这个函数依赖，也就<strong>没有保持函数依赖性</strong>。<br />如果R12是(员工，经理)，那么就会出现<strong>数据冗余</strong>，因为<strong>同一个部门的多个员工都会有相同的经理</strong>。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter06%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/">https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter06%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter07%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/" title="Chapter07 - 数据库设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Chapter07 - 数据库设计</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter10%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/" title="Chapter10 - 数据库恢复技术"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Chapter10 - 数据库恢复技术</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ch32-%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F%E5%8F%8A%E8%8C%83%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">ch32 关系模式及范式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BE%9D%E8%B5%96"><span class="toc-number">1.1.</span> <span class="toc-text">数据依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1NF"><span class="toc-number">1.2.</span> <span class="toc-text">1NF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%83%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">范式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch33-%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E4%B8%8E%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">ch33 函数依赖与码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.</span> <span class="toc-text">函数依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E5%87%A1%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E4%B8%8E%E9%9D%9E%E5%B9%B3%E5%87%A1%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.1.</span> <span class="toc-text">平凡函数依赖与非平凡函数依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E5%85%A8%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E4%B8%8E%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.2.</span> <span class="toc-text">完全函数依赖与部分函数依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.3.</span> <span class="toc-text">传递函数依赖</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%81"><span class="toc-number">2.2.</span> <span class="toc-text">码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E7%A0%81"><span class="toc-number">2.2.1.</span> <span class="toc-text">外码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch34-1NF-2NF-3NF"><span class="toc-number">3.</span> <span class="toc-text">ch34* 1NF 2NF 3NF</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%83%E5%BC%8F-1"><span class="toc-number">3.1.</span> <span class="toc-text">范式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1NF-1"><span class="toc-number">3.2.</span> <span class="toc-text">1NF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2NF"><span class="toc-number">3.3.</span> <span class="toc-text">2NF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">3.3.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A7%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">3.3.2.</span> <span class="toc-text">旧问题解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%97%AE%E9%A2%98%E5%87%BA%E7%8E%B0"><span class="toc-number">3.3.3.</span> <span class="toc-text">新问题出现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B"><span class="toc-number">3.3.4.</span> <span class="toc-text">举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3NF"><span class="toc-number">3.4.</span> <span class="toc-text">3NF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90-1"><span class="toc-number">3.4.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A7%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-1"><span class="toc-number">3.4.2.</span> <span class="toc-text">旧问题解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%97%AE%E9%A2%98%E4%BA%A7%E7%94%9F"><span class="toc-number">3.4.3.</span> <span class="toc-text">新问题产生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B-1"><span class="toc-number">3.4.4.</span> <span class="toc-text">举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.5.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch35-BCNF"><span class="toc-number">4.</span> <span class="toc-text">ch35 BCNF</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch36-%E5%A4%9A%E5%80%BC%E4%BE%9D%E8%B5%96%E4%B8%8E4NF"><span class="toc-number">5.</span> <span class="toc-text">ch36 多值依赖与4NF</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%80%BC%E4%BE%9D%E8%B5%96"><span class="toc-number">5.1.</span> <span class="toc-text">多值依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B-2"><span class="toc-number">5.2.</span> <span class="toc-text">举例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%80%BC%E4%BE%9D%E8%B5%96%E4%B8%8E%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">5.3.</span> <span class="toc-text">多值依赖与函数依赖的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-number">6.</span> <span class="toc-text">练习</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment7/" title="Experiment7">Experiment7</a><time datetime="2023-06-15T07:52:21.904Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment6/" title="Experiment6">Experiment6</a><time datetime="2023-06-15T07:52:21.901Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment5/" title="Experiment5">Experiment5</a><time datetime="2023-06-15T07:52:21.899Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment4/" title="Experiment4">Experiment4</a><time datetime="2023-06-15T07:52:21.898Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment3/" title="Experiment3">Experiment3</a><time datetime="2023-06-15T07:52:21.895Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

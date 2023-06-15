@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Chapter8 - 使用行为空间做实验 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="更新人工经济模型的基本规则首先回顾一下人工经济模型的基本交易规则：  经济系统中人和财富的总量保持不变； 开始的时候，每个人都有等量的货币； 每当两个主体相遇，他们就随机分配财富。  这样的经济系统非常野蛮、非常不合理，现实世界中并不是这样做交易的，通常你不会把自己的钱花光，而是会留存一定比例，然后把剩下的钱用于交易，因此我们可以考虑引入一个非常重要的变量——储蓄率，每个主体都有自己的储蓄率，它是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter8 - 使用行为空间做实验">
+<meta property="og:url" content="https://austynding.github.io/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter8%20-%20%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E7%A9%BA%E9%97%B4%E5%81%9A%E5%AE%9E%E9%AA%8C/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="更新人工经济模型的基本规则首先回顾一下人工经济模型的基本交易规则：  经济系统中人和财富的总量保持不变； 开始的时候，每个人都有等量的货币； 每当两个主体相遇，他们就随机分配财富。  这样的经济系统非常野蛮、非常不合理，现实世界中并不是这样做交易的，通常你不会把自己的钱花光，而是会留存一定比例，然后把剩下的钱用于交易，因此我们可以考虑引入一个非常重要的变量——储蓄率，每个主体都有自己的储蓄率，它是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-03-10T11:01:59.414Z">
+<meta property="article:modified_time" content="2023-03-10T11:14:54.742Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter8%20-%20%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E7%A9%BA%E9%97%B4%E5%81%9A%E5%AE%9E%E9%AA%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Chapter8 - 使用行为空间做实验',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-03-10 19:14:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Chapter8 - 使用行为空间做实验</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-10T11:01:59.414Z" title="发表于 2023-03-10 19:01:59">2023-03-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-10T11:14:54.742Z" title="更新于 2023-03-10 19:14:54">2023-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Netlogo多主体建模入门学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Chapter8 - 使用行为空间做实验"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="更新人工经济模型的基本规则"><a href="#更新人工经济模型的基本规则" class="headerlink" title="更新人工经济模型的基本规则"></a>更新人工经济模型的基本规则</h2><p>首先回顾一下人工经济模型的基本交易规则：</p>
+<ol>
+<li>经济系统中人和财富的总量保持不变；</li>
+<li>开始的时候，每个人都有等量的货币；</li>
+<li>每当两个主体相遇，他们就随机分配财富。</li>
+</ol>
+<p>这样的经济系统非常野蛮、非常不合理，现实世界中并不是这样做交易的，通常你不会把自己的钱花光，而是会留存一定比例，然后把剩下的钱用于交易，因此我们可以考虑引入一个非常重要的变量——<strong>储蓄率，每个主体都有自己的储蓄率，它是一个(0, 1)之间的小数。每个人在交易的时候，会保留储蓄率乘以自己财富总量的财富，剩余财富用于交易，并且交易仍然是随机的。</strong>更新后的人工经济模型的交易规则变为：</p>
+<ol>
+<li>经济系统中人和财富的总量保持不变；</li>
+<li>开始的时候，每个人都有等量的货币；</li>
+<li>每个主体有自己的储蓄率；</li>
+<li>每当两个主体相遇，他们会将除储蓄部分外的财富用于随机分配。</li>
+</ol>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677932971005-c52d1880-8e6b-4c0d-80d9-0d21aec23ff1.png" alt="image.png"></p>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677932981621-21601db3-12f2-4f36-9db2-f98546de3af1.png" alt="image.png"></p>
+<h2 id="程序修改"><a href="#程序修改" class="headerlink" title="程序修改"></a>程序修改</h2><p>接下来看看如何用程序实现新的经济模型规则。首先引入储蓄率，增加一个turtles-own的变量——save_rate，因为每一个主体的储蓄率都不一样，所以要把它放在turtles-own的变量中。在有多个变量的情况下，用回车隔开不同变量，并且都放在方括号内。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">turtles-own [</span><br><span class="line">    money</span><br><span class="line">    save_rate</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>接下来初始化的时候，要初始化save_rate的具体数值，我们在创建一个主体的时候，用random-float设定它的储蓄率是一个0~1之间的随机数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">to setup</span><br><span class="line">    clear-all</span><br><span class="line">    reset-ticks</span><br><span class="line">    create-turtles num_agents [</span><br><span class="line">        <span class="function">set <span class="title">money</span> <span class="params">(total_money / num_agents)</span></span></span><br><span class="line"><span class="function">        setxy random-xcor random-ycor</span></span><br><span class="line"><span class="function">        set save_rate random-<span class="type">float</span> 1</span></span><br><span class="line"><span class="function">    ]</span></span><br><span class="line"><span class="function">end</span></span><br></pre></td></tr></table></figure>
+<p>而且这个数值一旦定下来将不再变化，道理很简单，因为每个人的储蓄率基本上是固定的。储蓄率越高，表示这个交易者比较保守，因为他只拿一小部分钱用于交易；反过来，储蓄率越低，表示交易者更偏向于冒险，他会用更多的钱来进行交易。<br />接下来，添加一个全新的“new_go”按钮，方便比较两套交易规则，to go代码完全保留，而把全新的交易规则放在to new_go代码块中，这两个按钮都带持续循环标志</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">to new_go</span><br><span class="line">    ask turtles[</span><br><span class="line">        let agsets other turtles</span><br><span class="line">        <span class="keyword">if</span> count agsets &gt;= <span class="number">1</span></span><br><span class="line">        [</span><br><span class="line">            <span class="built_in">transaction_new</span> (one-of agsets)</span><br><span class="line">        ]</span><br><span class="line">        forward <span class="number">1</span></span><br><span class="line">    ]</span><br><span class="line">    tick</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">to transaction_new [trader]</span><br><span class="line">    let deltam <span class="number">0</span></span><br><span class="line">    let <span class="built_in">money0</span> ((<span class="number">1</span> - save_rate) * money)</span><br><span class="line">    let <span class="built_in">money1</span> ((<span class="number">1</span> - ([save_rate] of trader)) * ([money] of trader))</span><br><span class="line">    let <span class="built_in">epsilon</span> (random-<span class="type">float</span> <span class="number">1</span>)</span><br><span class="line">    set <span class="built_in">deltam</span> (epsilon - <span class="number">1</span>) * money0 + epsilon * money1</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> money + deltam &gt;= <span class="number">0</span> <span class="built_in">and</span> ([money] of trader) - deltam &gt;= <span class="number">0</span></span><br><span class="line">    [</span><br><span class="line">        set money money + deltam</span><br><span class="line">        ask trader[</span><br><span class="line">            set money money - deltam</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    ]</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h2 id="两种规则下的财富分布对比"><a href="#两种规则下的财富分布对比" class="headerlink" title="两种规则下的财富分布对比"></a>两种规则下的财富分布对比</h2><p>执行go命令<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933135855-cc07c03c-17b5-4419-a194-a845a4b71756.png" alt="image.png"><br>执行new_go命令<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933144755-90605921-1ddc-45ea-ae45-84171f796328.png" alt="image.png"></p>
+<h2 id="基尼系数的定义及程序实现"><a href="#基尼系数的定义及程序实现" class="headerlink" title="基尼系数的定义及程序实现"></a>基尼系数的定义及程序实现</h2><p>目前来看，这套全新的规则比较成功，能够复现我们感兴趣的现象。为了更加合理地刻画社会财富分布的不均衡性，也为了进一步比较不同的模型、不同的参数如何影响交易的不均衡性，我们引入一个全新的指标——基尼系数。</p>
+<h3 id="什么是基尼系数"><a href="#什么是基尼系数" class="headerlink" title="什么是基尼系数"></a>什么是基尼系数</h3><p>基尼系数是国际通用的<strong>衡量一个经济体社会财富分布不均衡性的指标</strong>。基尼系数不仅能够用于衡量社会财富分布，也可以衡量更多其他量分布的不均衡性，比如衡量社交媒体上不同人粉丝数分布的不均衡性。</p>
+<h3 id="基尼系数的计算方法"><a href="#基尼系数的计算方法" class="headerlink" title="基尼系数的计算方法"></a>基尼系数的计算方法</h3><p>第7章讲到洛伦兹曲线如果越弯曲越靠近折线，那么社会财富分布就越不均衡，因此我们不妨用洛伦兹曲线和对角线所围成的曲边三角形的面积来衡量社会财富分布的不均衡性，如图8-6所示。这个面积如果计算出来是S的话，那么最终<code>G = 2S</code><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933240194-43a2e669-af36-4696-86aa-e0d0515fdd84.png" alt="image.png"></p>
+<h3 id="基尼系数的程序实现"><a href="#基尼系数的程序实现" class="headerlink" title="基尼系数的程序实现"></a>基尼系数的程序实现</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933306504-adebf3fe-0b42-4c42-8438-55d0429b8772.png" alt="image.png"><br>设置名称为gini，横坐标是time，我们可以看到每一时刻基尼系数的大小，纵坐标就是基尼系数本身。这里面不修改绘图笔指令，具体绘制基尼系数的命令将在代码里完成。如何在计算机中计算这样一个洛伦兹曲线和对角线所围成的曲边三角形的面积？我们可以用数值积分的方法。具体思想是，对这个曲边三角形进行矩形刨分，把整个[0, 1]区间分成若干份，实际上有多少人口就划分成多少份。然后计算每一个小矩形的面积，再把所有小矩形的面积累加起来，就可以近似得到曲边三角形的面积，如图8-8所示。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933329779-b2647112-09f0-4ac1-a3d0-e8bcf61a8705.png" alt="image.png"><br>具体来讲，比如第i个小矩形的面积如何计算呢？首先可以计算每一个小矩形的宽度，我们把[0, 1]这个区间划分成num_agents份，因此每一份的宽度是<code>1 / num_agents</code>。小矩形的高度是：<br /><code>i / num_agents - wealth-sum-so-far / total_wealth</code><br />这里<code>i / num_agents</code>是对角线在该点的纵坐标，<code>wealth-sum-so-far / total_wealth</code>是洛伦兹曲线在该点的纵坐标。于是可以用“宽×高”计算出这个小矩形的面积。如此计算出所有矩形的面积，再把它们累加起来就得到了曲边三角形的面积。接下来看看如何编写代码。为了计算基尼系数，我们只要改动绘制洛伦兹曲线的这部分代码即可，前面都一样。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">to update-lorenz-plot</span><br><span class="line">    ;绘制财富分布绝对均衡的曲线</span><br><span class="line">    clear-plot</span><br><span class="line">    set-current-plot-pen <span class="string">&quot;equal&quot;</span></span><br><span class="line">    plot <span class="number">0</span></span><br><span class="line">    plot <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    ;绘制财富分布极端不均衡的曲线</span><br><span class="line">    set-current-plot-pen <span class="string">&quot;dominant&quot;</span></span><br><span class="line"></span><br><span class="line">    plot-pen-down</span><br><span class="line">    plotxy <span class="number">0</span> <span class="number">0</span></span><br><span class="line">    plotxy <span class="number">1</span> <span class="number">0</span></span><br><span class="line">    plotxy <span class="number">1</span> <span class="number">1</span></span><br><span class="line">    plot-pen-up</span><br><span class="line"></span><br><span class="line">    ;绘制洛伦兹曲线</span><br><span class="line">    set-current-plot-pen <span class="string">&quot;lorenz&quot;</span></span><br><span class="line">    set-plot-pen-interval <span class="number">1</span> / num_agents</span><br><span class="line">    plot <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    let sorted-wealths sort [money] of turtles</span><br><span class="line">    let total-wealth sum sorted-wealths</span><br><span class="line">    let wealth-sum-so-far <span class="number">0</span></span><br><span class="line">    let index <span class="number">0</span></span><br><span class="line">    let gini <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    repeat num_agents [</span><br><span class="line">        set wealth-sum-so-<span class="built_in">far</span> (wealth-sum-so-far + item index sorted-wealths)</span><br><span class="line">        <span class="built_in">plot</span> (wealth-sum-so-far / total-wealth)</span><br><span class="line">        <span class="function">set <span class="title">index</span> <span class="params">(index + <span class="number">1</span>)</span></span></span><br><span class="line"><span class="function">        set gini gini + <span class="params">((index / num_agents) - (wealth-sum-so-far / total-wealth))</span> / num_agents</span></span><br><span class="line"><span class="function">    ]</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    set-current-plot &quot;gini&quot; </span>;;指定绘画gini图</span><br><span class="line">    plot gini * <span class="number">2</span> ;; 一个时间点得到一个基尼系数</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933512143-20f480c0-9884-4522-b533-3228579923b8.png" alt="image.png"><br><strong>基尼系数表明，新规则造成的社会财富分布不均衡要比旧规则更严重。</strong> </p>
+<h2 id="使用行为空间做重复实验"><a href="#使用行为空间做重复实验" class="headerlink" title="使用行为空间做重复实验"></a>使用行为空间做重复实验</h2><p>接下来系统地探索参数是如何影响基尼系数的。这里介绍一个全新的工具——行为空间（BehaviorSpace），它可以让你通过简单的参数设置，自动实现同时进行大量重复的计算机模拟实验，并将实验结果自动记录到一个数据库文件中，方便我们探索不同的模型参数组合。在NetLogo的菜单栏中找到“工具”菜单，然后选择“行为空间”项。我们将会看到图8-14所示的界面，单击“新建”，就可以开始一系列实验。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933598485-d112493a-2d9b-4eb2-8a01-b56ee9fc6501.png" alt="image.png"><br>在行为空间设置界面，首先将这个实验命名为gini-experiment，如图8-15所示。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933613311-d0d47eb4-53fb-4382-b64e-9249c682aedc.png" alt="image.png"><br>接下来指定参数变化的范围。我们希望探索的是，当num_agents等于100、200、300、……一直到1000，total_money等于10 000、20 000、30 000、……一直到100000，不同参数组合下的基尼系数。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933642150-0ea6bebe-4525-4f24-b7bb-895779c4f3cc.png" alt="image.png"><br><strong>每一个组合下都要进行重复实验。因为实验是随机性的</strong>，所以每一次计算出来的基尼系数都会有一定的波动<strong>。为了消除这种噪声影响，需要进行重复实验。</strong>这里设置每一个参数组合下重复10次，因此一共要做1000次实验。<br />接下来我们用这些报告测算运行结果，<strong>即每一种参数组合下的实验会有什么样的输出结果，这里不可能用动画或者图形作为输出，通常要计算并输出一些数值</strong>，对于本例就是基尼系数。<br />因此在“用这些报告器测算运行结果：”下输入一个自定义的函数——compute-gini。也就是<strong>当有一组参数值设定时，它就动态激活compute-gini代码去做模拟实验。</strong><br />最后需要设定它的终止条件，这里只要设定最大模拟周期为1000即可。这样就定义好了一个行为空间，接下来给出compute-gini代码的写法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">to-report compute-gini</span><br><span class="line">    let sorted-wealths sort [money] of turtles</span><br><span class="line">    let total-wealth sum sorted-wealths</span><br><span class="line">    let wealth-sum-so-far <span class="number">0</span></span><br><span class="line">    let index <span class="number">0</span></span><br><span class="line">    let gini <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    repeat num_agents [</span><br><span class="line">        set wealth-sum-so-<span class="built_in">far</span> (wealth-sum-so-far + item index sorted-wealths)</span><br><span class="line">        <span class="built_in">plot</span> (wealth-sum-so-far / total-wealth)</span><br><span class="line">        <span class="function">set <span class="title">index</span> <span class="params">(index + <span class="number">1</span>)</span></span></span><br><span class="line"><span class="function">        set gini gini + <span class="params">((index / num_agents) - (wealth-sum-so-far / total-wealth))</span> / num_agents</span></span><br><span class="line"><span class="function">    ]</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    set-current-plot &quot;gini&quot;</span></span><br><span class="line"><span class="function">    report gini * 2</span></span><br><span class="line"><span class="function">end</span></span><br></pre></td></tr></table></figure>
+<p>实际上，它就是把前面计算基尼系数的代码复制过来了，不同之处在于它不是to和end，而是to-report和end，<strong>report的意思是最终要有返回结果，即最终基尼系数要作为这个函数的结果输出。</strong><br />写完代码以后，这个实验就可以运行了。单击运行，设置一下运行选项，如图8-16所示。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933821249-fd5741bf-fcd3-4737-ae58-3ef9f591906a.png" alt="image.png"><br>如果出现报错：<code>没有选中的绘图。请使用set-current-plot指令选择绘图.</code> 则要在更新洛伦兹的函数里指明<code>set-current-plot &quot;Lorenz curve&quot;</code><br />模拟结果：<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933840868-4fb527c3-c385-49f5-84de-3bdeaef67dd1.png" alt="image.png"><br>这个表单包括实验的名称、时间以及关键参数、多次模拟实验结果，并且记录了每一次模拟实验的参数取值、total_money取值、num_agents取值、最后的模拟步数以及基尼系数的运行结果。[final]这一行就是基尼系数的运行结果，因为这组结果是重复3次实验得到的，所以我们只需要把这3次的基尼系数求平均就可以得到参数组合下的基尼系数。<img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677933954436-7167fa15-0d26-45b3-8750-2883c530f2cb.png" alt="image.png"><br>最后可以绘制一个曲面，x坐标和y坐标分别对应<code>total_money</code>和<code>num_agents</code>，而[坐标对应基尼系数。这样我们就对模型的性质有了更深刻的了解。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本章首先更新了交易规则，然后讲解了如何计算基尼系数，以及如何用NetLogo实现简单的数值积分以计算基尼系数，最后介绍了行为空间，以及如何用行为空间做重复性实验。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter8%20-%20%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E7%A9%BA%E9%97%B4%E5%81%9A%E5%AE%9E%E9%AA%8C/">https://austynding.github.io/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter8%20-%20%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E7%A9%BA%E9%97%B4%E5%81%9A%E5%AE%9E%E9%AA%8C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%8B%E7%BB%8D/" title="介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">介绍</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter9%20-%20%E9%80%8F%E8%BF%87%E4%BA%BA%E5%B7%A5%E9%B8%9F%E7%BE%A4%E6%A8%A1%E5%9E%8BBoids%E5%AD%A6%E4%B9%A0list%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Chapter9 - 透过人工鸟群模型Boids学习list的使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Chapter9 - 透过人工鸟群模型Boids学习list的使用</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E4%BA%BA%E5%B7%A5%E7%BB%8F%E6%B5%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%A7%84%E5%88%99"><span class="toc-number">1.</span> <span class="toc-text">更新人工经济模型的基本规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E4%BF%AE%E6%94%B9"><span class="toc-number">2.</span> <span class="toc-text">程序修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E8%A7%84%E5%88%99%E4%B8%8B%E7%9A%84%E8%B4%A2%E5%AF%8C%E5%88%86%E5%B8%83%E5%AF%B9%E6%AF%94"><span class="toc-number">3.</span> <span class="toc-text">两种规则下的财富分布对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E5%B0%BC%E7%B3%BB%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E5%8F%8A%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.</span> <span class="toc-text">基尼系数的定义及程序实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%9F%BA%E5%B0%BC%E7%B3%BB%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">什么是基尼系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E5%B0%BC%E7%B3%BB%E6%95%B0%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">4.2.</span> <span class="toc-text">基尼系数的计算方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E5%B0%BC%E7%B3%BB%E6%95%B0%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.3.</span> <span class="toc-text">基尼系数的程序实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E7%A9%BA%E9%97%B4%E5%81%9A%E9%87%8D%E5%A4%8D%E5%AE%9E%E9%AA%8C"><span class="toc-number">5.</span> <span class="toc-text">使用行为空间做重复实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment7/" title="Experiment7">Experiment7</a><time datetime="2023-06-15T07:52:21.904Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment6/" title="Experiment6">Experiment6</a><time datetime="2023-06-15T07:52:21.901Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment5/" title="Experiment5">Experiment5</a><time datetime="2023-06-15T07:52:21.899Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment4/" title="Experiment4">Experiment4</a><time datetime="2023-06-15T07:52:21.898Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment3/" title="Experiment3">Experiment3</a><time datetime="2023-06-15T07:52:21.895Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

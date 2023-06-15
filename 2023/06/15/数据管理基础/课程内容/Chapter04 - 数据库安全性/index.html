@@ -1,0 +1,296 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Chapter04 - 数据库安全性 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ch24 存取控制数据库安全最重要的一点就是确保只授权给有资格的用户访问数据库的权限，同时令所有未被授权的人员无法接近数据，这主要通过数据库系统的存取控制机制实现。  在自主存取控制方法中，用户对于不同的数据库对象有不同的存取权限，不同的用户对同一对象也有不同的权限，而且用户还可将其拥有的存取权限转授给其他用户。因此自主存取控制非常灵活。 在强制存取控制方法中，每一个数据库对象被标以一定的密级，每">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter04 - 数据库安全性">
+<meta property="og:url" content="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter04%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="ch24 存取控制数据库安全最重要的一点就是确保只授权给有资格的用户访问数据库的权限，同时令所有未被授权的人员无法接近数据，这主要通过数据库系统的存取控制机制实现。  在自主存取控制方法中，用户对于不同的数据库对象有不同的存取权限，不同的用户对同一对象也有不同的权限，而且用户还可将其拥有的存取权限转授给其他用户。因此自主存取控制非常灵活。 在强制存取控制方法中，每一个数据库对象被标以一定的密级，每">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-06-15T07:02:41.467Z">
+<meta property="article:modified_time" content="2023-06-15T07:53:03.727Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter04%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Chapter04 - 数据库安全性',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-06-15 15:53:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Chapter04 - 数据库安全性</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-15T07:02:41.467Z" title="发表于 2023-06-15 15:02:41">2023-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-15T07:53:03.727Z" title="更新于 2023-06-15 15:53:03">2023-06-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/">数据管理基础</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/">课程内容</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Chapter04 - 数据库安全性"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ch24-存取控制"><a href="#ch24-存取控制" class="headerlink" title="ch24 存取控制"></a>ch24 存取控制</h1><p>数据库安全最重要的一点就是确保只授权给有资格的用户访问数据库的权限，同时令所有未被授权的人员无法接近数据，这主要通过数据库系统的存取控制机制实现。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679991967570-4a2e38e9-cac6-4f7a-90e1-6b6b71170989.png" alt="image.png"></p>
+<ol>
+<li>在自主存取控制方法中，用户对<strong>于不同的数据库对象有不同的存取权限，不同的用户对同一对象也有不同的权限</strong>，而且用户还可将其拥有的存取权限转授给其他用户。因此自主存取控制<strong>非常灵活</strong>。</li>
+<li>在强制存取控制方法中，<strong>每一个数据库对象被标以一定的密级，每一个用户也被授予某一个级别的许可证。</strong>对于任意一个对象，只有具有合法许可证的用户才可以存取。强制存取控制因此相对<strong>比较严格</strong>。</li>
+</ol>
+<h2 id="自主存取控制-DAC"><a href="#自主存取控制-DAC" class="headerlink" title="自主存取控制 DAC"></a>自主存取控制 DAC</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679992981293-0871ea92-aa7b-4dca-ae95-ebf9e0cf28e3.png" alt="image.png"><br>用户权限是由两个要素组成的：<strong>数据库对象和操作类型</strong>。定义一个用户的<strong>存取权限</strong>就是要定义这个用户可以<strong>在哪些数据库对象上进行哪些类型的操作</strong>。在数据库系统中，定义存取权限称为授权（authorization)。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680194012124-4400a431-c8da-438e-b37c-347fad68b161.png" alt="image.png"><br>列权限包括SELECT、REFERENCES、INSERT、UPDATE,其含义与表权限类似。需要说明的是,<strong>对列的UPDATE权限指对于表中存在的某一列的值可以进行修改。</strong>当然，有了这个权限之后，在修改的过程中还要<strong>遵守表在创建时定义的主码及其他约束。</strong>列上的 INSERT权限指用户可以插入一个元组，对于该插入的元组，授权用户可以插入指定的值（因为已经给了对应的列的选权限了），其他列或者为空，或者为默认值（因为没有给对应的列的权限）。<strong>在给用户授予列INSERT权限时，一定要包含主码的INSERT权限，否则用户的插入动作会因为主码为空而被拒绝。</strong><br /><code>INSERT INTO customers (customer_id, customer_name) VALUES (NULL, &#39;John Doe&#39;); </code><br />在这个例子中，我们向名为<strong>customers</strong>的表格中插入了一行数据。由于我们没有被授予主码的INSERT权限，所以我们无法为主码指定一个值。因此，我们将主码的值设置为NULL。但是，由于主码为空，这个插入操作将被拒绝。</p>
+<h3 id="授权：授予与收回"><a href="#授权：授予与收回" class="headerlink" title="授权：授予与收回"></a>授权：授予与收回</h3><h4 id="GRANT"><a href="#GRANT" class="headerlink" title="GRANT"></a>GRANT</h4><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680226865954-99f22fb5-0061-43b3-a5fa-5dfd37837ca1.png" alt="image.png"><br>其语义为：将对指定操作对象的指定操作权限授予指定的用户。发出该GRANT语句的可以是<strong>数据库管理员</strong>，也可以是该<strong>数据库对象创建者(即属主owner)<strong>，还可以是</strong>已经拥有该权限的用户</strong>。接受权限的用户可以是<strong>一个或多个具体用户</strong>，也可以是<strong>PUBLIC</strong>，即<strong>全体用户</strong>。<br />如果指定了 <strong>WITH GRANT OPTION</strong>子句，则获得某种权限的用户还可以<strong>把这种权限再授予其他的用户</strong>。<br />如果没有指定 WITH GRANT OPTION子句，则获得某种权限的用户只能使用该权限，不能传播该权限。<br />SQL标准允许具有WITH GRANT OPTION的用户把<strong>相应权限</strong>或其<strong>子集</strong>传递授予其他用户，但<strong>不允许循环授权</strong>，即被授权者不能把权限再授回给授权者或其祖先<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680226954469-73346430-efe1-49a5-a67f-7445c75da13e.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680227168088-8840b751-ba45-477a-b022-3d14e0484344.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680226998249-0c141607-c7ee-4e74-908f-7dcc30129e95.png" alt="image.png"><br>GRANT语句</p>
+<ul>
+<li>可以一次向一个用户授权</li>
+<li>可以一次向多个用户授权，如例4.2</li>
+<li>可以一次传播多个同类对象的权限，如例4.2</li>
+<li>可以一次完成对基本表和属性列这些不同对象的授权，如例4.4</li>
+</ul>
+<h4 id="REVOKE"><a href="#REVOKE" class="headerlink" title="REVOKE"></a>REVOKE</h4><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680227231281-27e91b58-d94c-49a1-b28f-a3988550d8fe.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680227891842-90f9d462-c128-4cb8-9768-9a6c140a91f5.png" alt="image.png"><br>SQL提供了非常灵活的授权机制。数据库管理员拥有对数据库中所有对象的所有权限,并可以根据实际情况将不同的权限授予不同的用户。<br />用户对自己建立的基本表和视图拥有全部的操作权限，并且可以用GRANT 语句把其中某些权限授予其他用户。被授权的用户如果有“继续授权”的许可，还可以把获得的权限再授予其他用户。<br />所有授予出去的权力在必要时又都可以用REVOKE 语句收回。<br />可见，<strong>用户可以“自主”地决定将数据的存取权限授予何人、决定是否也将“授权”的权限授予别人。因此称这样的存取控制是自主存取控制。</strong></p>
+<h4 id="创建数据库模式的权限"><a href="#创建数据库模式的权限" class="headerlink" title="创建数据库模式的权限"></a>创建数据库模式的权限</h4><p>GRANT和 REVOKE 语句<strong>向用户授予或收回对数据的操作权限</strong>。对创建<strong>数据库模式类</strong>的数据库对象的授权则由数据库管理员在创建用户时实现。<br />CREATE USER语句一般格式如下:<br /><code>CREATE USER&lt;username&gt;[WITH] [DBA|RESOURCE|CONNECT];</code><br />对CREATE USER语句说明如下：</p>
+<ul>
+<li>只有系统的超级用户才有权创建一个新的数据库用户。</li>
+<li>新创建的数据库用户有三种权限：CONNECT、RESOURCE和DBA。</li>
+</ul>
+<p>CREATE USER命令中如果没有指定创建的新用户的权限，默认该用户拥有CONNECT 权限。</p>
+<ul>
+<li>拥有CONNECT权限的用户不能创建新用户，不能创建模式，也不能创建基本表，只能登录数据库。由数据库管理员或其他用户授予他应有的权限，根据获得的授权情况他可以对数据库对象进行权限范围内的操作。</li>
+<li>拥有RESOURCE权限的用户能创建基本表和视图，成为所创建对象的属主，但不能创建模式，不能创建新的用户。数据库对象的属主可以使用GRANT 语句把该对象上的存取权限授予其他用户。</li>
+<li>拥有DBA权限的用户是系统中的超级用户，可以创建新的用户、创建模式、创建基本表和视图等;DBA拥有对所有数据库对象的存取权限，还可以把这些权限授予一般用户。</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680228586471-13109b09-b82e-493f-a6f9-863155cf1973.png" alt="image.png"></p>
+<h3 id="数据库角色"><a href="#数据库角色" class="headerlink" title="数据库角色"></a>数据库角色</h3><p><strong>数据库角色是被命名的一组与数据库操作相关的权限，角色是权限的集合。</strong>因此可以为一组具有相同权限的用户创建一个角色，使用角色来管理数据库权限可以简化授权的过程。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680228893318-1facf0e8-6945-4364-9877-caa633be46da.png" alt="image.png"><br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680229031125-b02bfcd9-1de7-44b7-b816-1ee57ecc8255.png" alt="image.png"><br><code>R1</code>相当于一个权限的集合<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680229006264-13052ea4-7133-4800-b9e2-32bcf9f4815b.png" alt="image.png"></p>
+<h3 id="自主存取控制缺点"><a href="#自主存取控制缺点" class="headerlink" title="自主存取控制缺点"></a>自主存取控制缺点</h3><p>离散，分布式的，各管各的权限。收回了A的权限，但是A可能从其他方面拿到了权限。<br />可能存在数据的“无意泄露”</p>
+<ul>
+<li>原因：这种机制仅仅通过对数据的存取权限来进行安全控制，而数据本身并无安全性标记</li>
+<li>解决：对系统控制下的所有主客体实施强制存取控制策略</li>
+</ul>
+<p>自主存取控制（MAC）能够通过授权机制有效地控制对敏感数据的存取。但是由于用户对数据的存取权限是“自主”的，<strong>用户可以自由地决定将数据的存取权限授予何人，以及决定是否也将“授权”的权限授予别人。在这种授权机制下，仍可能存在数据的“无意泄露”。</strong><br />比如，甲将自己权限范围内的某些数据存取权限授权给乙，甲的意图是仅允许乙本人操纵这些数据。但甲的这种安全性要求并不能得到保证，因为乙一旦获得了对数据的权限，就可以将数据备份，获得自身权限内的副本，并在不征得甲同意的前提下传播副本。造成这一问题的根本原因就在于，<br />这种机制<strong>仅仅通过对数据的存取权限来进行安全控制,而数据本身并无安全性标记。</strong>要解决这一问题，就需要对系统控制下的所有主客体实施强自主存取控制(MAC)</p>
+<h2 id="强制存取控制-MAC"><a href="#强制存取控制-MAC" class="headerlink" title="强制存取控制 MAC"></a>强制存取控制 MAC</h2><p>不再让权限管理成为离散式的，而是统一放在一起综合考量。<br />数据对象：数据库、表……<br />将用户、数据拆分为不同级别，以某种明确的方式定义两者的读写映射。<br /><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679992689286-73f9338d-1920-41e3-a851-d6b230bbf02f.png" alt="1679992684606.png"><br>适用于：<strong>密级明确</strong>，因为灵活性低，所以适合有明确标准的</p>
+<h3 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h3><p>在强制存取控制中，数据库管理系统所管理的全部实体被分为主体和客体两大类</p>
+<ul>
+<li>主体是系统中的活动实体<ul>
+<li>数据库管理系统所管理的实际用户</li>
+<li>代表用户的各进程</li>
+</ul>
+</li>
+<li>客体是系统中的被动实体，受主体操纵 <ul>
+<li>文件、基本表、索引、视图</li>
+</ul>
+</li>
+</ul>
+<h3 id="敏感度标记"><a href="#敏感度标记" class="headerlink" title="敏感度标记"></a>敏感度标记</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679992785932-0078c93f-db1b-4fd1-8ba4-aa1de45bc04c.png" alt="image.png"><br>小兵（低权限）可以写可信的，通报给上级 — 由下至上可以写<br />将军讨论时，写信不小心泄漏到公开信（小兵）— 由上至下不可以写<br />机密同一级别：红军发起，那么蓝军也能看到 — 需要使用不同存取控制方式</p>
+<h3 id="强制存取控制规则"><a href="#强制存取控制规则" class="headerlink" title="强制存取控制规则"></a>强制存取控制规则</h3><p>强制存取控制规则</p>
+<ul>
+<li>仅当主体的许可证级别大于或等于客体的密级时，该主体才能读取相应的客体</li>
+<li>仅当主体的许可证级别小于或等于客体的密级时，该主体才能写相应的客体</li>
+<li>强制存取控制（MAC）是对数据本身进行密级标记，无论数据如何复制，标记与数据是一个不可分的整体，只有符合密级标记要求的用户才可以操纵数据。<blockquote>
+<p>假如A的级别大于B，即A拥有的保密信息等级更高，此时如果A有对B的写入权限，那么很可能会将保密信息写入B，B的等级较低，会将保密信息传播，造成泄密。<br>所以只有小于等于时才能写入，保证秘密不向下传播扩散，只向上保留。<br>EX1:校长知道的东西最多,大家说的话,校长都能看见.但是,校长看见了A的悄悄话，想要告诉跟A一个宿舍的B，却办不到，因为第二条规则。意思是校长只能把A说的发布给跟他同级的或者比他级别还高的。这就是保证秘密不向下传播扩散，只向上保留。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="DAC-MAC"><a href="#DAC-MAC" class="headerlink" title="DAC + MAC"></a>DAC + MAC</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679993583920-21a2dbb6-64a7-4312-8efe-a7513fb75475.png" alt="image.png"></p>
+<h1 id="ch25-视图机制、审计、数据加密及其他"><a href="#ch25-视图机制、审计、数据加密及其他" class="headerlink" title="ch25 视图机制、审计、数据加密及其他"></a>ch25 视图机制、审计、数据加密及其他</h1><h2 id="视图机制"><a href="#视图机制" class="headerlink" title="视图机制"></a>视图机制</h2><p>需求：学生信息分别给对应宿舍长</p>
+<ul>
+<li>把要保密的数据对无权存取这些数据的用户隐藏起来，对数据提供一定程度的安全保护</li>
+<li>间接地实现支持存取谓词的用户权限定义</li>
+<li>对数据进行筛选，获得对部分元组的权限</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680229517840-83fd3a7f-adc2-493e-b737-e1b6bcf85926.png" alt="image.png"></p>
+<h2 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h2><ul>
+<li>审计功能把用户对数据库的<strong>所有操作自动记录下来放入审计日志</strong>（auditlog）中。</li>
+<li>审计员可以<strong>利用审计日志监控数据库中的各种行为，重现导致数据库现有状况的一系列事件，找出非法存取数据的人、时间和内容等。</strong>还可以通过对审计日志分析，对潜在的威胁提前采取措施加以防范。</li>
+</ul>
+<p>审计通常是<strong>很费时间和空间</strong>的,所以数据库管理系统往往都将审计设置为可选特征，允许数据库管理员<strong>根据具体应用对安全性的要求灵活地打开或关闭审计功能。</strong>审计功能主要用于安全性要求较高的部门。<br />可审计事件有服务器事件、系统权限、语句事件及模式对象事件，还包括用户鉴别、自主访问控制和强制访问控事件。换句话说，它能对普通和特权用户行为、各种表操作、身份鉴别、自主和强制访问控制等操作进行审计。它既能审计成功操作，也能审计失败操作。<br />记录：有意义的操作和数据库状态<br />作用：分析操作是否异常<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679993891585-0a44161f-2c09-41ae-9060-dbbe7cb94537.png" alt="image.png"></p>
+<h3 id="审计事件"><a href="#审计事件" class="headerlink" title="审计事件"></a>审计事件</h3><ul>
+<li>服务器事件：审计数据库服务器发生的事件，包含数据库服务器的启动、停止、数据库服务器配置文件的重新加载。</li>
+<li>系统权限：对系统拥有的结构或模式对象进行操作的审计，要求该操作的权限是通过系统权限获得的。</li>
+<li>语句事件：对SQL语句，如DDL、DML、DQL(Data Query Language，数据查询语言)及 DCL语句的审计。</li>
+<li>模式对象事件：对特定模式对象上进行的SELECT 或 DML操作的审计。模式对象包括表、视图、存储过程、函数等。模式对象不包括依附于表的索引、约束、触发器、分区表等。</li>
+</ul>
+<h3 id="审计功能"><a href="#审计功能" class="headerlink" title="审计功能"></a>审计功能</h3><ul>
+<li>基本功能，提供多种审计查阅方式:基本的、可选的、有限的，等等。</li>
+<li>提供多套审计规则，审计规则一般在数据库初始化时设定，以方便审计员管理。</li>
+<li>提供审计分析和报表功能。</li>
+<li>审计日志管理功能，<ul>
+<li>防止审计员误删审计记录，审计日志必须先转储后删除</li>
+<li>对转储的审计记录文件提供完整性和保密性保护</li>
+<li>只允许审计员查阅和转储审计记录，<strong>不允许任何用户新增和修改审计记</strong>；等等。</li>
+</ul>
+</li>
+<li>系统提供查询审计设置及审计记录信息的专门视图。对于系统权限级别、语句级别及模式对象级别的审计记录也可通过相关的系统表直接查看。（就是说不同级别，不同类型的审计信息有不同的表专门查看）</li>
+</ul>
+<h3 id="审计级别"><a href="#审计级别" class="headerlink" title="审计级别"></a>审计级别</h3><p>审计一般可以分为用户级审计和系统级审计。</p>
+<ul>
+<li>用户级审计是任何用户可设置的审计<ul>
+<li>主要是用户针对自己创建的数据库表或视图进行审计</li>
+<li>记录所有用户对这些表或视图的一切成功和（或)不成功的访问要求以及各种类型的SQL操作。</li>
+</ul>
+</li>
+<li>系统级审计<ul>
+<li>只能由数据库管理员设置</li>
+<li>用以监测成功或失败的登录要求、监测授权和收回操作以及其他数据库级权限下的操作。</li>
+</ul>
+</li>
+</ul>
+<h3 id="审计语句"><a href="#审计语句" class="headerlink" title="审计语句"></a>审计语句</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1680230125340-7754540b-2f78-4b16-bc54-51415d34c617.png" alt="image.png"><br>审计设置以及审计日志一般都存储在数据字典中。必须把审计开关打开(即把系统参数 audit_trail 设为true)，才可以在系统表SYS_AUDITTRAIL中查看到审计信息。<br /><strong>数据库安全审计系统提供了一种事后检查的安全机制。</strong>安全审计机制将特定用户或者特定对象相关的操作记录到系统审计日志中，作为后续对操作的查询分析和追踪的依据。通过审计机制,可以约束用户可能的恶意操作。</p>
+<h2 id="数据加密"><a href="#数据加密" class="headerlink" title="数据加密"></a>数据加密</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679994688934-810d10f7-d9f4-40f1-9535-caffa98b59ac.png" alt="image.png"></p>
+<h3 id="存储加密"><a href="#存储加密" class="headerlink" title="存储加密"></a>存储加密</h3><p>透明：需要软硬件资源<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679994769803-4906bcd7-ec20-4de3-af50-40f599b77ae1.png" alt="image.png"></p>
+<h3 id="传输加密"><a href="#传输加密" class="headerlink" title="传输加密"></a>传输加密</h3><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679994829208-b566d54b-9be3-44dd-b21e-eff88222fdd7.png" alt="image.png"></p>
+<h2 id="其他安全性保护"><a href="#其他安全性保护" class="headerlink" title="其他安全性保护"></a>其他安全性保护</h2><p>推理控制：</p>
+<ul>
+<li>推理访问方式：通过自己的URL，推理别人的URL，得到别人的数据。解决：乱序映射或者权限控制</li>
+<li>推理数据内容：对答案，知道我的成绩，推理出他的成绩</li>
+</ul>
+<p>隐蔽信道：附加需要传递的数据</p>
+<ul>
+<li>文件系统：要求传递图片 — 在图片中嵌入docx文档</li>
+<li>插入数据会产生0,1的结果返回，多次访问能够形成0 1 串</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1679994921080-9499f3b2-1f9f-4d29-9c83-907653d62000.png" alt="image.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter04%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/">https://austynding.github.io/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter04%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter03%20-%20%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A0%87%E5%87%86%E8%AF%AD%E8%A8%80SQL/" title="Chapter03 - 关系数据库标准语言SQL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Chapter03 - 关系数据库标准语言SQL</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9/Chapter05%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7/" title="Chapter05 - 数据库完整性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Chapter05 - 数据库完整性</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ch24-%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">ch24 存取控制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E4%B8%BB%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6-DAC"><span class="toc-number">1.1.</span> <span class="toc-text">自主存取控制 DAC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%88%E6%9D%83%EF%BC%9A%E6%8E%88%E4%BA%88%E4%B8%8E%E6%94%B6%E5%9B%9E"><span class="toc-number">1.1.1.</span> <span class="toc-text">授权：授予与收回</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GRANT"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">GRANT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#REVOKE"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">REVOKE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%9D%83%E9%99%90"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">创建数据库模式的权限</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%92%E8%89%B2"><span class="toc-number">1.1.2.</span> <span class="toc-text">数据库角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E4%B8%BB%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E7%BC%BA%E7%82%B9"><span class="toc-number">1.1.3.</span> <span class="toc-text">自主存取控制缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6-MAC"><span class="toc-number">1.2.</span> <span class="toc-text">强制存取控制 MAC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93"><span class="toc-number">1.2.1.</span> <span class="toc-text">实体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%8F%E6%84%9F%E5%BA%A6%E6%A0%87%E8%AE%B0"><span class="toc-number">1.2.2.</span> <span class="toc-text">敏感度标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E8%A7%84%E5%88%99"><span class="toc-number">1.2.3.</span> <span class="toc-text">强制存取控制规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DAC-MAC"><span class="toc-number">1.2.4.</span> <span class="toc-text">DAC + MAC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ch25-%E8%A7%86%E5%9B%BE%E6%9C%BA%E5%88%B6%E3%80%81%E5%AE%A1%E8%AE%A1%E3%80%81%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86%E5%8F%8A%E5%85%B6%E4%BB%96"><span class="toc-number">2.</span> <span class="toc-text">ch25 视图机制、审计、数据加密及其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">2.1.</span> <span class="toc-text">视图机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1"><span class="toc-number">2.2.</span> <span class="toc-text">审计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.2.1.</span> <span class="toc-text">审计事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1%E5%8A%9F%E8%83%BD"><span class="toc-number">2.2.2.</span> <span class="toc-text">审计功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1%E7%BA%A7%E5%88%AB"><span class="toc-number">2.2.3.</span> <span class="toc-text">审计级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.2.4.</span> <span class="toc-text">审计语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86"><span class="toc-number">2.3.</span> <span class="toc-text">数据加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%8A%A0%E5%AF%86"><span class="toc-number">2.3.1.</span> <span class="toc-text">存储加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%8A%A0%E5%AF%86"><span class="toc-number">2.3.2.</span> <span class="toc-text">传输加密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%89%E5%85%A8%E6%80%A7%E4%BF%9D%E6%8A%A4"><span class="toc-number">2.4.</span> <span class="toc-text">其他安全性保护</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment7/" title="Experiment7">Experiment7</a><time datetime="2023-06-15T07:52:21.904Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment6/" title="Experiment6">Experiment6</a><time datetime="2023-06-15T07:52:21.901Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment5/" title="Experiment5">Experiment5</a><time datetime="2023-06-15T07:52:21.899Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment4/" title="Experiment4">Experiment4</a><time datetime="2023-06-15T07:52:21.898Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment3/" title="Experiment3">Experiment3</a><time datetime="2023-06-15T07:52:21.895Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

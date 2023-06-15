@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Chapter7 - 文件导出与复杂曲线绘制 | 丁丁的小窝(*^_^*)</title><meta name="author" content="Austyn Ding,dingding.0825@qq.com"><meta name="copyright" content="Austyn Ding"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本章内容如下。学习导出数据文件，配合其他软件进行数据分析。NetLogo擅长仿真和模拟，并不擅长对数据做分析和统计，因此我们需要使用其他工具辅助分析。掌握洛伦兹曲线的概念。洛伦兹曲线能够非常方便地反映经济体系的财富分布不均衡现象。通过这样一条曲线，我们将很容易验证二八定律。绘制复杂曲线：洛伦兹曲线的若干编程技术。 人工经济模型回顾及遗留问题首先回顾第6章引入的模型。为了解释人类社会财富分布的不均衡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter7 - 文件导出与复杂曲线绘制">
+<meta property="og:url" content="https://austynding.github.io/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter7%20-%20%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E4%B8%8E%E5%A4%8D%E6%9D%82%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%88%B6/index.html">
+<meta property="og:site_name" content="丁丁的小窝(*^_^*)">
+<meta property="og:description" content="本章内容如下。学习导出数据文件，配合其他软件进行数据分析。NetLogo擅长仿真和模拟，并不擅长对数据做分析和统计，因此我们需要使用其他工具辅助分析。掌握洛伦兹曲线的概念。洛伦兹曲线能够非常方便地反映经济体系的财富分布不均衡现象。通过这样一条曲线，我们将很容易验证二八定律。绘制复杂曲线：洛伦兹曲线的若干编程技术。 人工经济模型回顾及遗留问题首先回顾第6章引入的模型。为了解释人类社会财富分布的不均衡">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg">
+<meta property="article:published_time" content="2023-03-10T11:02:00.202Z">
+<meta property="article:modified_time" content="2023-03-10T11:14:48.221Z">
+<meta property="article:author" content="Austyn Ding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/AustynDing/blog-img/main/fav(2).png"><link rel="canonical" href="https://austynding.github.io/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter7%20-%20%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E4%B8%8E%E5%A4%8D%E6%9D%82%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%88%B6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Chapter7 - 文件导出与复杂曲线绘制',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-03-10 19:14:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="丁丁的小窝(*^_^*)"></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 读书</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Chapter7 - 文件导出与复杂曲线绘制</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-10T11:02:00.202Z" title="发表于 2023-03-10 19:02:00">2023-03-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-10T11:14:48.221Z" title="更新于 2023-03-10 19:14:48">2023-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Netlogo多主体建模入门学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Chapter7 - 文件导出与复杂曲线绘制"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本章内容如下。学习导出数据文件，配合其他软件进行数据分析。NetLogo擅长仿真和模拟，并不擅长对数据做分析和统计，因此我们需要使用其他工具辅助分析。掌握洛伦兹曲线的概念。洛伦兹曲线能够非常方便地反映经济体系的财富分布不均衡现象。通过这样一条曲线，我们将很容易验证二八定律。绘制复杂曲线：洛伦兹曲线的若干编程技术。</p>
+<h2 id="人工经济模型回顾及遗留问题"><a href="#人工经济模型回顾及遗留问题" class="headerlink" title="人工经济模型回顾及遗留问题"></a>人工经济模型回顾及遗留问题</h2><p>首先回顾第6章引入的模型。为了解释人类社会财富分布的不均衡现象，物理学家Victor M. Yakovenko提出了一个简单的人工经济模型，该模型符合如下基本规则：</p>
+<ol>
+<li>经济系统中人和财富的总量保持不变</li>
+<li>开始的时候，每个人都有等量的货币</li>
+<li>每当两个主体相遇，他们就随机分配财富</li>
+</ol>
+<p>第6章也遗留了一些问题。首先，<strong>模拟得到的财富分布曲线是否满足帕累托分布</strong>？即是否遵循幂律分布？其次，这样一条<strong>财富分布曲线是否服从二八定律</strong>？本章将会回答这两个问题。</p>
+<h2 id="NetLogo导出文件"><a href="#NetLogo导出文件" class="headerlink" title="NetLogo导出文件"></a>NetLogo导出文件</h2><p>首先打开NetLogo，把财富分布数据导出到磁盘上的一个文件中。因为NetLogo分析数据的手段非常有限，所以我们需要借助其他工具来进行相应的统计分析。为了实现这个功能，需要创建一个新的按钮——<code>save-flie</code>，创建好后，添加如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">to save-file</span><br><span class="line">    file-open <span class="string">&quot;agents.txt&quot;</span></span><br><span class="line">    let wealths <span class="string">&quot;&quot;</span></span><br><span class="line">    ask turtles[</span><br><span class="line">        <span class="function">set <span class="title">wealths</span> <span class="params">(word wealths money <span class="string">&quot;\r\n&quot;</span>)</span></span></span><br><span class="line"><span class="function">    ]</span></span><br><span class="line"><span class="function">    file-print wealths</span></span><br><span class="line"><span class="function">    file-close</span></span><br><span class="line"><span class="function">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>file-open</code>是文件打开命令</li>
+<li><code>file-print</code>是向文件中打印内容</li>
+<li><code>file-close</code>是文件关闭命令</li>
+<li><code>word</code>是将两个甚至多个字符串拼接在一起。<code>word value1 value2 value3 ...</code></li>
+<li>相关其他命令需要查询和文件、字符串操作有关的命令</li>
+<li>接下来就可以用MATLAB或其他你熟悉的工具，根据这些数据绘制简单的直方图了。</li>
+</ul>
+<h2 id="洛伦兹曲线"><a href="#洛伦兹曲线" class="headerlink" title="洛伦兹曲线"></a>洛伦兹曲线</h2><p>洛伦兹曲线（Lorenz curve）是经济学中一种反映财富分布不均衡现象的曲线，由美国经济学家M. O. 洛伦兹（Max Otto Lorenz）于1905年提出。<br />相较于前面讲到的概率分布函数曲线来说，洛伦兹曲线具有如下优点：</p>
+<ol>
+<li>绘制它并不需要我们对数据进行财富区间分组处理</li>
+<li>它所反映的财富分布情况比概率分布曲线更客观、更准确</li>
+<li>基于它，我们更容易计算基尼系数，这是一种可以客观反映财富分布不均衡性的常用指标</li>
+</ol>
+<p>接下来详细讲解如何绘制洛伦兹曲线。<br />首先用图形化的方式模拟一个国家的财富分布。假设这个国家一共有6个人，这些人的财富多少用身体大小来进行形象化的表示，如图所示。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677932749910-cb8bc07b-34d8-4ee4-a55a-b7e1db1ad80f.png" alt="image.png"></p>
+<p>在现在这种状态下，他们的财富分布很不均衡。<br />接下来通过3个步骤得到洛伦兹曲线。<br />第1步，把这6个人<strong>按照财富值从小到大排序</strong>，财富最少的人排在最左边，财富最多的人排在最右边，如图7-8所示。这样可以得到一条单调上升的曲线，但它并不是洛伦兹曲线。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677932769905-dd106186-0627-4a78-9a3c-3863f7fac22f.png" alt="image.png"><br>第2步，<strong>对财富值进行累加</strong>。比如把前面3个人的财富之和跟第4个人的财富加在一起，形成一个高度，这个高度就是第4个人对应的洛伦兹曲线纵坐标的值。这样的话每个人在洛伦兹曲线上对应的纵坐标如图7-9所示，最后一个人即最富有的人，他所对应的纵坐标就是整个社会的财富总和。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677932785062-87c9667d-7bff-4989-8f77-c8d0ed5fb741.png" alt="image.png"></p>
+<p>第3步，<strong>将这条曲线的横坐标和纵坐标归一化</strong>。在横坐标上除以最大值，由于这个国家一共有6个人，因此每个点的横坐标都除以6，所以第5个人的横坐标就是5&#x2F;6。同理，纵坐标也要除以社会的总财富。因此对于洛伦兹曲线来说，比如第i个点，它的<strong>横坐标就是从穷到富的前i&#x2F;N的人数，其中N为社会总人数，纵坐标对应的是这前i&#x2F;N的人所占有的财富与社会总财富的比例。</strong>图7-10所示的是最终的洛伦兹曲线。<br><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677932859568-b578fa89-b476-4918-9dc8-7e43a32f3e59.png" alt="image.png"><br>图7-10的横坐标表示人口比例，纵坐标表示这些人所占财富的比例。洛伦兹曲线一定是这样一条弯曲的曲线，而且它一定会介于斜线A和竖线B与横坐标构成的三角形区域内部。<br />实际上，这两条特殊的线也有其经济含义，斜线A代表社会财富分布绝对均衡情况下的洛伦兹曲线。为什么可以这么说呢？我们可以想象，如果社会的财富分布极其均衡，即所有人的财富水平相等，那么当生成洛伦兹曲线的时候，一定是一条直线。<br />竖线B与横坐标构成的直角形折线，对应的就是社会财富分布极端不均衡的情况下的洛伦兹曲线。在这种情况下，一个人拥有全部社会总财富，而其他人的财富是0，所以这时只有最后一个人的纵坐标是1，而其他人都是0，因此刚好是这条折线。<br />由此可见，对于一般的随机的财富分布来说，洛伦兹曲线一定会介于这二者之间，而且越靠近折线，所反映的财富分布就越不均衡，越靠近斜线A财富分布就越均衡。<br />在这样一条洛伦兹曲线上很容易验证二八定律。那么如何验证呢？<br />我们可以作两条辅助线，<strong>首先找到横坐标为0.8的位置，这表示它对应的是社会按照从穷到富排序前80%的人口，找到它与洛伦兹曲线的交点，查看交点的纵坐标，这个纵坐标表示这80%的穷人所占据的财富比例。</strong></p>
+<h2 id="用NetLogo实现洛伦兹曲线"><a href="#用NetLogo实现洛伦兹曲线" class="headerlink" title="用NetLogo实现洛伦兹曲线"></a>用NetLogo实现洛伦兹曲线</h2><p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677929264843-038a2449-3b7b-41b0-ac4b-504fc0fb5360.png" alt="image.png"></p>
+<p>首先把名称设置成Lorenz curve，然后设定它的横纵坐标分别为population %和wealth %，接下来设定3个不同颜色的画笔，它们的名称分别设定为lorenz、equal和dominant，3个画笔分别对应洛伦兹曲线、对角线和表示财富分布极端不均衡的折线。然后把绘图更新命令改成自定义函数update-lorenz-plot，并把绘图笔更新命令处默认的命令删除。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">to update-lorenz-plot</span><br><span class="line">  clear-plot</span><br><span class="line">  ;; 绘制表示财富分布绝对均衡的斜线</span><br><span class="line">  set-current-plot-pen <span class="string">&quot;equal&quot;</span></span><br><span class="line">  plot <span class="number">0</span></span><br><span class="line">  plot <span class="number">1</span></span><br><span class="line">  ;; 绘制表示财富分布极端不均衡的折线</span><br><span class="line">  set-current-plot-pen <span class="string">&quot;dominant&quot;</span></span><br><span class="line">  plot-pen-down ;; plot-pen-down：开始绘图。</span><br><span class="line">  plotxy <span class="number">0</span> <span class="number">0</span></span><br><span class="line">  plotxy <span class="number">1</span> <span class="number">0</span></span><br><span class="line">  plotxy <span class="number">1</span> <span class="number">1</span></span><br><span class="line">  plot-pen-up ;; plot-pen-up：停止绘图。</span><br><span class="line">  </span><br><span class="line">  set-current-plot-pen <span class="string">&quot;lorenz&quot;</span></span><br><span class="line">  set-plot-pen-interval <span class="number">1</span> / num_agents ;; 按照x的一定间隔进行划分</span><br><span class="line">  plot <span class="number">0</span> </span><br><span class="line">  let sorted-wealths sort [money] of turtles ;; 对数组进行排序</span><br><span class="line">  let total-wealth sum sorted-wealths ;; 对数组进行求和</span><br><span class="line">  let wealth-sum-so-far <span class="number">0</span></span><br><span class="line">  let index <span class="number">0</span></span><br><span class="line">  repeat num_agents[ ;; 在<span class="keyword">for</span>循环中循环num_agents次</span><br><span class="line">    set wealth-sum-so-<span class="built_in">far</span> (wealth-sum-so-far + item index sorted-wealths)</span><br><span class="line">    <span class="built_in">plot</span> (wealth-sum-so-far / total-wealth)</span><br><span class="line">    <span class="function">set <span class="title">index</span> <span class="params">(index + <span class="number">1</span>)</span></span></span><br><span class="line"><span class="function">  ]</span></span><br><span class="line"><span class="function">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="绘图语句"><a href="#绘图语句" class="headerlink" title="绘图语句"></a>绘图语句</h3><p>NetLogo的图形化元素具有一定的层次结构，我们通常接触的有两个层次。</p>
+<ul>
+<li><code>plot</code>代表绘图</li>
+<li><code>set-current-plot &quot;plot-name&quot;</code>表示把后面的绘图框激活，其中的名称跟设置的标题是一致的</li>
+<li><code>pen</code>代表画笔</li>
+<li><code>set-current-pen &quot;pen-name&quot;</code>每个图可能有多条曲线，比如目前要画的图有3条曲线，对应3个画笔。要完成某一条曲线的绘制就要激活相应的画笔。</li>
+<li><code>plot-pen-down</code>代表开始绘图</li>
+<li><code>plot-pen-up</code>代表停止绘图</li>
+</ul>
+<p>绘图命令：</p>
+<ul>
+<li><code>plot</code>这是一个使用频率比较高的指令，它的作用是等水平间隔地绘制点。</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677929556766-734d6787-801f-4816-8646-fdae718c2cde.png" alt="image.png"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">clear-plot</span><br><span class="line">    set-current-plot-pen <span class="string">&quot;equal&quot;</span></span><br><span class="line">    plot <span class="number">0</span></span><br><span class="line">    plot <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>这里使用了plot语句来画图，第一步先清空当前绘图Lorenz curve。在每一个绘图周期都要重新清空，然后用<code>set-current-plot-pen &quot;equal&quot;</code>语句激活“equal”画笔。我们在图形界面设置的equal画笔对应的是红色，因此这时绘制的线就是红色的。接下来的plot语句从坐标(0, 0)到(1, 1)绘制了一条红色对角线</p>
+<ul>
+<li><code>plotxy</code></li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677929643621-f580e16d-29ad-4320-ac4f-1dafff56b096.png" alt="image.png"></p>
+<h3 id="绘制洛伦兹曲线"><a href="#绘制洛伦兹曲线" class="headerlink" title="绘制洛伦兹曲线"></a>绘制洛伦兹曲线</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">set-current-plot-pen <span class="string">&quot;lorenz&quot;</span></span><br><span class="line">set-plot-pen-interval <span class="number">1</span> / num_agents ;; 按照x的一定间隔进行划分</span><br><span class="line">plot <span class="number">0</span> </span><br><span class="line">let sorted-wealths sort [money] of turtles ;; 对数组进行排序</span><br><span class="line">let total-wealth sum sorted-wealths ;; 对数组进行求和</span><br><span class="line">let wealth-sum-so-far <span class="number">0</span></span><br><span class="line">let index <span class="number">0</span></span><br><span class="line">repeat num_agents[ ;; 在<span class="keyword">for</span>循环中循环num_agents次</span><br><span class="line">  set wealth-sum-so-<span class="built_in">far</span> (wealth-sum-so-far + item index sorted-wealths)</span><br><span class="line">  <span class="built_in">plot</span> (wealth-sum-so-far / total-wealth)</span><br><span class="line">  <span class="function">set <span class="title">index</span> <span class="params">(index + <span class="number">1</span>)</span></span></span><br><span class="line"><span class="function">]</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>确定间隔</li>
+</ol>
+<p>要绘制这条曲线，我们要先设定横坐标平移的间隔量。由于<strong>这条洛伦兹曲线针对货币转移模型里的所有主体</strong>，人数在模型中是变量<code>num_agents</code>，因此把洛沦兹曲线的横坐标划分成<code>num_agents</code>份，那么每一份的宽度就是<code>1 / num_agents</code>，于是用<code>set-plot-pen-interval 1 / num_agents</code>来设置间隔量。</p>
+<ol start="2">
+<li>排序</li>
+</ol>
+<p>sort命令，该命令的作用是<strong>对一个列表中的元素按从小到大进行排序</strong>。那么<code>let sorted-wealths sort [money] of turtles</code>语句的列表就是<code>[money] of turtles</code>，其作用是把所有主体的财富值构成一个大的数值列表。但是数值排序是乱的，而用sort命令就可以对数值列表按从小到大进行排序。因此<code>sorted-wealths</code>这个变量就是排序好的财富值列表。</p>
+<ol start="3">
+<li>循环与求和</li>
+</ol>
+<ul>
+<li><code>repeat num_agents[ ]</code>是一个循环过程，其中repeat是一个多次的循环，相当于Python语言中的for循环，紧随其后的是循环次数<code>num_agents</code>。</li>
+<li>在每一次循环中，首先<code>set wealth-sum-so-far (wealth-sum-so-far + item index sorted-wealths)</code>语句给<code>wealth-sum-so-far</code><strong>赋值</strong>，<code>wealth-sum-so-far</code>的含义相当于循环到第i个主体时积累的社会财富总量。这个量实际上是把<strong>前一次积累的财富总量加上当前主体所对应的财富量。</strong></li>
+<li><code>item idx lst</code>表示从list的列表中取出下标编号为idx的元素，比如当前列表是[0123]，那么item 1 lst得到的数就应该是1。此处注意，在NetLogo语法里，<strong>它的列表下标始于0。</strong><code>item index sorted-wealths</code>，就是<strong>从排序好的财富列表里取出第index这个下标的元素</strong>。然后把取出的财富值加到<code>wealth-sum-so-far</code>这个变量里，就得到了前i个主体的财富总量。</li>
+</ul>
+<ol start="4">
+<li>归一化</li>
+</ol>
+<ul>
+<li>纵坐标是归一化的财富总量。有了当前第i个主体的归一化的财富总量，直接用<code>wealth-sum-so-far /total-wealth</code>就可以得到相应的纵坐标。</li>
+</ul>
+<p><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/1677930099233-d5c52fc8-8620-47db-b262-0374fc69b81c.png" alt="image.png"><br>由图可知：这样的简单人工经济模型不满足二八定律</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li>学会对文件和字符串进行操作的若干命令</li>
+<li>学会<code>for</code>循环和对应下标值</li>
+<li>了解洛伦兹曲线</li>
+<li>了解<code>plot</code>绘图的相关命令<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">turtles-own [money]</span><br><span class="line">to setup</span><br><span class="line">  clear-all</span><br><span class="line">  reset-ticks</span><br><span class="line">  create-turtles num_agents[</span><br><span class="line">    <span class="function">set <span class="title">money</span> <span class="params">(total_money / num_agents)</span> </span>;; 初始情况下每个turtle都拥有相同的货币量</span><br><span class="line">    setxy random-xcor random-ycor  ;; 设置为随机取值，实现随机分布</span><br><span class="line">  ]</span><br><span class="line">end</span><br><span class="line">to go</span><br><span class="line">  ask turtles [</span><br><span class="line">    let agsets other turtles-here ;; 其他所有turtles-here</span><br><span class="line">    let agentNum count agsets</span><br><span class="line">    <span class="keyword">if</span> agentNum &gt;= <span class="number">1</span> [</span><br><span class="line">      <span class="built_in">transaction</span> (one-of agsets)</span><br><span class="line">    ]</span><br><span class="line">    forward <span class="number">1</span></span><br><span class="line">  ]</span><br><span class="line"> tick</span><br><span class="line">end</span><br><span class="line">to transaction [trader]</span><br><span class="line">  let deltam <span class="number">0</span></span><br><span class="line">  let <span class="built_in">money1</span> ([money] of trader)</span><br><span class="line">  let <span class="built_in">epsilon</span> (random-<span class="type">float</span> <span class="number">1</span>) ;; 定义epsilon为一个<span class="number">0</span>~<span class="number">1</span>的随机数。前面用过random-<span class="type">float</span>，它会产生一个<span class="number">0</span>~<span class="number">1</span>的随机小数</span><br><span class="line">  let all money + money1</span><br><span class="line">  set money epsilon * all</span><br><span class="line">  ask trader [</span><br><span class="line">    <span class="function">set <span class="title">money</span> <span class="params">(<span class="number">1</span> - epsilon)</span> * all</span></span><br><span class="line"><span class="function">  ]</span></span><br><span class="line"><span class="function">end</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">to to-update-plot</span></span><br><span class="line"><span class="function">    let lst [money] of turtles</span></span><br><span class="line"><span class="function">    set-histogram-num-bars 100</span></span><br><span class="line"><span class="function">    <span class="keyword">if</span> <span class="keyword">not</span> empty? lst [</span></span><br><span class="line"><span class="function">        set-plot-x-range 0 <span class="params">(max lst)</span></span></span><br><span class="line"><span class="function">        histogram lst</span></span><br><span class="line"><span class="function">    ]</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">end</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">to save-file</span></span><br><span class="line"><span class="function">  file-open &quot;agent.txt&quot;</span></span><br><span class="line"><span class="function">  let wealths &quot;&quot;</span></span><br><span class="line"><span class="function">  ask turtles[</span></span><br><span class="line"><span class="function">    set <span class="title">wealths</span> <span class="params">(word wealths money <span class="string">&quot;\r\n&quot;</span>)</span></span></span><br><span class="line"><span class="function">  ]</span></span><br><span class="line"><span class="function">  file-print wealths</span></span><br><span class="line"><span class="function">  file-close</span></span><br><span class="line"><span class="function">end</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">to update-lorenz-plot</span></span><br><span class="line"><span class="function">  clear-plot</span></span><br><span class="line"><span class="function">  </span>;; 绘制表示财富分布绝对均衡的斜线</span><br><span class="line">  set-current-plot-pen <span class="string">&quot;equal&quot;</span></span><br><span class="line">  plot <span class="number">0</span></span><br><span class="line">  plot <span class="number">1</span></span><br><span class="line">  ;; 绘制表示财富分布极端不均衡的折线</span><br><span class="line">  set-current-plot-pen <span class="string">&quot;dominant&quot;</span></span><br><span class="line">  plot-pen-down ;; plot-pen-down：开始绘图。</span><br><span class="line">  plotxy <span class="number">0</span> <span class="number">0</span></span><br><span class="line">  plotxy <span class="number">1</span> <span class="number">0</span></span><br><span class="line">  plotxy <span class="number">1</span> <span class="number">1</span></span><br><span class="line">  plot-pen-up ;; plot-pen-up：停止绘图。</span><br><span class="line">  </span><br><span class="line">  set-current-plot-pen <span class="string">&quot;lorenz&quot;</span></span><br><span class="line">  set-plot-pen-interval <span class="number">1</span> / num_agents ;; 按照x的一定间隔进行划分</span><br><span class="line">  plot <span class="number">0</span> </span><br><span class="line">  let sorted-wealths sort [money] of turtles ;; 对数组进行排序</span><br><span class="line">  let total-wealth sum sorted-wealths ;; 对数组进行求和</span><br><span class="line">  let wealth-sum-so-far <span class="number">0</span></span><br><span class="line">  let index <span class="number">0</span></span><br><span class="line">  repeat num_agents[ ;; 在<span class="keyword">for</span>循环中循环num_agents次</span><br><span class="line">    set wealth-sum-so-<span class="built_in">far</span> (wealth-sum-so-far + item index sorted-wealths)</span><br><span class="line">    <span class="built_in">plot</span> (wealth-sum-so-far / total-wealth)</span><br><span class="line">    <span class="function">set <span class="title">index</span> <span class="params">(index + <span class="number">1</span>)</span></span></span><br><span class="line"><span class="function">  ]</span></span><br><span class="line"><span class="function">end</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://austynding.github.io/">Austyn Ding</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://austynding.github.io/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter7%20-%20%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E4%B8%8E%E5%A4%8D%E6%9D%82%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%88%B6/">https://austynding.github.io/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter7%20-%20%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E4%B8%8E%E5%A4%8D%E6%9D%82%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%88%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://austynding.github.io" target="_blank">丁丁的小窝(*^_^*)</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Chapter6%20-%20%E4%BA%BA%E5%B7%A5%E7%BB%8F%E6%B5%8E%E6%A8%A1%E5%9E%8B%E4%B8%8Eturtle%E9%97%B4%E7%9A%84%E4%BA%92%E5%8A%A8/" title="Chapter6 - 人工经济模型与turtle间的互动"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Chapter6 - 人工经济模型与turtle间的互动</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/10/Netlogo%E5%A4%9A%E4%B8%BB%E4%BD%93%E5%BB%BA%E6%A8%A1%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BB%8B%E7%BB%8D/" title="介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">介绍</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://blog-bed0.oss-cn-hangzhou.aliyuncs.com/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Austyn Ding</div><div class="author-info__description">Have a fun!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">89</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AustynDing"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AustynDing" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dingding.0825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E7%BB%8F%E6%B5%8E%E6%A8%A1%E5%9E%8B%E5%9B%9E%E9%A1%BE%E5%8F%8A%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">人工经济模型回顾及遗留问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NetLogo%E5%AF%BC%E5%87%BA%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">NetLogo导出文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B4%9B%E4%BC%A6%E5%85%B9%E6%9B%B2%E7%BA%BF"><span class="toc-number">3.</span> <span class="toc-text">洛伦兹曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8NetLogo%E5%AE%9E%E7%8E%B0%E6%B4%9B%E4%BC%A6%E5%85%B9%E6%9B%B2%E7%BA%BF"><span class="toc-number">4.</span> <span class="toc-text">用NetLogo实现洛伦兹曲线</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%98%E5%9B%BE%E8%AF%AD%E5%8F%A5"><span class="toc-number">4.1.</span> <span class="toc-text">绘图语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%98%E5%88%B6%E6%B4%9B%E4%BC%A6%E5%85%B9%E6%9B%B2%E7%BA%BF"><span class="toc-number">4.2.</span> <span class="toc-text">绘制洛伦兹曲线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment7/" title="Experiment7">Experiment7</a><time datetime="2023-06-15T07:52:21.904Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment6/" title="Experiment6">Experiment6</a><time datetime="2023-06-15T07:52:21.901Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment5/" title="Experiment5">Experiment5</a><time datetime="2023-06-15T07:52:21.899Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment4/" title="Experiment4">Experiment4</a><time datetime="2023-06-15T07:52:21.898Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/%E5%AE%9E%E9%AA%8C%E4%BD%9C%E4%B8%9A/Experiment3/" title="Experiment3">Experiment3</a><time datetime="2023-06-15T07:52:21.895Z" title="发表于 2023-06-15 15:52:21">2023-06-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Austyn Ding</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://austynding.github.io/">Hi, welcome to my blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>
